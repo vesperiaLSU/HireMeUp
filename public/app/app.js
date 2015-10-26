@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module("app", []);
 
 angular.module("app").controller("testCtrl", function($scope) {
@@ -8,4 +9,4 @@ angular.module("app").controller("testCtrl", function($scope) {
         title: "Accountant",
         description: "you will use the keyboard"
     }]
-})
+});

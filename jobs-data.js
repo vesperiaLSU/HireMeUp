@@ -22,6 +22,10 @@ exports.seedJobs = function() {
                     description: "You will be mindlessly typing code"
                 });
                 Job.create({
+                    title: "Game Tester",
+                    description: "You will be testing games endlessly"
+                });
+                Job.create({
                     title: "Axe Maker",
                     description: "We need many axes made...so many..."
                 }, resolve);

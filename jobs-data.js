@@ -6,7 +6,14 @@ exports.findJobs = function (query) {
 }
 
 exports.saveJob = function(job) {
-    return Promise.cas(Job.create(job).exec());
+    var newJob = new Job({
+        title: job.title,
+        description: job.description
+    });
+    
+    newJob.save(function(){
+        console.log("new job saved: " + newJob.title);
+    })
 }
 
 exports.seedJobs = function() {
@@ -15,7 +22,7 @@ exports.seedJobs = function() {
             if (collection.length === 0) {
                 Job.create({
                     title: "Cook",
-                    description: "You will be making bagels"
+                    description: "You will be making big bagels"
                 });
                 Job.create({
                     title: "Waiter",
@@ -24,10 +31,6 @@ exports.seedJobs = function() {
                 Job.create({
                     title: "Programmer",
                     description: "You will be mindlessly typing code"
-                });
-                Job.create({
-                    title: "Game Tester",
-                    description: "You will be testing games endlessly"
                 });
                 Job.create({
                     title: "Game Tester",

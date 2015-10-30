@@ -7,7 +7,7 @@ module.exports = function(db, app) {
         res.end();
     })
     app.get("/api/jobs", function(req, res){
-        db.findJobs().then(function(collection){
+        db.findJobs({}).then(function(collection){
             res.send(collection);
         })
     })

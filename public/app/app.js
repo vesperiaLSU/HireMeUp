@@ -1,6 +1,14 @@
 /*global angular*/
-angular.module("app", ["ngResource"]);
+var app = angular.module("app", ["ngResource"]);
 
-angular.module("app").controller("testCtrl", ["$scope", "$resource", function($scope, $resource) {
-    $scope.jobs = $resource("/api/jobs").query();
+app.controller("testCtrl", ["$scope", "$resource", function($scope, $resource) {
+    var resource = $resource("/api/jobs");
+    
+    $scope.jobs = resource.query();
+    
+    $scope.submit = function(){
+        resource.save({title: $scope.title, description: $scope.description}, function(){
+            $scope.jobs.push({title: $scope.title, description: $scope.description});
+        });
+    }
 }]);

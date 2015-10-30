@@ -12,6 +12,7 @@
     "bluebird": "^3.0.2",
     "express": "^4.13.3",
     "jade": "^1.11.0",
+    "mocha": "^2.3.3",
     "mongoose": "^4.2.2"
   },
   "devDependencies": {

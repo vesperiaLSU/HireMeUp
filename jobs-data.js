@@ -5,6 +5,10 @@ exports.findJobs = function (query) {
     return Promise.cast(Job.find(query).exec());
 }
 
+exports.saveJob = function(job) {
+    return Promise.cas(Job.create(job).exec());
+}
+
 exports.seedJobs = function() {
     return new Promise(function(resolve, reject) {
         Job.find({}).exec(function(err, collection) {

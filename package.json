@@ -10,10 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.0.2",
+    "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "jade": "^1.11.0",
     "mocha": "^2.3.3",
-    "mongoose": "^4.2.2"
+    "mongoose": "^4.2.2",
+    "supertest": "^1.1.0"
   },
   "devDependencies": {
     "bower": "^1.6.5",

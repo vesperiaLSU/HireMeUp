@@ -1,4 +1,4 @@
-(function () {
+(function() {
     var jwt = require("jwt-simple");
     var webConfig = require("../Config/webConfig.js");
     var messages = require("../Config/messageConfig.js");
@@ -11,7 +11,7 @@
         "Toast Inspector"
     ];
 
-    module.exports = function (req, res) {
+    module.exports = function(req, res) {
         //check if the header contains an authorization
         /** @namespace req.headers.authorization */
         if (!req.headers.authorization) {
@@ -32,13 +32,21 @@
         }
 
         if (payload.ggId) {
-            search = {googleId: payload.ggId};
+            search = {
+                googleId: payload.ggId
+            };
             handleJob(res, search);
-        } else if (payload.fbId) {
-            search = {facebookId: payload.fbId};
+        }
+        else if (payload.fbId) {
+            search = {
+                facebookId: payload.fbId
+            };
             handleJob(res, search);
-        } else {
-            search = {email: payload.email};
+        }
+        else {
+            search = {
+                email: payload.email
+            };
             handleJob(res, search);
         }
     };
@@ -50,15 +58,16 @@
     }
 
     function handleJob(res, search) {
-        User.findOne(search, function (err, foundUser) {
+        User.findOne(search, function(err, foundUser) {
             if (!foundUser) return handleError(res);
 
             if (!foundUser.active) {
-                return res.status(401).send({message: messages.NEED_ACTIVATION});
+                return res.status(401).send({
+                    message: messages.NEED_ACTIVATION
+                });
             }
 
             res.json(jobs);
         });
     }
 }());
-

@@ -1,9 +1,9 @@
-(function () {
+(function() {
     var jwt = require("jwt-simple");
     var moment = require("moment");
     var webConfig = require("../Config/webConfig.js");
 
-    module.exports = function (user, req, res) {
+    module.exports = function(user, req, res) {
         var payload = {
             iss: req.hostname,
             email: user.email,
@@ -20,4 +20,3 @@
         });
     }
 }());
-

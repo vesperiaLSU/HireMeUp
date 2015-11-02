@@ -1,7 +1,7 @@
 var Promise = require("bluebird");
 var Job = require("./Models/Job.js");
 
-exports.findJobs = function (query) {
+exports.findJobs = function(query) {
     return Promise.cast(Job.find(query).exec());
 }
 
@@ -10,8 +10,8 @@ exports.saveJob = function(job) {
         title: job.title,
         description: job.description
     });
-    
-    newJob.save(function(){
+
+    newJob.save(function() {
         console.log("new job saved: " + newJob.title);
     })
 }

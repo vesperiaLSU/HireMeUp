@@ -1,4 +1,4 @@
-(function () {
+(function() {
     var _ = require("underscore");
     var fs = require("fs");
     var jwt = require("jwt-simple");
@@ -8,7 +8,7 @@
     var User = require("../Models/User.js");
     var messages = require("../Config/messageConfig.js");
 
-    exports.send = function (user) {
+    exports.send = function(user) {
         var payload = {
             email: user.email,
             ggId: user.googleId,
@@ -34,14 +34,14 @@
         };
 
 
-        transporter.sendMail(mailOptions, function (err, info) {
+        transporter.sendMail(mailOptions, function(err, info) {
             if (err) return console.log(err)
 
             console.log("email sent " + info.response);
         });
     };
 
-    exports.handler = function (req, res) {
+    exports.handler = function(req, res) {
         var token = req.query.token;
         var payload = jwt.decode(token, webConfig.EMAIL_SECRET);
         var email = payload.email;
@@ -51,13 +51,21 @@
         if (!email) return handleError(res);
 
         if (googleId) {
-            search = {googleId: googleId};
+            search = {
+                googleId: googleId
+            };
             handleActivation(res, search);
-        } else if (facebookId) {
-            search = {facebookId: facebookId};
+        }
+        else if (facebookId) {
+            search = {
+                facebookId: facebookId
+            };
             handleActivation(res, search);
-        } else {
-            search = {email: email};
+        }
+        else {
+            search = {
+                email: email
+            };
             handleActivation(res, search);
         }
     };
@@ -91,7 +99,7 @@
     }
 
     function handleActivation(res, search) {
-        User.findOne(search, function (err, foundUser) {
+        User.findOne(search, function(err, foundUser) {
             if (err) return res.status(500);
 
             if (!foundUser) return handleError(res);
@@ -100,7 +108,7 @@
                 foundUser.active = true;
             }
 
-            foundUser.save(function (err) {
+            foundUser.save(function(err) {
                 if (err) return res.status(500);
 
                 return res.redirect(webConfig.APP_URL);
@@ -108,5 +116,3 @@
         });
     }
 }());
-
-

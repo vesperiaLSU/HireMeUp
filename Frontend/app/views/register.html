@@ -1,0 +1,14 @@
+<div id="register" class="container">
+  <form ng-submit="submitRegistration()" class="form-sign-in" name="register" novalidate>
+    <h1 class="form-sign-in-heading text-muted">Register</h1>
+    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email address" required>
+    <span class="help-block menu-bar" ng-show="register.email.$dirty && register.email.$invalid">Please enter a proper email</span>
+    <input type="password" name="password" ng-model="password" class="form-control" placeholder="Password" required>
+    <input type="password" name="passwordConfirm" ng-model="passwordConfirm" class="form-control"
+           placeholder="Confirm Password" validate-equals="password" required>
+    <span class="help-block menu-bar" ng-show="register.passwordConfirm.$dirty && register.passwordConfirm.$invalid">please match the password</span>
+    <button ng-disabled="register.$invalid" class="btn btn-lg btn-primary btn-block" type="submit">
+      Submit
+    </button>
+  </form>
+</div>

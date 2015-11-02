@@ -1,0 +1,19 @@
+<div id="login" class="container">
+  <form ng-submit="login()" class="form-sign-in" name="register" novalidate>
+    <h1 class="form-sign-in-heading text-muted">Login</h1>
+    <input type="email" name="email" ng-model="email" class="form-control" placeholder="Email address" required>
+    <span class="help-block menu-bar" ng-show="register.email.$dirty && register.email.$invalid">Please enter a proper email</span>
+    <input type="password" name="password" ng-model="password" class="form-control" placeholder="Password" required>
+    <button ng-disabled="register.$invalid" class="btn btn-lg btn-primary btn-block" type="submit">
+      Login
+    </button>
+    <br />
+    <a class="pull-right" style="color: white" ui-sref="register">Create Account</a>
+    <button ng-click="authenticate('google')" class="btn btn-lg btn-default btn-block" type="button">
+      Google
+    </button>
+    <button ng-click="authenticate('facebook')" class="btn btn-lg btn-default btn-block" type="button">
+      Facebook
+    </button>
+  </form>
+</div>

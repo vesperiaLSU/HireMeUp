@@ -1,27 +1,47 @@
-var express = require("express");
-var mongoose = require("mongoose");
-var jobsData = require("./jobs-data.js");
+(function() {
+    /**pre-defined libraries**/
+    var express = require("express");
+    var mongoose = require("mongoose");
+    var bodyParser = require("body-parser");
+    var Promise = require("bluebird");
+    var jobsData = require("./jobs-data.js");
 
-var Promise = require("bluebird");
-var app = express();
+    /**custom services**/
+    var facebookAuth = require("./Services/facebookAuth.js");
+    var jobs = require("./Services/jobs.js");
+    var googleAuth = require("./Services/googleAuth.js");
+    var login = require("./Services/login.js");
+    var register = require("./Services/register.js");
+    var webConfig = require("./Config/webConfig.js");
+    var emailVerification = require("./Services/emailVerification.js");
 
-require("./jobs-service.js")(jobsData, app);
+    var app = express();
 
-app.set("view engine", "jade");
-app.set("views", __dirname);
+    require("./jobs-service.js")(jobsData, app);
 
-app.use(express.static(__dirname + "/public"));
+    app.engine('.html', require('ejs').renderFile);
 
-app.get("*", function(req, res) {
-    res.render("index");
-});
+    app.use(express.static(__dirname + "/Frontend"));
+    app.use(bodyParser.json());
 
-Promise.promisifyAll(mongoose);
+    /**APIs**/
+    app.get("/", function(req, res) {
+        res.render("index.html");
+    });
+    app.post("/register", register);
+    app.post("/login", login);
+    app.post("/auth/facebook", facebookAuth);
+    app.post("/auth/google", googleAuth);
+    app.get("/jobs", jobs);
+    app.get("/auth/verifyEmail", emailVerification.handler);
 
-// mongoose.connect("mongodb://localhost/jobfinder");
-mongoose.connect("mongodb://chen:123@ds039484.mongolab.com:39484/jobfinder", function(){
-    console.log("connected to mongodb successfully");
-    jobsData.seedJobs();
-});
+    Promise.promisifyAll(mongoose);
 
-app.listen(process.env.PORT, process.env.IP);
+    // mongoose.connect("mongodb://localhost/jobfinder");
+    mongoose.connect(webConfig.MONGODB, function() {
+        console.log("connected to mongodb successfully");
+        jobsData.seedJobs();
+    });
+
+    app.listen(process.env.PORT, process.env.IP);
+}());

@@ -1,0 +1,23 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "authors": [
+    "Chen Guo <guochen1223@gmail.com>"
+  ],
+  "description": "job finding app",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "angular-resource": "~1.4.7",
+    "angular-animate": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "animate.css": "~3.4.0",
+    "satellizer": "~0.13.0"
+  }
+}

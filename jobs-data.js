@@ -1,5 +1,5 @@
 var Promise = require("bluebird");
-var Job = require("./models/Job.js");
+var Job = require("./Models/Job.js");
 
 exports.findJobs = function (query) {
     return Promise.cast(Job.find(query).exec());

@@ -1,13 +1,28 @@
-link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
+link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
+link(rel='stylesheet', href='bower_components/animate.css/animate.css')
+link(rel='stylesheet', href='styles/bootstrap-superhero.css')
+link(rel='stylesheet', href='styles/main.css')
 
-script(type="text/javascript", src="/bower_components/angular/angular.js")
-script(type="text/javascript", src="/bower_components/angular-resource/angular-resource.js")
-script(type="text/javascript", src="/app/app.js")
-script(type="text/javascript", src="/app/jobs.js")
+script(type="text/javascript", src='bower_components/jquery/dist/jquery.js')
+script(type="text/javascript", src='bower_components/angular/angular.js')
+script(type="text/javascript", src='bower_components/angular-resource/angular-resource.js')
+script(type="text/javascript", src='bower_components/bootstrap/dist/js/bootstrap.js')
+script(type="text/javascript", src='bower_components/angular-ui-router/release/angular-ui-router.js')
+script(type="text/javascript", src='bower_components/angular-animate/angular-animate.js')
+script(type="text/javascript", src='bower_components/satellizer/satellizer.js')
 
-body(ng-app="app")
+script(type="text/javascript", src='app/scripts/app.js')
+script(type="text/javascript", src='app/scripts/directives/validateEquals.js')
+script(type="text/javascript", src='app/scripts/controllers/registerCtrl.js')
+script(type="text/javascript", src='app/scripts/services/alert.js')
+script(type="text/javascript", src='app/scripts/controllers/headerCtrl.js')
+script(type="text/javascript", src='app/scripts/controllers/logoutCtrl.js')
+script(type="text/javascript", src='app/scripts/controllers/jobsCtrl.js')
+script(type="text/javascript", src='app/scripts/controllers/loginCtrl.js')
+
+body(ng-app="psJwtApp")
     .container
-        div(ng-controller="testCtrl")
+        div(ng-controller="JobsCtrl")
             h1 Post a New Job!
             form(ng-submit="submit()")
                 .form-group

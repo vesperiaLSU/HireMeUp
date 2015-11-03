@@ -35,7 +35,7 @@
 
 
         transporter.sendMail(mailOptions, function(err, info) {
-            if (err) return console.log(err)
+            if (err) return console.log(err);
 
             console.log("email sent " + info.response);
         });
@@ -78,7 +78,7 @@
             body: messages.NEED_VERIFY
         };
 
-        var path = "./views/emailVerification.html";
+        var path = "./Views/emailVerification.html";
         var html = fs.readFileSync(path, encoding = "utf8");
 
         var template = _.template(html);

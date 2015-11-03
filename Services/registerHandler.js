@@ -1,6 +1,6 @@
 (function() {
     var User = require("../Models/User.js");
-    var createResponseToken = require("./createResponseToken.js");
+    var tokenHandler = require("./tokenHandler.js");
     var messages = require("../Config/messageConfig.js");
     var emailVerification = require("./emailVerification.js");
 
@@ -25,7 +25,7 @@
 
             newUser.save(function() {
                 emailVerification.send(searchUser);
-                createResponseToken(newUser, req, res);
+                tokenHandler(newUser, req, res);
             });
         });
     };

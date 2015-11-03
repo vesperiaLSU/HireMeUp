@@ -3,13 +3,7 @@
     var webConfig = require("../Config/webConfig.js");
     var messages = require("../Config/messageConfig.js");
     var User = require("../Models/User.js");
-
-    var jobs = [
-        "Cook",
-        "Super Hero",
-        "Unicorn Whisper",
-        "Toast Inspector"
-    ];
+    var dataService = require("./dataService/dataService.js");
 
     module.exports = function(req, res) {
         //check if the header contains an authorization
@@ -66,8 +60,9 @@
                     message: messages.NEED_ACTIVATION
                 });
             }
-
-            res.json(jobs);
+            dataService.findJobs({}).then(function(collection){
+                res.send(collection);
+            });
         });
     }
 }());

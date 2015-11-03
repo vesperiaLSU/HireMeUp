@@ -1,11 +1,11 @@
 (function () {
   'use strict';
 
-  var app = angular.module('psJwtApp',
+  var app = angular.module('jobFinder.app',
     ["ui.router",
       "ngAnimate",
       "satellizer",
-      "ngResource"
+      "common.service"
     ]);
 
   app.config(["$urlRouterProvider", "$stateProvider", "$authProvider", 
@@ -48,9 +48,8 @@
     //   url: API_URL + "auth/facebook"
     // });
 
-    // $authProvider.loginUrl = API_URL + "login";
-
-    // $authProvider.signupUrl = API_URL + "register";
+    $authProvider.loginUrl = "/api/login";
+    $authProvider.signupUrl = "/api/register";
 
   }]).constant('API_URL', "http://localhost:3000/")
     // .run(function ($window) {

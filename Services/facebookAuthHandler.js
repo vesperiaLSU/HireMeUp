@@ -1,7 +1,7 @@
 (function() {
     var request = require("request");
     var User = require("../Models/User.js");
-    var createResponseToken = require("./createResponseToken.js");
+    var tokenHandler = require("./tokenHandler.js");
     var emailVerification = require("./emailVerification.js");
     var webConfig = require("../Config/webConfig.js");
 
@@ -38,10 +38,10 @@
                 }, function(err, foundUser) {
                     if (foundUser) {
                         if (foundUser.active == true)
-                            return createResponseToken(foundUser, req, res);
+                            return tokenHandler(foundUser, req, res);
                         else {
                             emailVerification.send(foundUser);
-                            return createResponseToken(foundUser, req, res);
+                            return tokenHandler(foundUser, req, res);
                         }
                     }
                     else {
@@ -53,7 +53,7 @@
                         });
                         newUser.save(function(err) {
                             emailVerification.send(newUser);
-                            createResponseToken(newUser, req, res);
+                            tokenHandler(newUser, req, res);
                         })
                     }
                 })

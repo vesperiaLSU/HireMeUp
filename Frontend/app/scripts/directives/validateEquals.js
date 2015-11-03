@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  angular.module("psJwtApp")
+  angular.module("jobFinder.app")
     .directive("validateEquals", function () {
       return {
         require: "ngModel",

@@ -1,20 +1,19 @@
 (function() {
   "use strict";
 
-  angular.module("psJwtApp").controller("JobsCtrl", ["$scope", "$http", "API_URL", "alert", "$resource",
-    function($scope, $http, API_URL, alert, $resource) {
-      $http.get(API_URL + "jobs").success(function(jobs) {
-        $scope.jobs = jobs;
-      }).error(function(err) {
-        alert("warning", "Unable to get jobs!!", err.message);
-      });
-
-      var resource = $resource("/api/jobs");
-
-      $scope.jobs = resource.query();
+  angular.module("jobFinder.app").controller("JobsCtrl", ["$scope", "jobService", "alertService",
+    function($scope, jobService, alertService) {
+      jobService.query().$promise.then(
+        function(data) {
+          debugger;
+          $scope.jobs = data;
+        },
+        function(error) {
+          alertService("warning", "Unable to get jobs!!", error.data.message);
+        });
 
       $scope.submit = function() {
-        resource.save({
+        jobService.save({
           title: $scope.title,
           description: $scope.description
         }, function() {

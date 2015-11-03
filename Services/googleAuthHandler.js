@@ -1,6 +1,6 @@
 (function() {
     var request = require("request");
-    var createResponseToken = require("./createResponseToken.js");
+    var tokenHandler = require("./tokenHandler.js");
     var User = require("../Models/User.js");
     var webConfig = require("../Config/webConfig.js");
     var emailVerification = require("./emailVerification.js");
@@ -42,10 +42,10 @@
                         }, function(err2, foundEmail) {
                             if (err2) throw err2;
                             if (foundUser.active == true || foundEmail)
-                                return createResponseToken(foundUser, req, res);
+                                return tokenHandler(foundUser, req, res);
                             else {
                                 emailVerification.send(foundUser);
-                                return createResponseToken(foundUser, req, res);
+                                return tokenHandler(foundUser, req, res);
                             }
                         });
                     }
@@ -59,7 +59,7 @@
                         newUser.save(function(err) {
                             if (err) throw err;
                             emailVerification.send(newUser);
-                            createResponseToken(newUser, req, res);
+                            tokenHandler(newUser, req, res);
                         });
                     }
                 });

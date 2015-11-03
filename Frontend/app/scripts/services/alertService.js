@@ -1,8 +1,8 @@
 (function () {
   "use strict";
 
-  angular.module("psJwtApp")
-    .service("alert", function alert($rootScope, $timeout) {
+  angular.module("common.service")
+    .service("alertService", function alert($rootScope, $timeout) {
       var alertTimeout;
       return function (type, title, message, timeout) {
         $rootScope.alert = {

@@ -1,8 +1,8 @@
 (function () {
     "use strict";
 
-    angular.module("psJwtApp")
-        .controller("RegisterCtrl", ["$scope", "alert", "$auth", "$state", function ($scope, alert, $auth, $state) {
+    angular.module("jobFinder.app")
+        .controller("RegisterCtrl", ["$scope", "alertService", "$auth", "$state", function ($scope, alert, $auth, $state) {
             $scope.submitRegistration = function () {
                 $auth.signup({
                         email: $scope.email,

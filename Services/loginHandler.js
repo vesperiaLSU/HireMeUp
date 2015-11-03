@@ -1,6 +1,6 @@
 (function() {
     var User = require("../Models/User.js");
-    var createResponseToken = require("./createResponseToken.js");
+    var tokenHandler = require("./tokenHandler.js");
     var messages = require("../Config/messageConfig.js");
 
     module.exports = function(req, res) {
@@ -32,7 +32,7 @@
                     message: messages.PASSWORD_NOT_MATCH
                 });
 
-                createResponseToken(user, req, res);
+                tokenHandler(user, req, res);
             });
         });
     };

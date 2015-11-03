@@ -1,8 +1,8 @@
 (function () {
     "use strict";
 
-    angular.module("psJwtApp")
-        .controller("LoginCtrl", ["$scope", "alert", "$state", "$auth", function ($scope, alert, $state, $auth) {
+    angular.module("jobFinder.app")
+        .controller("LoginCtrl", ["$scope", "alertService", "$state", "$auth", function ($scope, alertService, $state, $auth) {
             $scope.login = function () {
                 $auth.login({
                         email: $scope.email,
@@ -16,7 +16,7 @@
                             message = "Just a reminder, please active your account soon :)";
                         }
 
-                        alert("success", "Welcome " + res.data.user.email + "! " + message);
+                        alertService("success", "Welcome " + res.data.user.email + "! " + message);
                     })
                     .catch(handleError);
             };
@@ -28,12 +28,12 @@
                     if (!res.data.user.active) {
                         message = "Just a reminder, please active your account soon :)";
                     }
-                    alert("success", "Welcome " + res.data.user.displayName + "! " + message);
+                    alertService("success", "Welcome " + res.data.user.displayName + "! " + message);
                 }, handleError);
             };
 
             function handleError(err) {
-                alert("warning", "Something went wrong :( ", err.data.message);
+                alertService("warning", "Something went wrong :( ", err.data.message);
             }
     }]);
 }());

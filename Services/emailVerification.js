@@ -16,16 +16,15 @@
         };
 
         var token = jwt.encode(payload, webConfig.EMAIL_SECRET);
-
-        var transporter = nodeMailer.createTransport(smtpTransport({
-            host: webConfig.SMTP_HOST,
-            port: 465,
-            secure: false,
+        
+        var auth = {
             auth: {
-                user: webConfig.SMTP_USER,
-                pass: webConfig.SMTP_PASS
+                api_key: "key-4c727b4f44758682acb2b25f276fe644",
+                domain: "sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org"
             }
-        }));
+        }
+
+        var transporter = nodeMailer.createTransport(smtpTransport(auth));
 
         var mailOptions = {
             from: webConfig.SMTP_EMAIL_FROM,

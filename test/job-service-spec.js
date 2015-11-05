@@ -16,7 +16,7 @@ var db = {
     }
 };
 
-require("../jobs-service.js")(db, app);
+require("../Services/webService/webService.js")(app);
 
 describe("save jobs", function() {
     

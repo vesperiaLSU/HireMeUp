@@ -14,13 +14,11 @@
         EMAIL_SECRET: "email",
         LOGIN_SECRET: "login",
         //email verification
-        VERIFY_URL: "http://localhost:3000/auth/verifyEmail?token=",
+        VERIFY_URL: "/api/auth/verifyEmail?token=",
         SEND_PATH: "./views/emailVerification.html",
         SMTP_USER: "postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org",
         SMTP_PASS: "dae3f15a722e23f3ffd9b4c354b8a993",
         SMTP_HOST: "smtp.mailgun.org",
         SMTP_EMAIL_FROM: "Accounts <postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org>",
-        //angular app url
-        APP_URL: "http://localhost:9000/"
     };
 }());

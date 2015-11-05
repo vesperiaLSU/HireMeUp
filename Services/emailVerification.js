@@ -19,7 +19,8 @@
 
         var transporter = nodeMailer.createTransport(smtpTransport({
             host: webConfig.SMTP_HOST,
-            secure: true,
+            port: 465,
+            secure: false,
             auth: {
                 user: webConfig.SMTP_USER,
                 pass: webConfig.SMTP_PASS
@@ -30,7 +31,7 @@
             from: webConfig.SMTP_EMAIL_FROM,
             to: user.email,
             subject: "JWT Account Verification",
-            html: getHtml(token)
+            html: getHtml(user.host, token)
         };
 
 
@@ -70,9 +71,9 @@
         }
     };
 
-    function getHtml(token) {
+    function getHtml(host, token) {
         var model = {
-            verifyUrl: webConfig.VERIFY_URL,
+            verifyUrl: "https://" + host + webConfig.VERIFY_URL,
             title: "JWT",
             subTitle: "Thanks for signing up",
             body: messages.NEED_VERIFY
@@ -111,7 +112,7 @@
             foundUser.save(function(err) {
                 if (err) return res.status(500);
 
-                return res.redirect(webConfig.APP_URL);
+                return res.redirect("/");
             })
         });
     }

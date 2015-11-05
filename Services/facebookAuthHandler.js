@@ -40,7 +40,7 @@
                         if (foundUser.active == true)
                             return tokenHandler(foundUser, req, res);
                         else {
-                            emailVerification.send(foundUser);
+                            //emailVerification.send(foundUser);
                             return tokenHandler(foundUser, req, res);
                         }
                     }
@@ -52,7 +52,7 @@
                             active: false
                         });
                         newUser.save(function(err) {
-                            emailVerification.send(newUser);
+                            //emailVerification.send(newUser);
                             tokenHandler(newUser, req, res);
                         })
                     }

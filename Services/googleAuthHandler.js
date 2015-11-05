@@ -44,7 +44,7 @@
                             if (foundUser.active == true || foundEmail)
                                 return tokenHandler(foundUser, req, res);
                             else {
-                                emailVerification.send(foundUser);
+                                //emailVerification.send(foundUser);
                                 return tokenHandler(foundUser, req, res);
                             }
                         });
@@ -58,7 +58,7 @@
                         });
                         newUser.save(function(err) {
                             if (err) throw err;
-                            emailVerification.send(newUser);
+                            //emailVerification.send(newUser);
                             tokenHandler(newUser, req, res);
                         });
                     }

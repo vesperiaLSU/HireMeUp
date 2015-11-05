@@ -13,7 +13,8 @@
         });
 
         var searchUser = {
-            email: user.email
+            email: user.email,
+            host: req.hostname
         };
 
         User.findOne(searchUser, function(err, user) {

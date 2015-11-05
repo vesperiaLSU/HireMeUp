@@ -40,7 +40,8 @@
                         if (foundUser.active == true)
                             return tokenHandler(foundUser, req, res);
                         else {
-                            //emailVerification.send(foundUser);
+                            foundUser.host = req.hostname;
+                            emailVerification.send(foundUser);
                             return tokenHandler(foundUser, req, res);
                         }
                     }
@@ -52,7 +53,8 @@
                             active: false
                         });
                         newUser.save(function(err) {
-                            //emailVerification.send(newUser);
+                            newUser.host = req.hostname;
+                            emailVerification.send(newUser);
                             tokenHandler(newUser, req, res);
                         })
                     }

@@ -13,8 +13,7 @@
         });
 
         var searchUser = {
-            email: user.email,
-            host: req.hostname
+            email: user.email
         };
 
         User.findOne(searchUser, function(err, user) {
@@ -25,6 +24,7 @@
             });
 
             newUser.save(function() {
+                searchUser.host = req.hostname;
                 emailVerification.send(searchUser);
                 tokenHandler(newUser, req, res);
             });

@@ -37,17 +37,14 @@
                 }, function(err, foundUser) {
                     if (err) throw err;
                     if (foundUser) {
-                        User.findOne({
-                            email: profile.email
-                        }, function(err2, foundEmail) {
-                            if (err2) throw err2;
-                            if (foundUser.active == true || foundEmail)
-                                return tokenHandler(foundUser, req, res);
-                            else {
-                                //emailVerification.send(foundUser);
-                                return tokenHandler(foundUser, req, res);
-                            }
-                        });
+                        if (foundUser.active == true)
+                            return tokenHandler(foundUser, req, res);
+                        else {
+                            foundUser.host = req.hostname;
+                            emailVerification.send(foundUser);
+                            return tokenHandler(foundUser, req, res);
+                        }
+
                     }
                     else {
                         var newUser = new User({
@@ -58,7 +55,8 @@
                         });
                         newUser.save(function(err) {
                             if (err) throw err;
-                            //emailVerification.send(newUser);
+                            newUser.host = req.hostname;
+                            emailVerification.send(newUser);
                             tokenHandler(newUser, req, res);
                         });
                     }

@@ -4,7 +4,7 @@
     var jwt = require("jwt-simple");
     var webConfig = require("../Config/webConfig.js");
     var nodeMailer = require("nodemailer");
-    var smtpTransport = require("nodemailer-smtp-transport");
+    var mg = require("nodemailer-mailgun-transport");
     var User = require("../Models/User.js");
     var messages = require("../Config/messageConfig.js");
 
@@ -24,7 +24,7 @@
             }
         }
 
-        var transporter = nodeMailer.createTransport(smtpTransport(auth));
+        var transporter = nodeMailer.createTransport(mg(auth));
 
         var mailOptions = {
             from: webConfig.SMTP_EMAIL_FROM,
@@ -37,7 +37,7 @@
         transporter.sendMail(mailOptions, function(err, info) {
             if (err) return console.log(err);
 
-            console.log("email sent " + info.response);
+            console.log("email sent from " + info.id);
         });
     };
 

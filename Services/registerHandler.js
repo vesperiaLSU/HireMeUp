@@ -4,7 +4,7 @@
     var messages = require("../Config/messageConfig.js");
     var emailVerification = require("./emailVerification.js");
 
-    module.exports = function(req, res) {
+    module.exports = function(req, res, next) {
         var user = req.body;
         var newUser = new User({
             email: user.email,

@@ -1,5 +1,20 @@
 var Promise = require("bluebird");
 var Job = require("../../Models/Job.js");
+var User = require("../../Models/User.js");
+
+exports.findUser = function(query) {
+    return Promise.cast(User.findOne(query).exec());
+}
+
+exports.saveUser = function(newUser) {
+    var user = new User({
+        facebookId: newUser.id,
+        displayName: newUser.name,
+        email: newUser.email,
+        active: false
+    });
+    return Promise.cast(user.save().exec());
+}
 
 exports.findJobs = function(query) {
     return Promise.cast(Job.find(query).exec());
@@ -14,6 +29,12 @@ exports.saveJob = function(job) {
     newJob.save(function() {
         console.log("new job saved: " + newJob.title);
     })
+}
+
+exports.updateJob = function(current, newJob) {
+    current.title = newJob.title;
+    current.description = newJob.description;
+    current.save();
 }
 
 exports.seedJobs = function() {

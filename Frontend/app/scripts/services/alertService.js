@@ -4,11 +4,12 @@
   angular.module("common.service")
     .service("alertService", function alert($rootScope, $timeout) {
       var alertTimeout;
-      return function (type, title, message, timeout) {
+      return function (type, title, message, style, timeout) {
         $rootScope.alert = {
           hasBeenShown: true,
           show: true,
           type: type,
+          style: style,
           message: message,
           title: title
         };

@@ -3,7 +3,7 @@
     var tokenHandler = require("./tokenHandler.js");
     var messages = require("../Config/messageConfig.js");
 
-    module.exports = function(req, res) {
+    module.exports = function(req, res, next) {
         req.user = req.body;
 
         var searchUser = {

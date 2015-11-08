@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="jobFinder.app">
 
 <head>
   <meta charset="utf-8">
@@ -23,6 +23,7 @@
   
   <script src="app/scripts/app.js"></script>
   
+  <script src="app/scripts/controllers/mainCtrl.js"></script>
   <script src="app/scripts/controllers/registerCtrl.js"></script>
   <script src="app/scripts/controllers/headerCtrl.js"></script>
   <script src="app/scripts/controllers/logoutCtrl.js"></script>
@@ -33,9 +34,10 @@
   <script src="app/scripts/services/commonService.js"></script>
   <script src="app/scripts/services/alertService.js"></script>
   <script src="app/scripts/services/jobService.js"></script>
+  <script src="app/scripts/services/jobTransfer.js"></script>
 </head>
 
-<body ng-app="jobFinder.app">
+<body class="{{bodyStyle}}">
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -56,7 +58,7 @@
 <![endif]-->
 
   <!-- Add your site or application content here -->
-  <div class="container" ng-cloak>
+  <div class="container-fluid" ng-cloak>
     <div ng-include="'/app/views/header.html'"></div>
     <div class="row">
       <div class="ui-view-container">

@@ -7,11 +7,36 @@
 
 body {
     padding: 0;
+    font-size: 16px;
+    font-family: Arial, Calibri, monospace;
+    margin: 0;
 }
 
-.menu-bar{
-  font-size:16px;
-  font-family: Arial, Calibri, monospace;
+.nopad {
+    padding: 0 !important;
+}
+.nomargin {
+    margin: 0;
+}
+
+.mainPage {
+    background-image: url("http://www.metropolismag.com/Airbnb_PDXoffice_Bittermann_12-10-2104_-6.jpg");
+    background-size: cover
+}
+
+.menu-bar {
+    font-size: 16px;
+    font-family: Arial, Calibri, monospace;
+}
+
+.table-font-style {
+    font-size: 13px;
+    font-family: Arial, Calibri, monospace;
+}
+
+.font-style {
+    font-size: 15px;
+    font-family: Arial, Calibri, monospace;
 }
 
 
@@ -20,8 +45,19 @@ body {
 .header,
 .marketing,
 .footer {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+@media (min-width: 768px) {
+    .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+        width: 1024px;
+    }
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
 }
 
 
@@ -51,12 +87,25 @@ body {
     margin: 30px 0;
 }
 
+.google-button {
+    color: #ffffff;
+    background-color: rgba(211, 72, 54, 0.9);
+    border-color: transparent;
+}
+
+.facebook-button {
+    color: #ffffff;
+    background-color: rgba(59, 89, 152, 0.9);
+    border-color: transparent;
+}
+
 
 /* Main marketing message and sign up button */
 
 .jumbotron {
     text-align: center;
-    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    top: 150px;
 }
 
 .jumbotron .btn {
@@ -75,29 +124,72 @@ body {
     margin-top: 28px;
 }
 
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
 
 /* Responsive: Portrait tablets and up */
 
-@media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
-    }
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
-}
+
+/*@media screen and (min-width: 768px) {*/
+
+
+/*    .container {*/
+
+
+/*        max-width: 730px;*/
+
+
+/*    }*/
+
+
+/* Remove the padding we set earlier */
+
+
+/*    .header,*/
+
+
+/*    .marketing,*/
+
+
+/*    .footer {*/
+
+
+/*        padding-left: 0;*/
+
+
+/*        padding-right: 0;*/
+
+
+/*    }*/
+
+
+/* Space out the masthead */
+
+
+/*    .header {*/
+
+
+/*        margin-bottom: 30px;*/
+
+
+/*    }*/
+
+
+/* Remove the bottom border on the jumbotron for visual effect */
+
+
+/*    .jumbotron {*/
+
+
+/*        border-bottom: 0;*/
+
+
+/*    }*/
+
+
+/*}*/
 
 .form-sign-in {
     max-width: 280px;
@@ -155,6 +247,15 @@ body {
 .main-alert {
     position: absolute;
     top: 70px;
+    left: 5px;
+    right: 5px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.job-alert {
+    position: absolute;
+    top: 300px;
     left: 5px;
     right: 5px;
     max-width: 400px;

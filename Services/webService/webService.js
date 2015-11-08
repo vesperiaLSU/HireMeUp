@@ -13,6 +13,6 @@ module.exports = function(app) {
     app.post("/api/login", loginHandler);
     app.post("/api/auth/facebook", facebookAuthHandler);
     app.post("/api/auth/google", googleAuthHandler);
-    app.get("/api/jobs", jobHandler);
+    //app.get("/api/jobs", jobHandler);
     app.get("/api/auth/verifyEmail", emailVerification.handler);
 }

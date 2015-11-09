@@ -10,10 +10,12 @@
                     title: jobTitle
                 }).$promise.then(
                     function(data) {
+                        debugger;
                         jobTransfer.addJobToList(data);
                         $state.go("jobs");
                     },
                     function(error) {
+                        debugger;
                         $scope.jobs = null;
                         alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");
                     });

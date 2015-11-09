@@ -5,17 +5,16 @@
     function($scope, jobService, alertService, $rootScope, jobTransfer) {
       $rootScope.bodyStyle = "";
       var searchResult = jobTransfer.getJobFromList();
+      debugger;
       if (searchResult.length > 0) {
         $scope.jobs = jobTransfer.getJobFromList();
       }
       else {
         jobService.query({}).$promise.then(
           function(data) {
-            debugger;
             $scope.jobs = data;
           },
           function(error) {
-            debugger;
             alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");
           });
       }
@@ -26,9 +25,11 @@
           title: jobTitle
         }).$promise.then(
           function(data) {
+            debugger;
             $scope.jobs = data;
           },
           function(error) {
+            debugger;
             $scope.jobs = null;
             alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");
           });

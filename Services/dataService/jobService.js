@@ -1,20 +1,5 @@
 var Promise = require("bluebird");
 var Job = require("../../Models/Job.js");
-var User = require("../../Models/User.js");
-
-exports.findUser = function(query) {
-    return Promise.cast(User.findOne(query).exec());
-}
-
-exports.saveUser = function(newUser) {
-    var user = new User({
-        facebookId: newUser.id,
-        displayName: newUser.name,
-        email: newUser.email,
-        active: false
-    });
-    return Promise.cast(user.save().exec());
-}
 
 exports.findJobs = function(query) {
     return Promise.cast(Job.find(query).exec());
@@ -23,12 +8,12 @@ exports.findJobs = function(query) {
 exports.saveJob = function(job) {
     var newJob = new Job({
         title: job.title,
-        description: job.description
+        description: job.description,
+        company: job.company
     });
-
-    newJob.save(function() {
-        console.log("new job saved: " + newJob.title);
-    })
+    newJob.save(function(err){
+        if(err) console.log(err);
+    });
 }
 
 exports.updateJob = function(current, newJob) {
@@ -64,5 +49,4 @@ exports.seedJobs = function() {
             }
         });
     });
-
 };

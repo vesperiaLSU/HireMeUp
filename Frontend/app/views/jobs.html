@@ -1,14 +1,54 @@
 <div id="jobs" class="container">
-    <div style="background-color:rgba(78,93,108,0.98); padding:14px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <fieldset>
-            <p class="lead">Get Hired. Love Your Job.</p>
-            <div class="input-group col-sm-8">
-                <input type="text" name="job" ng-model="jobToSearch" class="form-control font-style" placeholder="Job Title.." />
-                <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="searchJob()"><span class="glyphicon glyphicon-search"></span></button>
+    <div style="background-color:rgba(78,93,108,0.98); padding:14px; margin-bottom: 20px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <p class="lead">Get Hired. Love Your Job.</p>
+        <div class="input-group col-sm-6">
+            <input type="text" name="job" ng-model="jobToSearch" class="form-control font-style" placeholder="Job Title.." />
+            <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="searchJob()"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+        <div style="display: inline; float: right;">
+            <button type="button" class="btn btn-primary" data-target="#postJob" ng-click="showModal = true">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" ak-modal="showModal" role="dialog">
+        <div class="modal-dialog modal-md">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Post A New Job</h4>
+                </div>
+                <div class="modal-body" style="height: 330px;">
+                    <form class="form-horizontal" ng-submit="postJob()" name="jobs">
+                        <br>
+
+                        <div class="col-sm-12">
+                            <div style="margin-bottom: 20px;">
+                                <input class="form-control font-style" type="text" name="jobTitle" placeholder="Title..." ng-model="jobTitle">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <input class="form-control font-style" type="text" name="company" placeholder="Company..." ng-model="company">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <textarea class="form-control font-style" rows="4" name="description" placeholder="Description..." ng-model="description" />
+                            </div>
+
+                            <button class="btn btn-primary col-sm-2 col-sm-offset-5 font-style" type="submit" ng-click="showModal = false">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="showModal = false">Close</button>
+                </div>
             </div>
-        </fieldset>
+        </div>
+    </div>
 
-
+    <div style="background-color:rgba(78,93,108,0.98); padding:14px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div id="job-list" style="width:100%; height:650px; overflow: auto;">
             <h2>Job Opening List</h2>
             <table class="table table-hover table-font-style">
@@ -30,11 +70,18 @@
                         <td>{{job.views}}</td>
                         <td>{{job.applicants}}</td>
                         <td>
-                            <button class="btn btn-link font-style"><span class="glyphicon glyphicon-eye-open"></span>
-                                <br>View</button>
-                            <button class="btn btn-link font-style">Edit</button>
-                            <button class="btn btn-link font-style">Copy</button>
-                            <button class="btn btn-link font-style">Delete</button>
+                            <button class="btn btn-link font-style" style="color:#7cb228"><span class="glyphicon glyphicon-eye-open"></span>
+                                <br>View
+                            </button>
+                            <button class="btn btn-link font-style" style="color:#7cb228"><span class="glyphicon glyphicon-edit"></span>
+                                <br>Edit
+                            </button>
+                            <button class="btn btn-link font-style" style="color:#7cb228"><span class="glyphicon glyphicon-book"></span>
+                                <br>Copy
+                            </button>
+                            <button class="btn btn-link font-style" style="color:#7cb228"><span class="glyphicon glyphicon-remove"></span>
+                                <br>Delete
+                            </button>
                         </td>
                     </tr>
                 </tbody>

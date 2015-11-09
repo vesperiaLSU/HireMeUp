@@ -15,6 +15,7 @@ body {
 .nopad {
     padding: 0 !important;
 }
+
 .nomargin {
     margin: 0;
 }
@@ -37,6 +38,11 @@ body {
 .font-style {
     font-size: 15px;
     font-family: Arial, Calibri, monospace;
+}
+
+#postJob {
+    top: 15%;
+    outline: none;
 }
 
 

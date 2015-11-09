@@ -2,9 +2,6 @@
     var mongoose = require("mongoose");
 
     var JobSchema = new mongoose.Schema({
-        _id: {
-            type: Number
-        },
         datePosted: {
             type: Date,
             default: Date.now

@@ -11,9 +11,11 @@
       else {
         jobService.query({}).$promise.then(
           function(data) {
+            debugger;
             $scope.jobs = data;
           },
           function(error) {
+            debugger;
             alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");
           });
       }
@@ -35,11 +37,13 @@
       $scope.postJob = function() {
         jobService.save({
           title: $scope.jobTitle,
-          description: $scope.description
+          description: $scope.description,
+          company: $scope.company
         }).$promise.then(function() {
           $scope.jobs.push({
             title: $scope.title,
-            description: $scope.description
+            description: $scope.description,
+            company: $scope.company
           });
           alertService("success", "New job added: ", $scope.title, "job-alert");
         }, function(error) {

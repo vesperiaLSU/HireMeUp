@@ -24,6 +24,7 @@
             };
 
             $scope.authenticate = function(provider) {
+                debugger;
                 $auth.authenticate(provider).then(function(res) {
                     $state.go("main");
                     var message = "Thanks for coming back!";

@@ -1,6 +1,7 @@
 (function() {
     "use strict";
-    var mongoose = require("mongoose");
+    var Promise = require("bluebird");
+    var mongoose = Promise.promisifyAll(require("mongoose"));
     var bcrypt = require("bcrypt-nodejs");
 
     var UserSchema = new mongoose.Schema({

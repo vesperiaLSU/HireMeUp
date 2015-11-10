@@ -16,17 +16,21 @@
             email: user.email
         };
 
-        User.findOne(searchUser, function(err, user) {
-            if (err) throw err;
-
+        User.findOne(searchUser).then(function(user) {
             if (user) return res.status(401).send({
                 message: messages.EMAIL_DUPLICATE
             });
 
-            newUser.save(function() {
+            newUser.save().then(function() {
                 searchUser.host = req.hostname;
                 emailVerification.send(searchUser);
                 tokenHandler(newUser, req, res);
+            }).catch(function(err) {
+                throw err;
+            });
+        }).catch(function(err) {
+            return res.status(500).send({
+                message: "Server could not register user"
             });
         });
     };

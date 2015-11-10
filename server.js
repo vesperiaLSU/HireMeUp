@@ -14,12 +14,20 @@
 
     var app = express();
 
+    // app.use(function(req, res, next){
+    //   res.header("Access-Control-Allow-Origin", "https://ide.c9.io");
+    //   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+    //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    //   next();
+    // });
+
     app.engine('.html', require('ejs').renderFile);
     app.use(express.static(__dirname + "/Frontend"));
     app.use(bodyParser.json());
     app.use("/api", jobRouter);
     app.use("/api", userRouter);
-    
+
 
     //webService(app);
 
@@ -29,9 +37,14 @@
     });
 
     Promise.promisifyAll(mongoose);
-    mongoose.connect(webConfig.MONGODB, function() {
-        console.log("connected to mongodb successfully");
-        jobService.seedJobs();
+    mongoose.connect(webConfig.MONGODB, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("connected to mongodb successfully");
+            jobService.seedJobs();
+        }
     });
 
     app.listen(process.env.PORT, process.env.IP);

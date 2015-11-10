@@ -1,7 +1,6 @@
 var express = require("express");
 var jobService = require("../dataService/jobService.js");
 var bodyParser = require("body-parser");
-
 var jwt = require("jwt-simple");
 var webConfig = require("../../Config/webConfig.js");
 var messages = require("../../Config/messageConfig.js");
@@ -10,58 +9,62 @@ var User = require("../../Models/User.js");
 var jobRouter = express.Router();
 jobRouter.use(bodyParser.json());
 
+jobRouter.all("/jobs", requireAuthentication);
+
 jobRouter.route("/jobs")
     .get(function(req, res, next) {
-        userAuth(req, res);
-        if (res.statusCode !== 401) {
-            jobService.findJobs({}).then(function(collection) {
-                if (collection.length != 0) {
-                    res.send(collection);
-                }
-                else {
-                    res.status(401).send({
-                        message: "failed to find a job"
-                    });
-                }
-            });
-        }
+        jobService.findJobs({}).then(function(collection) {
+            if (collection.length != 0) {
+                res.send(collection);
+            }
+            else {
+                res.status(401).send({
+                    message: "failed to find a job"
+                });
+            }
+        }).catch(function(err) {
+            console.log(err);
+        });
+
     })
     .post(function(req, res, next) {
-        userAuth(req, res);
-        if (res.statusCode !== 401) {
-            var newJob = {
-                title: req.body.title,
-                description: req.body.description,
-                company: req.body.company
-            };
-            jobService.saveJob(newJob);
-        }
+        var newJob = {
+            title: req.body.title,
+            description: req.body.description,
+            company: req.body.company
+        };
+        jobService.saveJob(newJob).then(function(job) {
+            res.send(job);
+        }).catch(function(err) {
+            console.log(err);
+            res.status(401).send({
+                message: "failed to save the job"
+            });
+        });
     });
 
 jobRouter.route("/jobs/:title")
     .get(function(req, res, next) {
-        userAuth(req, res);
-        if (res.statusCode !== 401) {
-            var searchBy = {
-                title: req.params.title
-            };
-            jobService.findJobs(searchBy).then(function(collection) {
-                if (collection.length != 0) {
-                    res.send(collection);
-                }
-                else {
-                    res.status(401).send({
-                        message: "failed to find a job"
-                    });
-                }
-            });
-        }
+        var searchBy = {
+            title: req.params.title
+        };
+        jobService.findJobs(searchBy).then(function(collection) {
+            if (collection.length != 0) {
+                res.send(collection);
+            }
+            else {
+                res.status(401).send({
+                    message: "failed to find a job"
+                });
+            }
+        });
+
     })
     .put(function(req, res, next) {
         jobService.updateJob(req.foundJob, req.body);
     });
 
-function userAuth(req, res) {
+function requireAuthentication(req, res, next) {
     //check if the header contains an authorization
     /** @namespace req.headers.authorization */
     if (!req.headers.authorization) {
@@ -85,19 +88,19 @@ function userAuth(req, res) {
         search = {
             googleId: payload.ggId
         };
-        handleAuthentication(res, search);
+        handleAuthentication(res, next, search);
     }
     else if (payload.fbId) {
         search = {
             facebookId: payload.fbId
         };
-        handleAuthentication(res, search);
+        handleAuthentication(res, next, search);
     }
     else {
         search = {
             email: payload.email
         };
-        handleAuthentication(res, search);
+        handleAuthentication(res, next, search);
     }
 }
 
@@ -107,17 +110,24 @@ function handleError(res) {
     });
 }
 
-function handleAuthentication(res, search) {
-    User.findOne(search, function(err, foundUser) {
-        if (!foundUser)
+function handleAuthentication(res, next, search) {
+    User.findOne(search).then(function(foundUser) {
+        if (!foundUser) {
             handleError(res);
-
-        if (!foundUser.active) {
+        }
+        else if (!foundUser.active) {
             return res.status(401).send({
                 message: messages.NEED_ACTIVATION
             });
         }
-    });
+        else {
+            next();
+        }
+    }).catch(function(err) {
+        return res.status(401).send({
+            message: err
+        });
+    })
 }
 
 module.exports = jobRouter;

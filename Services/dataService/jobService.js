@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 var Job = require("../../Models/Job.js");
 
 exports.findJobs = function(query) {
-    return Promise.cast(Job.find(query).exec());
+    return Job.find(query);
 }
 
 exports.saveJob = function(job) {
@@ -11,15 +11,13 @@ exports.saveJob = function(job) {
         description: job.description,
         company: job.company
     });
-    newJob.save(function(err){
-        if(err) console.log(err);
-    });
+    return newJob.saveAsync();
 }
 
 exports.updateJob = function(current, newJob) {
     current.title = newJob.title;
     current.description = newJob.description;
-    current.save();
+    return current.saveAsync();
 }
 
 exports.seedJobs = function() {

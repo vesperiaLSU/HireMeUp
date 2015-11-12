@@ -12,6 +12,11 @@ body {
     margin: 0;
 }
 
+#postJobModal {
+top:15%;
+outline: none;
+}
+
 .nopad {
     padding: 0 !important;
 }
@@ -39,12 +44,6 @@ body {
     font-size: 15px;
     font-family: Arial, Calibri, monospace;
 }
-
-#postJob {
-    top: 15%;
-    outline: none;
-}
-
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 

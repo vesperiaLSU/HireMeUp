@@ -1,4 +1,5 @@
 (function() {
+    "use strict";
     var User = require("../Models/User.js");
     var tokenHandler = require("./tokenHandler.js");
     var messages = require("../Config/messageConfig.js");

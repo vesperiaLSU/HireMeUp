@@ -1,4 +1,5 @@
 (function() {
+    "use strict";
     /**pre-defined libraries**/
     var express = require("express");
     var mongoose = require("mongoose");
@@ -7,20 +8,11 @@
 
     /**custom service**/
     var jobService = require("./Services/dataService/jobService.js");
-    var webService = require("./Services/webService/webService.js");
     var webConfig = require("./Config/webConfig.js");
     var jobRouter = require("./Services/webService/jobRouter.js");
     var userRouter = require("./Services/webService/userRouter.js");
 
     var app = express();
-
-    // app.use(function(req, res, next){
-    //   res.header("Access-Control-Allow-Origin", "https://ide.c9.io");
-    //   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
-    //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-    //   next();
-    // });
 
     app.engine('.html', require('ejs').renderFile);
     app.use(express.static(__dirname + "/Frontend"));

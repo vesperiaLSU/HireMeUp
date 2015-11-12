@@ -1,4 +1,4 @@
-<div ng-controller="HeaderCtrl">
+<div ng-controller="HeaderCtrl" style="line-height: 0px;">
     <nav class="menu-bar navbar navbar-default" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -9,30 +9,38 @@
             </button>
         </div>
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" style="font-size:20px;">
                 <li>
-                    <a ui-sref="main" class="navbar-brand" href="#" style="padding-left: 20px;">
+                    <a ui-sref="main" class="navbar-brand logo" href="#" style="padding: 10px 12px 12px 12px; font-size: 20px; margin-right:10px;">
                         <span class="glyphicon glyphicon-send" style="color: #7cb228; padding: 0 5px;"></span>Hire Me Up
                     </a>
                 </li>
                 <li ui-sref-active="active">
-                    <a ui-sref="main">Home</a>
+                    <a type="button" style="padding: 12px;" ui-sref="main">Home</a>
                 </li>
                 <li ui-sref-active="active">
-                    <a ui-sref="jobs">Jobs</a>
+                    <a ui-sref="jobs" style="padding: 12px;">Job List</a>
                 </li>
                 <li ui-sref-active="active" style="float: right;">
-                    <a ui-sref="register">Register</a>
+                    <a ui-sref="register" style="padding: 12px;">Register</a>
                 </li>
-                
+
                 <li ng-hide="isAuthenticated()" ui-sref-active="active" style="float: right;">
-                    <a ui-sref="login">Login</a>
+                    <a ui-sref="login" style="padding: 12px;">Login</a>
                 </li>
                 <li ng-show="isAuthenticated()" ui-sref-active="active" style="float: right;">
-                    <a ui-sref="logout">Logout</a>
-                </li>
-                <li ng-show="isAuthenticated()" ui-sref-active="active" style="float: right;">
-                    <a ui-sref="logout"><span class="glyphicon glyphicon-user"></span></a>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" style="font-size: 20px; background-color:#7cb228" type="button" id="menu1" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user dropdown-toggle" style="margin-right: 5px;"></span><span ng-model="username"></span><span class="caret" style="margin-left:5px;"></span></button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            <li><a role="menuitem" ui-sref="userProfile" tabindex="-1" href="#" style="font-size:16px">User Profile</a></li>
+                            <li><a role="menuitem" ui-sref="jobPosted" tabindex="-1" href="#" style="font-size:16px">Jobs Posted</a></li>
+                            <li><a role="menuitem" ui-sref="jobViewed" tabindex="-1" href="#" style="font-size:16px">Jobs Viewed</a></li>
+                            <li><a role="menuitem" ui-sref="jobApplied" tabindex="-1" href="#" style="font-size:16px">Jobs Applied</a></li>
+                            <li class="divider"></li>
+                            <li><a role="menuitem" ui-sref="logout" tabindex="-1" href="#" style="font-size:16px">Logout</a></li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>

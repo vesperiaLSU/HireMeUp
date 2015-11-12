@@ -1,4 +1,5 @@
 (function() {
+    "use strict";
     var User = require("../Models/User.js");
     var tokenHandler = require("./tokenHandler.js");
     var messages = require("../Config/messageConfig.js");
@@ -21,7 +22,7 @@
                 message: messages.EMAIL_DUPLICATE
             });
 
-            newUser.save().then(function() {
+            newUser.saveAsync().then(function() {
                 searchUser.host = req.hostname;
                 emailVerification.send(searchUser);
                 tokenHandler(newUser, req, res);
@@ -30,7 +31,7 @@
             });
         }).catch(function(err) {
             return res.status(500).send({
-                message: "Server could not register user"
+                message: err
             });
         });
     };

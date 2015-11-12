@@ -1,11 +1,11 @@
 (function() {
     "use strict";
 
-    angular.module("jobFinder.app").controller("MainCtrl", ["$rootScope", "$scope", "$state", "jobTransfer",
-        function($rootScope, $scope, $state, jobTransfer) {
+    angular.module("jobFinder.app").controller("MainCtrl", ["$rootScope", "$scope", "$state", "dataTransfer",
+        function($rootScope, $scope, $state, dataTransfer) {
             $rootScope.bodyStyle = "mainPage";
             $scope.searchJob = function() {
-                jobTransfer.addJob($scope.jobToSearch);
+                dataTransfer.addJob($scope.jobToSearch);
                 $state.go("jobs");
             }
         }

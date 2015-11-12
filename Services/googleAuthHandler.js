@@ -1,4 +1,5 @@
 (function() {
+    "use strict";
     var request = require("request");
     var tokenHandler = require("./tokenHandler.js");
     var User = require("../Models/User.js");

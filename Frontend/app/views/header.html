@@ -26,19 +26,19 @@
                 </li>
 
                 <li ng-hide="isAuthenticated()" ui-sref-active="active" style="float: right;">
-                    <a ui-sref="login" style="padding: 12px;">Login</a>
+                    <a ui-sref="login" style="padding: 12px;">Sign In</a>
                 </li>
                 <li ng-show="isAuthenticated()" ui-sref-active="active" style="float: right;">
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" style="font-size: 20px; background-color:#7cb228" type="button" id="menu1" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user dropdown-toggle" style="margin-right: 5px;"></span><span ng-model="username"></span><span class="caret" style="margin-left:5px;"></span></button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                            <li><a role="menuitem" ui-sref="userProfile" tabindex="-1" href="#" style="font-size:16px">User Profile</a></li>
-                            <li><a role="menuitem" ui-sref="jobPosted" tabindex="-1" href="#" style="font-size:16px">Jobs Posted</a></li>
-                            <li><a role="menuitem" ui-sref="jobViewed" tabindex="-1" href="#" style="font-size:16px">Jobs Viewed</a></li>
-                            <li><a role="menuitem" ui-sref="jobApplied" tabindex="-1" href="#" style="font-size:16px">Jobs Applied</a></li>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1" style="width:200px;">
+                            <li><a role="menuitem" ui-sref="userProfile" tabindex="-1" href="#" style="font-size:15px; padding:5 20">User Profile</a></li>
+                            <li><a role="menuitem" ui-sref="jobPosted" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Jobs Posted</a></li>
+                            <li><a role="menuitem" ui-sref="jobViewed" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Jobs Viewed</a></li>
+                            <li><a role="menuitem" ui-sref="jobApplied" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Jobs Applied</a></li>
                             <li class="divider"></li>
-                            <li><a role="menuitem" ui-sref="logout" tabindex="-1" href="#" style="font-size:16px">Logout</a></li>
+                            <li><a role="menuitem" ui-sref="logout" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Sign Out</a></li>
                         </ul>
                     </div>
                 </li>

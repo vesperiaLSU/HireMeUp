@@ -1,7 +1,14 @@
 (function() {
     "use strict";
-    angular.module("common.service").factory("jobService", ["$resource", function($resource) {
-        return $resource("/api/jobs/:title", null, {
+
+    var service = angular.module("common.service");
+
+    service.factory("titleSearch", ["$resource", function($resource) {
+        return $resource("/api/jobs/:title", null, null);
+    }]);
+
+    service.factory("idSearch", ["$resource", function($resource) {
+        return $resource("/api/jobs/:id", null, {
             "update": {
                 method: "PUT"
             }

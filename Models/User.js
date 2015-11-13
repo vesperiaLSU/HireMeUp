@@ -16,7 +16,11 @@
         active: {
             type: Boolean,
             required: true
-        }
+        },
+        jobViewed: [Number],
+        jobPosted: [Number],
+        jobApplied: [Number],
+        jobMarked: [Number]
     });
 
     UserSchema.methods.toJSON = function() {

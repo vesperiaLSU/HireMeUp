@@ -11,8 +11,8 @@
     var jobRouter = express.Router();
     jobRouter.use(bodyParser.json());
 
-    jobRouter.all("/jobs", requireAuthentication);
-    jobRouter.all("/jobs/:title", requireAuthentication);
+    // jobRouter.all("/jobs", requireAuthentication);
+    // jobRouter.all("/jobs/:title", requireAuthentication);
     jobRouter.route("/jobs")
         .get(function(req, res, next) {
             jobService.findJobs({}).then(function(collection) {
@@ -58,12 +58,16 @@
                 res.status(500).send({
                     message: err
                 });
-            })
+            });
 
-        })
-        .put(function(req, res, next) {
-            jobService.updateJob(req.foundJob, req.body);
         });
+
+    jobRouter.route("/jobs/:id").delete(function(req, res, next) {
+        var id = req.params.id;
+    }).put(function(req, res, next) {
+        var id = req.params.id;
+    });
+
 
     function requireAuthentication(req, res, next) {
         var _ = require("underscore");

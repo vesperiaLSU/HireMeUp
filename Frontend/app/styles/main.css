@@ -12,7 +12,7 @@ body {
     margin: 0;
 }
 
-#postJobModal {
+.jobModal {
 top:15%;
 outline: none;
 }
@@ -37,11 +37,13 @@ outline: none;
 
 .table-font-style {
     font-size: 13px;
+    font-weight: normal;
     font-family: Arial, Calibri, monospace;
 }
 
 .font-style {
     font-size: 15px;
+    font-weight: normal;
     font-family: Arial, Calibri, monospace;
 }
 
@@ -269,6 +271,10 @@ outline: none;
 
 .alert-hidden {
     visibility: hidden;
+}
+
+.alert-none {
+    display: none;
 }
 
 .ui-view-container {

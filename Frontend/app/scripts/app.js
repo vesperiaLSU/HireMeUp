@@ -1,10 +1,12 @@
 (function() {
   'use strict';
 
-  var app = angular.module('jobFinder.app', ["ui.router",
+  var app = angular.module('jobFinder.app', [
+    "ui.router",
     "ngAnimate",
     "satellizer",
-    "common.service"
+    "common.service",
+    'ui.bootstrap'
   ]);
 
   app.config(["$urlRouterProvider", "$stateProvider", "$authProvider",
@@ -15,12 +17,12 @@
       $stateProvider
         .state("register", {
           url: "/register",
-          templateUrl: "app/views/register.html",
+          templateUrl: "/app/views/register.html",
           controller: "RegisterCtrl"
         })
         .state("main", {
           url: "/",
-          templateUrl: "app/views/main.html",
+          templateUrl: "/app/views/main.html",
           controller: "MainCtrl"
         })
         .state("logout", {
@@ -29,12 +31,12 @@
         })
         .state("jobs", {
           url: "/jobs",
-          templateUrl: "app/views/jobs.html",
+          templateUrl: "/app/views/jobs.html",
           controller: "JobsCtrl"
         })
         .state("login", {
           url: "/login",
-          templateUrl: "app/views/login.html",
+          templateUrl: "/app/views/login.html",
           controller: "LoginCtrl"
         });
 

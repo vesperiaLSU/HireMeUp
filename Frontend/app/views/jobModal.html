@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{modalTitle}}</h4>
+</div>
+<div class="modal-body" style="height: 440px;">
+    <form class="form-horizontal" name="jobs">
+        <br>
+
+        <div class="col-sm-12">
+            <div style="margin-bottom: 20px;">
+                <input ng-disabled="!isEditable" class="form-control font-style" type="text" name="title" placeholder="Title..." maxlength="50" ng-model="title" />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <input ng-disabled="!isEditable" class="form-control font-style" type="text" name="jobCompany" placeholder="Company..." maxlength="50" ng-model="company" />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <textarea ng-disabled="!isEditable" class="form-control font-style" rows="10" name="jobDescription" placeholder="Description..." maxlength="550" ng-model="description" />
+            </div>
+
+            <button class="btn btn-primary col-sm-2 col-sm-offset-4 font-style" ng-click="submit()" style="width:200px;">{{buttonType}}</button>
+        </div>
+    </form>
+</div>
+<div class="modal-footer" style="height:60px;">
+    <button type="button" class="btn btn-default" style="position:relative; top:-10px;" ng-click="cancel()">Close</button>
+</div>

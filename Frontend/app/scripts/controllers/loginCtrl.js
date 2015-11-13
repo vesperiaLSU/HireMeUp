@@ -2,8 +2,8 @@
     "use strict";
 
     angular.module("jobFinder.app")
-        .controller("LoginCtrl", ["$rootScope", "$scope", "alertService", "$state", "$auth",
-            function($rootScope, $scope, alertService, $state, $auth) {
+        .controller("LoginCtrl", ["$rootScope", "$scope", "alertService", "$state", "$auth", "$window",
+            function($rootScope, $scope, alertService, $state, $auth, $window) {
                 $rootScope.bodyStyle = "mainPage";
 
                 $scope.login = function() {
@@ -13,6 +13,7 @@
                         })
                         .then(function(res) {
                             $state.go("main");
+
                             var message = "Thanks for coming back!";
 
                             if (!res.data.user.active) {

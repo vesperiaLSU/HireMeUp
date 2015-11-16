@@ -6,6 +6,7 @@
     var facebookAuthHandler = require("../facebookAuthHandler.js");
     var googleAuthHandler = require("../googleAuthHandler.js");
     var emailVerification = require("../emailVerification.js");
+    var updateUserInfoHandler = require("../updateUserInfoHandler.js");
 
     var userRouter = express.Router();
 
@@ -14,6 +15,7 @@
     userRouter.route("/auth/facebook").post(facebookAuthHandler);
     userRouter.route("/auth/google").post(googleAuthHandler);
     userRouter.route("/auth/verifyEmail").get(emailVerification.handler);
+    userRouter.route("/updateUserInfo").post(updateUserInfoHandler);
 
     module.exports = userRouter;
 }());

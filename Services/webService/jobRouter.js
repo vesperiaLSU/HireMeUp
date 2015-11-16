@@ -41,7 +41,7 @@
                 res.send(job);
             }).catch(function(err) {
                 console.log(err);
-                res.status(401).send({
+                res.status(500).send({
                     message: "failed to save the job"
                 });
             });
@@ -55,7 +55,7 @@
             jobService.findJobs(searchBy).then(function(collection) {
                 res.send(collection);
             }).catch(function(err) {
-                res.status(500).send({
+                res.status(404).send({
                     message: err
                 });
             });
@@ -64,8 +64,17 @@
 
     jobRouter.route("/jobs/:id").delete(function(req, res, next) {
         var id = req.params.id;
+
     }).put(function(req, res, next) {
         var id = req.params.id;
+        var update = req.body;
+        jobService.updateJob(id, update).then(function(updated) {
+            res.send(updated);
+        }).catch(function(err) {
+            res.status(404).send({
+                message: err
+            });
+        });
     });
 
 

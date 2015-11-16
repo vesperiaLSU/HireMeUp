@@ -13,8 +13,8 @@
     "$uibModal",
     function($scope, titleSearch, idSearch, alertService, $rootScope, dataTransfer, $auth, $state, $uibModal) {
       $rootScope.bodyStyle = "";
-      $scope.title = dataTransfer.getJob();
-      var allJobs = {};
+      $scope.jobToSearch = dataTransfer.getJob();
+      var allJobs, id, title, company, description, views, applicants, modalTitle, isEditable, buttonType;
 
       $scope.$watch("jobToSearch", function(newValue, oldValue) {
         if (newValue === oldValue) return;
@@ -24,10 +24,10 @@
       titleSearch.query({}).$promise.then(
         function(data) {
           allJobs = data;
-          if ($scope.title) {
+          if ($scope.jobToSearch) {
             dataTransfer.clearJob();
             $scope.jobs = $.grep(allJobs, function(item) {
-              return item.title === $scope.title;
+              return item.title === $scope.jobToSearch;
             })
           }
           else {
@@ -57,76 +57,86 @@
         });
 
         modalInstance.result.then(function(newJob) {
-          // if ($auth.isAuthenticated()) {
-          debugger;
-          switch (newJob.type) {
-            case 'SUBMIT':
-              {
-                titleSearch.save(newJob).$promise.then(function(data) {
-                  $scope.jobs = allJobs;
-                  $scope.jobs.push(data);
-                  alertService("success", "New job added: ", data.title, "job-alert");
-                }, function(error) {
-                  alertService("warning", "Error: ", "Job saving failed", "job-alert");
-                });
-              }
-              break;
-            case 'APPLY':
-              {
-                debugger;
-                idSearch.update({
-                  id: $scope.id
-                }, newJob).$promise.then(function(data) {
-                  alertService("success", "You succesfully applied for: ", data.title, "job-alert");
-                }, function(error) {
-                  alertService("warning", "Error: ", "Job applying failed", "job-alert");
-                });
-              }
-              break;
+          if ($auth.isAuthenticated()) {
+            switch (newJob.type) {
+              case 'SUBMIT':
+                {
+                  titleSearch.save(newJob).$promise.then(function(data) {
+                    $scope.jobs = allJobs;
+                    $scope.jobs.push(data);
+                    alertService("success", "New job added: ", data.title, "job-alert");
+                  }, function(error) {
+                    alertService("warning", "Error: ", "Job saving failed", "job-alert");
+                  });
+                }
+                break;
+              case 'APPLY':
+                {
+                  newJob.applicants++;
+                  idSearch.update({
+                    id: id
+                  }, newJob).$promise.then(function(data) {
+                    alertService("success", "You succesfully applied for: ", data.title, "job-alert");
+                  }, function(error) {
+                    alertService("warning", "Error: ", "Job applying failed", "job-alert");
+                  });
+                }
+                break;
+            }
           }
-
-
-          // }
-          // else {
-          //   $state.go("login");
-          //   alertService("warning", "Opps! ", "To post a job, you need to sign in first", "main-alert");
-          // }
+          else {
+            $state.go("login");
+            alertService("warning", "Opps! ", "To post a job, you need to sign in first", "main-alert");
+          }
         }, function() {
           console.log('Modal dismissed at: ' + new Date());
         });
       }
 
       $scope.viewJob = function(job) {
-        $scope.id = job._id;
-        $scope.jobTitle = job.title;
-        $scope.company = job.company;
-        $scope.description = job.description;
+        id = job._id;
+        title = job.title;
+        company = job.company;
+        description = job.description;
+        views = job.views;
+        applicants = job.applicants;
 
+        job.views += 1;
+        idSearch.update({
+          id: id
+        }, job).$promise.then(function(data) {
+          //do nothing
+        }).catch(function(error) {
+          job.views -= 1;
+          alertService('warning', 'Opps!', 'Error increasing the job view for : ' + title, 'job-alert');
+        });
+        
+        
       }
 
       $scope.editJob = function(job) {
-        $scope.id = job._id;
-        $scope.jobTitle = job.title;
-        $scope.company = job.company;
-        $scope.description = job.description;
-        $scope.modalTitle = "Edit Job";
-        $scope.isEditable = true;
-        $scope.buttonType = "UPDATE";
+        id = job._id;
+        title = job.title;
+        company = job.company;
+        description = job.description;
+        modalTitle = "Edit Job";
+        isEditable = true;
+        buttonType = "UPDATE";
 
       }
 
       $scope.copyJob = function(job) {
-        $scope.id = job._id;
-        $scope.jobTitle = job.title;
-        $scope.company = job.company;
-        $scope.description = job.description;
-        $scope.modalTitle = "Post a Job";
-        $scope.isEditable = true;
-        $scope.buttonType = "SUBMIT";
+        id = job._id;
+        title = job.title;
+        company = job.company;
+        description = job.description;
+        modalTitle = "Post a Job";
+        isEditable = true;
+        buttonType = "SUBMIT";
       }
 
       $scope.deleteJob = function(job) {
-        $scope.id = job._id;
+        id = job._id;
         idSearch.delete({
           id: job._id
         }).$promise.then(function(job) {
@@ -140,28 +150,9 @@
         $scope.jobs = allJobs;
       }
 
-      $scope.submit = function() {
-        if ($auth.isAuthenticated()) {
-          titleSearch.save({
-            title: $scope.jobTitle,
-            description: $scope.description,
-            company: $scope.company
-          }).$promise.then(function(data) {
-            $scope.jobs = allJobs;
-            $scope.jobs.push(data);
-            alertService("success", "New job added: ", data.title, "job-alert");
-          }, function(error) {
-            alertService("warning", "Error: ", "Job saving failed", "job-alert");
-          });
-        }
-        else {
-          $state.go("login");
-          alertService("warning", "Opps! ", "To post a job, you need to sign in first", "main-alert");
-        }
-      }
+
 
       function search() {
-        $scope.title = $scope.jobToSearch;
         titleSearch.query({
           title: $scope.jobToSearch
         }).$promise.then(
@@ -183,10 +174,12 @@
             };
           case 'VIEW':
             return {
-              id: $scope.id,
-              title: $scope.jobTitle,
-              company: $scope.company,
-              description: $scope.description,
+              id: id,
+              title: title,
+              company: company,
+              description: description,
+              views: views,
+              applicants: applicants,
               modalTitle: "View Job",
               isEditable: false,
               buttonType: "APPLY"

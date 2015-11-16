@@ -4,7 +4,7 @@
     var Job = require("../../Models/Job.js");
 
     exports.findJobs = function(query) {
-        return Job.find(query);
+        return Job.find(query).sort('title');
     }
 
     exports.saveJob = function(job) {
@@ -16,10 +16,11 @@
         return newJob.saveAsync();
     }
 
-    exports.updateJob = function(current, newJob) {
-        current.title = newJob.title;
-        current.description = newJob.description;
-        return current.saveAsync();
+    exports.updateJob = function(id, update) {
+        var options = {
+            new: true
+        };
+        return Job.findByIdAndUpdate(id, update, options);
     }
 
     exports.seedJobs = function() {

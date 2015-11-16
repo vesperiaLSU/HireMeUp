@@ -20,9 +20,6 @@
     app.use("/api", jobRouter);
     app.use("/api", userRouter);
 
-
-    //webService(app);
-
     /**APIs**/
     app.get("/", function(req, res) {
         res.render("index.html");

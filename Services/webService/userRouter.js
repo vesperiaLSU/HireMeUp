@@ -15,7 +15,7 @@
     userRouter.route("/auth/facebook").post(facebookAuthHandler);
     userRouter.route("/auth/google").post(googleAuthHandler);
     userRouter.route("/auth/verifyEmail").get(emailVerification.handler);
-    userRouter.route("/updateUserInfo").post(updateUserInfoHandler);
+    userRouter.route("/users/:id").put(updateUserInfoHandler);
 
     module.exports = userRouter;
 }());

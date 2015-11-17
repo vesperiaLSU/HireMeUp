@@ -9,18 +9,15 @@
         $scope.company = config.company;
         $scope.description = config.description;
         
-        var views = config.views; 
-        var applicants = config.applicants;
-        
         $scope.submit = function() {
-            debugger;
             $uibModalInstance.close({
+                _id: config.id,
                 title: $scope.title,
                 company: $scope.company,
                 description: $scope.description,
                 type: $scope.buttonType,
-                views: views,
-                applicants: applicants
+                views: config.views,
+                applicants: config.applicants
             });
         };
 

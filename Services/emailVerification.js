@@ -80,7 +80,7 @@
         };
 
         var path = "./Views/emailVerification.html";
-        var html = fs.readFileSync(path, encoding = "utf8");
+        var html = fs.readFileSync(path, "utf8");
 
         var template = _.template(html);
 

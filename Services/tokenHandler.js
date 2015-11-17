@@ -19,5 +19,5 @@
             user: user.toJSON(),
             token: token
         });
-    }
+    };
 }());

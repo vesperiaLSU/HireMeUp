@@ -17,10 +17,10 @@
             type: Boolean,
             required: true
         },
-        jobViewed: [Number],
-        jobPosted: [Number],
-        jobApplied: [Number],
-        jobMarked: [Number]
+        jobsViewed: [String],
+        jobsPosted: [String],
+        jobsApplied: [String],
+        jobsMarked: [String]
     });
 
     UserSchema.methods.toJSON = function() {
@@ -53,8 +53,8 @@
 
                 user.password = hash;
                 next();
-            })
-        })
+            });
+        });
     });
 
     module.exports = mongoose.model("User", UserSchema);

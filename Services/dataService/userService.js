@@ -1,9 +1,11 @@
 (function() {
     "use strict";
-    var Promise = require("bluebird");
     var User = require("../../Models/User.js");
-    
-    exports.updateUser = function(){
-        
+
+    exports.updateUser = function(id, update) {
+        var options = {
+            new: true
+        };
+        return User.findByIdAndUpdateAsync(id, update, options);
     };
 }());

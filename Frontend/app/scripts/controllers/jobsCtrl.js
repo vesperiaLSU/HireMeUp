@@ -3,32 +3,33 @@
 
   angular.module("jobFinder.app").controller("JobsCtrl", [
     "$scope",
-    "titleSearch",
-    "idSearch",
+    "jobTitleService",
+    "jobIdService",
+    "userIdService",
     "alertService",
     "$rootScope",
     "dataTransfer",
     "$auth",
     "$state",
     "$uibModal",
-    function($scope, titleSearch, idSearch, alertService, $rootScope, dataTransfer, $auth, $state, $uibModal) {
+    function($scope, jobTitleService, jobIdService, userIdService, alertService, $rootScope, dataTransfer, $auth, $state, $uibModal) {
       $rootScope.bodyStyle = "";
       $scope.jobToSearch = dataTransfer.getJob();
-      var allJobs, id, title, company, description, views, applicants, modalTitle, isEditable, buttonType;
+      var allJobs, id, title, company, description, views, applicants;
 
       $scope.$watch("jobToSearch", function(newValue, oldValue) {
         if (newValue === oldValue) return;
         search();
       });
 
-      titleSearch.query({}).$promise.then(
+      jobTitleService.query({}).$promise.then(
         function(data) {
           allJobs = data;
           if ($scope.jobToSearch) {
             dataTransfer.clearJob();
             $scope.jobs = $.grep(allJobs, function(item) {
-              return item.title === $scope.jobToSearch;
-            })
+              return item.title.toLowerCase().indexOf($scope.jobToSearch.toLowerCase()) !== -1;
+            });
           }
           else {
             $scope.jobs = allJobs;
@@ -61,7 +62,7 @@
             switch (newJob.type) {
               case 'SUBMIT':
                 {
-                  titleSearch.save(newJob).$promise.then(function(data) {
+                  jobTitleService.save(newJob).$promise.then(function(data) {
                     $scope.jobs = allJobs;
                     $scope.jobs.push(data);
                     alertService("success", "New job added: ", data.title, "job-alert");
@@ -71,16 +72,7 @@
                 }
                 break;
               case 'APPLY':
-                {
-                  newJob.applicants++;
-                  idSearch.update({
-                    id: id
-                  }, newJob).$promise.then(function(data) {
-                    alertService("success", "You succesfully applied for: ", data.title, "job-alert");
-                  }, function(error) {
-                    alertService("warning", "Error: ", "Job applying failed", "job-alert");
-                  });
-                }
+                applyForJob(newJob);
                 break;
             }
           }
@@ -91,7 +83,7 @@
         }, function() {
           console.log('Modal dismissed at: ' + new Date());
         });
-      }
+      };
 
       $scope.viewJob = function(job) {
         id = job._id;
@@ -101,8 +93,8 @@
         views = job.views;
         applicants = job.applicants;
 
-        job.views += 1;
-        idSearch.update({
+        job.views++;
+        jobIdService.update({
           id: id
         }, job).$promise.then(function(data) {
           //do nothing
@@ -110,50 +102,52 @@
           job.views -= 1;
           alertService('warning', 'Opps!', 'Error increasing the job view for : ' + title, 'job-alert');
         });
-        
-        
-      }
 
-      $scope.editJob = function(job) {
-        id = job._id;
-        title = job.title;
-        company = job.company;
-        description = job.description;
-        modalTitle = "Edit Job";
-        isEditable = true;
-        buttonType = "UPDATE";
+        var user = dataTransfer.getUser();
+        if (user && user.jobsViewed.indexOf(id) === -1) {
+          user.jobsViewed.push(id);
+          userIdService.update({
+            id: user._id
+          }, user).$promise.then(function(user) {
+            dataTransfer.updateUser(user);
+          }).catch(function(error) {
+            alertService('warning', 'Opps!', 'Error adding: ' + title + " to jobs viewed", 'job-alert');
+          });
+        }
+      };
 
-      }
+      $scope.markJob = function(job) {
+        var user = dataTransfer.getUser();
+        if (user) {
+          if (user.jobsMarked.indexOf(job._id) === -1) {
+            user.jobsMarked.push(job._id);
+            userIdService.update({
+              id: user._id
+            }, user).$promise.then(function(user) {
+              dataTransfer.updateUser(user);
+              alertService("success", "You succesfully bookmarked: ", job.title, "job-alert");
+            }).catch(function(error) {
+              alertService('warning', 'Opps!', 'Error adding: ' + job.title + " to bookmarked", 'job-alert');
+            });
+          }
+          else {
+            alertService('warning', 'Opps!', 'You already have bookmarked: ' + job.title, 'job-alert');
+          }
+        }
+        else {
+          $state.go("login");
+          alertService("warning", "Opps! ", "To bookmark a job, you need to sign in first", "main-alert");
+        }
+      };
 
-      $scope.copyJob = function(job) {
-        id = job._id;
-        title = job.title;
-        company = job.company;
-        description = job.description;
-        modalTitle = "Post a Job";
-        isEditable = true;
-        buttonType = "SUBMIT";
-      }
-
-      $scope.deleteJob = function(job) {
-        id = job._id;
-        idSearch.delete({
-          id: job._id
-        }).$promise.then(function(job) {
-          console.log(job + "deleted");
-        }, function(error) {
-          alertService("warning", "Error: ", "Job deleting failed", "job-alert");
-        })
-      }
+      $scope.applyJob = applyForJob;
 
       $scope.refresh = function() {
         $scope.jobs = allJobs;
-      }
-
-
+      };
 
       function search() {
-        titleSearch.query({
+        jobTitleService.query({
           title: $scope.jobToSearch
         }).$promise.then(
           function(data) {
@@ -185,6 +179,43 @@
               buttonType: "APPLY"
             };
         }
+      }
+
+      function applyForJob(job) {
+        var user = dataTransfer.getUser();
+        if (user) {
+          if (user.jobsApplied.indexOf(job._id) === -1) {
+            user.jobsApplied.push(job._id);
+            userIdService.update({
+              id: user._id
+            }, user).$promise.then(function(user) {
+              dataTransfer.updateUser(user);
+              alertService("success", "You succesfully applied for: ", job.title, "job-alert");
+            }).catch(function(error) {
+              alertService('warning', 'Opps!', 'Error adding: ' + job.title + " to jobs applied", 'job-alert');
+            });
+            
+            increaseJobApplicant(job);
+          }
+          else {
+            alertService('warning', 'Opps!', 'You already have applied for: ' + job.title, 'job-alert');
+          }
+        }
+        else {
+          $state.go("login");
+          alertService("warning", "Opps! ", "To apply for a job, you need to sign in first", "main-alert");
+        }
+      }
+
+      function increaseJobApplicant(job) {
+        job.applicants++;
+        jobIdService.update({
+          id: job._id
+        }, job).$promise.then(function(data) {
+          console.log("success");
+        }, function(error) {
+          alertService("warning", "Error: ", "Job applied cannot be added", "job-alert");
+        });
       }
     }
   ]);

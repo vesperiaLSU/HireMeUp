@@ -32,7 +32,6 @@
         }
         else {
             console.log("connected to mongodb successfully");
-            jobService.seedJobs();
         }
     });
 

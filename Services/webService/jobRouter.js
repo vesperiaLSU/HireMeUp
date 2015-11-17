@@ -50,7 +50,10 @@
     jobRouter.route("/jobs/:title")
         .get(function(req, res, next) {
             var searchBy = {
-                title: req.params.title
+                title: {
+                    $regex: req.params.title,
+                    $options: "i"
+                }
             };
             jobService.findJobs(searchBy).then(function(collection) {
                 res.send(collection);

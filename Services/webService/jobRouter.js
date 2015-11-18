@@ -78,6 +78,17 @@
                 message: err
             });
         });
+    }).get(function(req, res, next) {
+        var id = req.params.id;
+        jobService.findOneJob(id).then(function(found) {
+            if (found) {
+                res.send(found);
+            }
+        }).catch(function(err) {
+            res.status(404).send({
+                message: err
+            });
+        });
     });
 
 

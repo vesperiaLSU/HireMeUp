@@ -5,6 +5,10 @@
     exports.findJobs = function(query) {
         return Job.find(query).sort('title');
     };
+    
+    exports.findOneJob = function(query) {
+        return Job.findById(query, 'datePosted title company');
+    };
 
     exports.saveJob = function(job) {
         var newJob = new Job({

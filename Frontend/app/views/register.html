@@ -10,5 +10,12 @@
     <button ng-disabled="register.$invalid" style="opacity:0.9" class="btn btn-lg btn-primary btn-block" type="submit">
       Submit
     </button>
+    <br />
+    <button ng-click="authenticate('google')" class="btn btn-lg google-button btn-block" type="button">
+      Google Login
+    </button>
+    <button ng-click="authenticate('facebook')" class="btn btn-lg facebook-button btn-block" type="button">
+      Facebook Login
+    </button>
   </form>
 </div>

@@ -27,7 +27,6 @@
                 $scope.authenticate = function(provider) {
                     $auth.authenticate(provider).then(function(res) {
                         $state.go("main");
-                        debugger;
                         dataTransfer.updateUser(res.data.user);
                         var message = "Thanks for coming back!";
                         if (!res.data.user.active) {

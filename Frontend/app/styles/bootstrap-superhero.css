@@ -7,7 +7,7 @@
  * Based on Bootstrap
 */
 /*!
- * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Bootstrap v3.3.5 (http://getbootstrap.
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
@@ -1302,7 +1302,7 @@ p {
 }
 @media (min-width: 768px) {
   .lead {
-    font-size: 22.5px;
+    font-size: 25px;
   }
 }
 small,
@@ -3687,7 +3687,7 @@ tbody.collapse.in {
 .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #ebebeb;
-  background-color: #485563;
+  background-color: #c7ced6;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,

@@ -4,11 +4,11 @@
     var service = angular.module("common.service");
 
     service.factory("jobTitleService", ["$resource", function($resource) {
-        return $resource("/api/jobs/:title", null, null);
+        return $resource("/api/jobs/:title", {title: "@title"}, null);
     }]);
 
     service.factory("jobIdService", ["$resource", function($resource) {
-        return $resource("/api/jobs/:id", null, {
+        return $resource("/api/jobs/:id", {id: "@id"}, {
             "update": {
                 method: "PUT"
             }

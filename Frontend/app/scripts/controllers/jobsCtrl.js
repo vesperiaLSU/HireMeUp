@@ -25,6 +25,7 @@
       jobTitleService.query({}).$promise.then(
         function(data) {
           allJobs = data;
+          $scope.numOfJob = allJobs.length;
           if ($scope.jobToSearch) {
             dataTransfer.clearJob();
             $scope.jobs = $.grep(allJobs, function(item) {
@@ -65,6 +66,7 @@
                   jobTitleService.save(newJob).$promise.then(function(data) {
                     $scope.jobs = allJobs;
                     $scope.jobs.push(data);
+                    $scope.numOfJob = $scope.jobs.length;
                     alertService("success", "New job added: ", data.title, "job-alert");
                   }, function(error) {
                     alertService("warning", "Error: ", "Job saving failed", "job-alert");
@@ -194,7 +196,7 @@
             }).catch(function(error) {
               alertService('warning', 'Opps!', 'Error adding: ' + job.title + " to jobs applied", 'job-alert');
             });
-            
+
             increaseJobApplicant(job);
           }
           else {

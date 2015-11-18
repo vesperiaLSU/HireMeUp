@@ -19,7 +19,7 @@
                     <a type="button" style="padding: 12px;" ui-sref="main">Home</a>
                 </li>
                 <li ui-sref-active="active">
-                    <a ui-sref="jobs" style="padding: 12px;">Job List</a>
+                    <a ui-sref="jobs" style="padding: 12px;">Jobs</a>
                 </li>
                 <li ui-sref-active="active" style="float: right;">
                     <a ui-sref="register" style="padding: 12px;">Register</a>
@@ -32,13 +32,13 @@
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" style="font-size: 20px; background-color:#7cb228" type="button" id="menu1" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user dropdown-toggle" style="margin-right: 5px;"></span><span ng-model="username"></span><span class="caret" style="margin-left:5px;"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1" style="width:200px;">
-                            <li><a role="menuitem" ui-sref="userProfile" tabindex="-1" href="#" style="font-size:15px; padding:5 20">User Profile</a></li>
-                            <li><a role="menuitem" ui-sref="jobPosted" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Jobs Posted</a></li>
-                            <li><a role="menuitem" ui-sref="jobViewed" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Jobs Viewed</a></li>
-                            <li><a role="menuitem" ui-sref="jobApplied" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Jobs Applied</a></li>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1" style="width:200px; background-color: #fff;">
+                            <li><a role="menuitem" ui-sref="userProfile.jobsViewed" tabindex="-1" href="#" style="font-size:15px; padding:5 20; color: #000000">User Profile</a></li>
+                            <li><a role="menuitem" ui-sref="userProfile.jobsMarked" tabindex="-1" href="#" style="font-size:15px; padding:5 20; color: #000000">Jobs Marked</a></li>
+                            <li><a role="menuitem" ui-sref="userProfile.jobsViewed" tabindex="-1" href="#" style="font-size:15px; padding:5 20; color: #000000">Jobs Viewed</a></li>
+                            <li><a role="menuitem" ui-sref="userProfile.jobsApplied" tabindex="-1" href="#" style="font-size:15px; padding:5 20; color: #000000">Jobs Applied</a></li>
                             <li class="divider"></li>
-                            <li><a role="menuitem" ui-sref="logout" tabindex="-1" href="#" style="font-size:15px; padding:5 20">Sign Out</a></li>
+                            <li><a role="menuitem" ui-sref="logout" tabindex="-1" href="#" style="font-size:15px; padding:5 20; color: #000000">Sign Out</a></li>
                         </ul>
                     </div>
                 </li>

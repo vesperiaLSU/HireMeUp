@@ -38,6 +38,23 @@
           url: "/login",
           templateUrl: "/app/views/login.html",
           controller: "LoginCtrl"
+        })
+        .state("userProfile", {
+          url: "/userProfile",
+          templateUrl: "/app/views/userProfile.html",
+          controller: "ProfileCtrl"
+        })
+        .state("userProfile.jobsViewed", {
+          url: "/jobsViewed",
+          templateUrl: "/app/views/userProfileJobsViewed.html"
+        })
+        .state("userProfile.jobsMarked", {
+          url: "/jobsMarked",
+          templateUrl: "/app/views/userProfileJobsMarked.html"
+        })
+        .state("userProfile.jobsApplied", {
+          url: "/jobsApplied",
+          templateUrl: "/app/views/userProfileJobsApplied.html"
         });
 
       $authProvider.google({

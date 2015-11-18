@@ -10,6 +10,7 @@ body {
     font-size: 16px;
     font-family: Arial, Calibri, monospace;
     margin: 0;
+    overflow-x: hidden;
 }
 
 .jobModal {

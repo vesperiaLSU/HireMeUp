@@ -7,9 +7,9 @@
     var Promise = require("bluebird");
 
     /**custom service**/
-    var jobService = require("./Services/dataService/jobService.js");
     var webConfig = require("./Config/webConfig.js");
     var jobRouter = require("./Services/webService/jobRouter.js");
+    var jobByIdRouter = require("./Services/webService/jobByIdRouter.js");
     var userRouter = require("./Services/webService/userRouter.js");
 
     var app = express();
@@ -19,6 +19,7 @@
     app.use(bodyParser.json());
     app.use("/api", jobRouter);
     app.use("/api", userRouter);
+    app.use("/api", jobByIdRouter);
 
     /**APIs**/
     app.get("/", function(req, res) {

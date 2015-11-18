@@ -1,1 +1,24 @@
-<div style="background-color:rgba(78,93,108,0.9); padding:14px; height: 650px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Jobs Marked not found</div>
+<div style="background-color:rgba(78,93,108,0.9); padding:14px; height: 650px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="job-list" style="width:100%; height:645px; overflow: auto;">
+        <p class="lead" style="margin-top: 5px; display: inline-block; font-size: 14px">Jobs marked recently</p>
+        <table class="table table-hover table-font-style">
+            <thead style="background-color: #485563;">
+                <tr>
+                    <th class="col-sm-3" style="font-size:12px">Date Posted</th>
+                    <th class="col-sm-5">Title</th>
+                    <th class="col-sm-4">Company</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobsMarked">
+                    <td>{{job.datePosted | date: MM-dd-yyyy}}</td>
+                    <td style="font-weight:bold; padding:15px 0;"><a href="#" style="color: #7cb228" ng-click="viewJob(job); openJobModal('VIEW')">{{job.title}}</a></td>
+                    <td>{{job.company}}</td>
+                </tr>
+                <tr ng-show="jobsViewed.length === 0" style="font-size: 20px; font-weight: bold">
+                    <td style="padding-top:30px" colspan="6">No job marked recently</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

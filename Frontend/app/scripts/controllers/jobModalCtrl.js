@@ -5,6 +5,7 @@
         $scope.modalTitle = config.modalTitle;
         $scope.buttonType = config.buttonType;
         $scope.isEditable = config.isEditable;
+        $scope.hasApplied = config.hasApplied;
         $scope.title = config.title;
         $scope.company = config.company;
         $scope.description = config.description;
@@ -17,7 +18,8 @@
                 description: $scope.description,
                 type: $scope.buttonType,
                 views: config.views,
-                applicants: config.applicants
+                applicants: config.applicants,
+                candidates: config.candidates
             });
         };
 

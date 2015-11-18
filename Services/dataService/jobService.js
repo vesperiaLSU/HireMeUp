@@ -7,7 +7,7 @@
     };
     
     exports.findOneJob = function(query) {
-        return Job.findById(query, 'datePosted title company');
+        return Job.findById(query);
     };
 
     exports.saveJob = function(job) {

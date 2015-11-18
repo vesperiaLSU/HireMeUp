@@ -32,7 +32,8 @@
             type: Boolean,
             required: true,
             default: true
-        }
+        },
+        candidates: [String]
     });
 
     module.exports = mongoose.model("Job", JobSchema);

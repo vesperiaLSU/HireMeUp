@@ -6065,6 +6065,11 @@ button.close {
   position: relative;
   padding: 0 20px;
 }
+
+.modal-body body{
+  overflow-y: scroll !important;
+}
+
 .modal-footer {
   padding: 20px;
   text-align: right;

@@ -18,25 +18,22 @@
             <table class="table table-hover table-font-style table-condensed">
                 <thead style="background-color: #485563;">
                     <tr>
-                        <th class="col-sm-2" style="font-size:12px">Date Posted</th>
+                        <th class="col-sm-2">Date Posted</th>
                         <th class="col-sm-3">Title</th>
-                        <th class="col-sm-2">Company</th>
+                        <th class="col-sm-3">Company</th>
                         <th class="col-sm-1">Views</th>
                         <th class="col-sm-1">Applicants</th>
-                        <th class="col-sm-3">Actions</th>
+                        <th class="col-sm-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="padding: 5px; padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobs">
                         <td>{{job.datePosted | date: MM-dd-yyyy}}</td>
-                        <td style="color: #7cb228; font-weight:bold;">{{job.title}}</td>
+                        <td><a style="color: #7cb228; font-weight:bold;" href="#" ng-click="viewJob(job); openJobModal('VIEW')">{{job.title}}</a></td>
                         <td>{{job.company}}</td>
                         <td>{{job.views}}</td>
                         <td>{{job.applicants}}</td>
                         <td>
-                            <button class="btn btn-default" style="color:#fff" ng-click="viewJob(job); openJobModal('VIEW')"><span class="glyphicon glyphicon-eye-open"></span>
-                                <br>View
-                            </button>
                             <button class="btn btn-default" style="color:#fff" ng-click="markJob(job);"><span class="glyphicon glyphicon-bookmark"></span>
                                 <br>Mark
                             </button>
@@ -54,7 +51,7 @@
     </div>
     <div class="hr"></div>
     <div>
-        <p>Copyright ©2015, Chen Guo</p>
-        <a href="https://github.com/vesperiaLSU/HireMeUp.git">Feeling interested? View the project source code on Github</a>
+        <p>Copyright ©2015, Chen Guo. HireMeUp is for presentation and non-commercial use only.</p>
+        <a href="https://github.com/vesperiaLSU/HireMeUp.git">Feeling interested in how it's built? View the project source code on Github</a>
     </div>
 </div>

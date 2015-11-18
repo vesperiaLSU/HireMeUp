@@ -18,7 +18,7 @@
                 <textarea ng-disabled="!isEditable" class="form-control font-style" rows="10" name="jobDescription" placeholder="Description..." maxlength="550" ng-model="description" />
             </div>
 
-            <button class="btn btn-primary col-sm-2 col-sm-offset-4 font-style" ng-click="submit()" style="width:200px;">{{buttonType}}</button>
+            <button ng-disabled="hasApplied" class="btn btn-primary col-sm-2 col-sm-offset-4 font-style" ng-click="submit()" style="width:200px;">{{buttonType}}</button>
         </div>
     </form>
 </div>

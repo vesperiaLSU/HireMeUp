@@ -1,8 +1,8 @@
 (function() {
     'use strict';
-    angular.module("common.service").service("applyForJobService", function(dataTransfer, userService, alertService, $state, jobService) {
+    angular.module("common.service").service("applyForJobService", function(userStorage, userService, alertService, $state, jobService) {
         this.apply = function(job) {
-            var user = dataTransfer.getUser();
+            var user = userStorage.getUser();
             if (user) {
                 if (job.candidates.indexOf(user._id) === -1) {
                     job.candidates.push(user._id);
@@ -20,7 +20,7 @@
                     userService.update({
                         id: user._id
                     }, user).$promise.then(function(user) {
-                        dataTransfer.updateUser(user);
+                        userStorage.setUser(user);
                         alertService("success", "You succesfully applied for: ", job.title, "job-alert");
                     }).catch(function(error) {
                         alertService('warning', 'Opps!', 'Error adding: ' + job.title + " to jobs applied", 'job-alert');

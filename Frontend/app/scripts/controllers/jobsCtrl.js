@@ -24,7 +24,7 @@
       });
 
       if (jobs.length === 0) {
-        alertService("warning", "Unable to get jobs: ", "job-alert");
+        alertService("warning", "Opps! ", "No job found", "job-alert");
       }
       else {
         $scope.allJobs = jobs;
@@ -109,7 +109,15 @@
       };
 
       $scope.refresh = function() {
-        $scope.jobs = $scope.allJobs;
+        jobService.title.query({}).$promise.then(function(jobs) {
+          if (jobs.length === 0) {
+            alertService("warning", "Opps! ", "No job found", "job-alert");
+            return;
+          }
+          $scope.jobs = jobs;
+        }).catch(function(err) {
+          alertService("warning", "Unable to get jobs: " + err, "job-alert");
+        });
       };
 
       $scope.searchJob = search;

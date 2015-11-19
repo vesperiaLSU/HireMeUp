@@ -1,6 +1,6 @@
 (function() {
     "use strict";
-    angular.module("common.service").factory("dataTransfer", function($resource) {
+    angular.module("common.service").factory("dataTransfer", function() {
         var jobTitle;
         var addJob = function(title){
             jobTitle = title;

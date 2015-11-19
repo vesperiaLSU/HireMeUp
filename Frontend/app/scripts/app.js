@@ -70,6 +70,12 @@
               return jobService.jobId.query({
                 jobList: JSON.stringify(user.jobsApplied)
               }).$promise;
+            },
+            jobsPosted: function(userStorage, jobService) {
+              var user = userStorage.getUser();
+              return jobService.jobId.query({
+                jobList: JSON.stringify(user.jobsPosted)
+              }).$promise;
             }
           }
         })

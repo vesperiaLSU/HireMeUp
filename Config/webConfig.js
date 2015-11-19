@@ -20,5 +20,7 @@
         SMTP_PASS: "dae3f15a722e23f3ffd9b4c354b8a993",
         SMTP_HOST: "smtp.mailgun.org",
         SMTP_EMAIL_FROM: "Accounts <postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org>",
+        
+        STATIC_AVATAR: "http://static.glassdoor.com/static/img/icons/generic-avatar-50x50@2x.png?v=089a97eh"
     };
 }());

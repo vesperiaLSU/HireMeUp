@@ -6,15 +6,18 @@
             <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="searchJob()"><span class="glyphicon glyphicon-search"></span></button>
         </div>
         <div class="col-sm-12" style="margin-top: 50px; padding: 0">
-            <button type="button" class="btn btn-primary" style="width:100%; opacity:0.9;" ng-click="openJobModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
+            <button type="button" class="btn btn-primary" style="width:100%; opacity: 0.9" ng-click="openJobModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
         </div>
     </div>
 
-    <div style="background-color:rgba(78,93,108,0.98); padding:14px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div id="job-list" style="width:100%; height:645px; overflow: auto;">
-            <p class="lead" style="margin-top: 5px; display: inline-block">Job Openings</p>
+    <div style="background-color:rgba(78,93,108,0.98); padding:0; margin-bottom:0;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 panel panel-default">
+        <div class="panel-heading" style="background-color: rgba(91,192,222,0.9); padding: 5px;">
+            <h3 class="panel-title" style="margin: 5px; display: inline-block; font-size: 20px; font-weight: bold;">Job Openings</h3>
+            <!--<p class="lead" style="margin: 5px; display: inline-block">Job Openings</p>-->
             <label style="margin:5px 20px; font-size: 14px;">{{numOfJob}} Jobs</label>
-            <a href="#" role="button" ng-click="refresh()"><span class="glyphicon glyphicon-refresh" style="float: right; margin-right: 20px; margin-top: 20px; color: #7cb228"></span></a>
+            <a href="#" role="button" ng-click="refresh()" style="float: right; margin:10px; color: #eaeaea;"><span class="glyphicon glyphicon-refresh" style="padding-right:5px"></span>refresh all jobs</a>
+        </div>
+        <div class="panel-body" id="job-list" style="width:100%; height:670px; overflow: auto;">
             <table class="table table-hover table-font-style table-condensed">
                 <thead style="background-color: #485563;">
                     <tr>
@@ -27,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="padding: 5px; padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobs">
+                    <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobs">
                         <td>{{job.datePosted | date: MM-dd-yyyy}}</td>
                         <td><a style="color: #7cb228; font-weight:bold;" href="#" ng-click="viewJob(job); openJobModal('VIEW')">{{job.title}}</a></td>
                         <td>{{job.company}}</td>
@@ -50,8 +53,8 @@
         </div>
     </div>
     <div class="hr"></div>
-    <div>
+    <div style="margin-bottom:20px">
         <p>Copyright ©2015, Chen Guo. HireMeUp is for presentation and non-commercial use only.</p>
-        <a href="https://github.com/vesperiaLSU/HireMeUp.git">Feeling interested in how it's built? View the project source code on Github</a>
+        <a href="https://github.com/vesperiaLSU/HireMeUp.git">Feeling interested in how it's built? View the project source code on my Github</a>
     </div>
 </div>

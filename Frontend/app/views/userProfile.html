@@ -9,23 +9,74 @@
             <button type="button" class="btn btn-primary" style="width:100%; opacity:0.9;" ng-click="vm.openJobModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
         </div>
     </div>
-    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-left: 0;">
-        <div class="nav nav-tabs nav-justified">
-            <div class="wizard">
-                <a href="#" ui-sref=".jobsViewed" ui-sref-active="active">Jobs Viewed</a>
-                <a href="#" ui-sref=".jobsMarked" ui-sref-active="active">Jobs Marked</a>
-                <a href="#" ui-sref=".jobsApplied" ui-sref-active="active">Jobs Applied</a>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-left: 0; padding-right: 20px">
+        <div class="panel panel-default" style="margin-bottom:0px">
+            <div class="panel-heading" style="background-color: rgba(91,192,222,0.9)">
+                <h3 class="panel-title" style="font-weight:bold">Job Activity</h3>
             </div>
-        </div>
-        <div class="ui-view-container" style="height: 650px; background-color: rgba(78,93,108,0.9);">
-            <div ui-view></div>
+            <div class="panel-body" style="background-color: #2b3e50; padding:0">
+                <div class="nav nav-tabs nav-justified">
+                    <div class="wizard col-sm-12 nopad">
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsViewed" ui-sref-active="active">Jobs Viewed</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsMarked" ui-sref-active="active">Jobs Marked</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsApplied" ui-sref-active="active">Jobs Applied</a>
+                    </div>
+                </div>
+                <div class="ui-view-container" style="height: 700px; background-color: rgba(78,93,108,0.9); border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+                    <div ui-view></div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel panel-info" style="padding-right: 0; padding-left: 0">
+        <div class="panel-heading" style="background-color: rgba(124,178,40, 0.9)">
+            <h3 class="panel-title" style="font-weight:bold">Complete Your Profile</h3>
+        </div>
+        <div class="panel-body">
+            <img border="0" height="70" width="70" class="cell round50" src={{vm.avatar_url}}>
+            <div style="display: inline-table; padding-left: 20px;">
+                <span style="display: block; padding: 5px;">User: {{vm.displayName}}</span>
+                <span style="display: block; padding: 5px;">Status: {{vm.status}}</span>
+                <span style="display: block; padding: 5px;"><a href="#" ng-click="openModal('USER')"><span class="glyphicon glyphicon-edit" style="padding-right:5px"></span>Edit Profile</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel panel-default" style="padding-right: 0; padding-left: 0; margin-bottom: 0">
+        <div class="panel-heading" style="background-color: rgba(238,185,109,0.9);">
+            <h3 class="panel-title" style="font-weight:bold">Jobs Recently Posted</h3>
+        </div>
+        <div class="panel-body" style="height:555px;">
+            <div style="width:100%; overflow: auto;">
+                <table class="table table-hover table-font-style">
+                    <thead style="background-color: #485563;">
+                        <tr>
+                            <th class="col-sm-8">Title</th>
+                            <th class="col-sm-4"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in vm.jobsPosted">
+                            <td style="font-weight:bold; padding:15px 0;"><a href="#" style="color: #7cb228" ng-click="vm.viewJob(job); vm.openJobModal('VIEW')">{{job.title}}</a></td>
+                            <td>
+                                <button class="btn btn-default" style="color:#fff" ng-click="markJob(job);"><span class="glyphicon glyphicon-edit"></span>
+                                <br>Edit
+                            </button>
+                            </td>
+                        </tr>
+                        <tr ng-show="jobsPosted.length === 0" style="font-size: 20px; font-weight: bold">
+                            <td style="padding-top:30px" colspan="6">You haven't posted a job</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <div class="hr"></div>
     <div>
         <p>Copyright ©2015, Chen Guo</p>
-        <a href="https://github.com/vesperiaLSU/HireMeUp.git">Feeling interested? View the project source code on Github</a>
+        <a href="https://github.com/vesperiaLSU/HireMeUp.git">Feeling interested? View the project source code on my Github</a>
     </div>
 </div>

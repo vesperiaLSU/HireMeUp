@@ -13,17 +13,23 @@
         "jobsViewed",
         "jobsMarked",
         "jobsApplied",
+        "jobsPosted",
         userProfileController
     ]);
 
     function userProfileController($rootScope, dataTransfer, jobService, alertService, userService,
-        jobModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied) {
+        jobModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted) {
         var vm = this;
+        var user = userStorage.getUser();
+        var emailName = user.email.substring(0, user.email.indexOf('@'));
         $rootScope.bodyStyle = "";
-        debugger;
         vm.jobsViewed = jobsViewed;
         vm.jobsMarked = jobsMarked;
         vm.jobsApplied = jobsApplied;
+        vm.jobsPosted = jobsPosted;
+        vm.displayName = user.displayName ? user.displayName : emailName;
+        vm.status = user.active? "activated" : "unactivated";
+        vm.avatar_url = user.avatar_url;
 
         vm.viewJob = function(job) {
             vm.id = job._id;

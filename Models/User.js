@@ -3,6 +3,7 @@
     var Promise = require("bluebird");
     var mongoose = Promise.promisifyAll(require("mongoose"));
     var bcrypt = require("bcrypt-nodejs");
+    var webConfig = require("../Config/webConfig.js");
 
     var UserSchema = new mongoose.Schema({
         email: {
@@ -16,6 +17,10 @@
         active: {
             type: Boolean,
             required: true
+        },
+        avatar_url: {
+            type: String,
+            default: webConfig.STATIC_AVATAR
         },
         jobsViewed: [String],
         jobsPosted: [String],

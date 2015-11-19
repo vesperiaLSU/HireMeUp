@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService) {
+    angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService) {
         this.open = function(type, scope) {
             $("body").css('overflow-y', 'scroll');
             var modalInstance = $uibModal.open({
@@ -20,24 +20,11 @@
             });
 
             modalInstance.result.then(function(job) {
-
                     switch (job.type) {
                         case 'SUBMIT':
                             {
                                 if ($auth.isAuthenticated()) {
-                                    jobService.title.save(job).$promise.then(function(data) {
-                                        if ($state.current.url === "/jobs") {
-                                            scope.jobs = scope.allJobs;
-                                            scope.jobs.push(data);
-                                            scope.numOfJob = scope.jobs.length;
-                                        }
-                                        else {
-                                            $state.go("jobs");
-                                        }
-                                        alertService("success", "New job added: ", data.title, "job-alert");
-                                    }, function(error) {
-                                        alertService("warning", "Error: ", "Job saving failed", "job-alert");
-                                    });
+                                    postJobService.post(job, scope);
                                 }
                                 else {
                                     $state.go("login");

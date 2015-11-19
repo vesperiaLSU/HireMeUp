@@ -1,10 +1,10 @@
 (function() {
   "use strict";
 
-  angular.module("jobFinder.app").controller("LogoutCtrl", ["$auth", "$state", "dataTransfer",
-    function($auth, $state, dataTransfer) {
+  angular.module("jobFinder.app").controller("LogoutCtrl", ["$auth", "$state", "userStorage",
+    function($auth, $state, userStorage) {
       $auth.logout();
-      dataTransfer.clearUser();
+      userStorage.removeUser();
       $state.go("main");
     }
   ]);

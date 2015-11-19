@@ -37,5 +37,29 @@
         });
     });
 
+    jobByIdRouter.route("/jobById").get(function(req, res, next) {
+        var jobList = JSON.parse(req.query.jobList);
+        var query = {
+            '_id': {
+                $in: jobList
+            }
+        };
+        jobService.findJobs(query).then(function(collection) {
+            if (collection.length != 0) {
+                res.send(collection);
+            }
+            else {
+                res.status(404).send({
+                    message: "failed to find any job"
+                });
+            }
+        }).catch(function(err) {
+            res.status(500).send({
+                message: err
+            });
+        });
+
+    });
+
     module.exports = jobByIdRouter;
 }());

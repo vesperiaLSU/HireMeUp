@@ -6,7 +6,7 @@
     "ngAnimate",
     "satellizer",
     "common.service",
-    'ui.bootstrap'
+    "ui.bootstrap"
   ]);
 
   app.config(["$urlRouterProvider", "$stateProvider", "$authProvider",
@@ -32,7 +32,13 @@
         .state("jobs", {
           url: "/jobs",
           templateUrl: "/app/views/jobs.html",
-          controller: "JobsCtrl"
+          controller: "JobsCtrl",
+          resolve: {
+            jobService: "jobService",
+            jobs: function(jobService) {
+              return jobService.title.query({}).$promise;
+            }
+          }
         })
         .state("login", {
           url: "/login",
@@ -42,7 +48,30 @@
         .state("userProfile", {
           url: "/userProfile",
           templateUrl: "/app/views/userProfile.html",
-          controller: "ProfileCtrl"
+          controller: "ProfileCtrl",
+          controllerAs: "vm",
+          resolve: {
+            userStorage: "userStorage",
+            jobService: "jobService",
+            jobsViewed: function(userStorage, jobService) {
+              var user = userStorage.getUser();
+              return jobService.jobId.query({
+                jobList: JSON.stringify(user.jobsViewed)
+              }).$promise;
+            },
+            jobsMarked: function(userStorage, jobService) {
+              var user = userStorage.getUser();
+              return jobService.jobId.query({
+                jobList: JSON.stringify(user.jobsMarked)
+              }).$promise;
+            },
+            jobsApplied: function(userStorage, jobService) {
+              var user = userStorage.getUser();
+              return jobService.jobId.query({
+                jobList: JSON.stringify(user.jobsApplied)
+              }).$promise;
+            }
+          }
         })
         .state("userProfile.jobsViewed", {
           url: "/jobsViewed",

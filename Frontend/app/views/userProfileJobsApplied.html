@@ -10,9 +10,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobsApplied">
+                <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in vm.jobsApplied">
                     <td>{{job.datePosted | date: MM-dd-yyyy}}</td>
-                    <td style="font-weight:bold; padding:15px 0;"><a href="#" style="color: #7cb228" ng-click="viewJob(job); openJobModal('VIEW')">{{job.title}}</a></td>
+                    <td style="font-weight:bold; padding:15px 0;"><a href="#" style="color: #7cb228" ng-click="vm.viewJob(job); vm.openJobModal('VIEW')">{{job.title}}</a></td>
                     <td>{{job.company}}</td>
                 </tr>
                 <tr ng-show="jobsViewed.length === 0" style="font-size: 20px; font-weight: bold">

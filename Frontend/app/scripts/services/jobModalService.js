@@ -26,9 +26,14 @@
                             {
                                 if ($auth.isAuthenticated()) {
                                     jobService.title.save(job).$promise.then(function(data) {
-                                        scope.jobs = scope.allJobs;
-                                        scope.jobs.push(data);
-                                        scope.numOfJob = scope.jobs.length;
+                                        if ($state.current.url === "/jobs") {
+                                            scope.jobs = scope.allJobs;
+                                            scope.jobs.push(data);
+                                            scope.numOfJob = scope.jobs.length;
+                                        }
+                                        else {
+                                            $state.go("jobs");
+                                        }
                                         alertService("success", "New job added: ", data.title, "job-alert");
                                     }, function(error) {
                                         alertService("warning", "Error: ", "Job saving failed", "job-alert");

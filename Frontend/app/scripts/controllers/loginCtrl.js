@@ -2,8 +2,8 @@
     "use strict";
 
     angular.module("jobFinder.app")
-        .controller("LoginCtrl", ["$rootScope", "$scope", "alertService", "$state", "$auth", "$window", "dataTransfer",
-            function($rootScope, $scope, alertService, $state, $auth, $window, dataTransfer) {
+        .controller("LoginCtrl", ["$rootScope", "$scope", "alertService", "$state", "$auth", "userStorage",
+            function($rootScope, $scope, alertService, $state, $auth, userStorage) {
                 $rootScope.bodyStyle = "mainPage";
 
                 $scope.login = function() {
@@ -13,7 +13,7 @@
                         })
                         .then(function(res) {
                             $state.go("main");
-                            dataTransfer.updateUser(res.data.user);
+                            userStorage.setUser(res.data.user);
                             var message = "Thanks for coming back!";
 
                             if (!res.data.user.active) {
@@ -27,7 +27,7 @@
                 $scope.authenticate = function(provider) {
                     $auth.authenticate(provider).then(function(res) {
                         $state.go("main");
-                        dataTransfer.updateUser(res.data.user);
+                        userStorage.setUser(res.data.user);
                         var message = "Thanks for coming back!";
                         if (!res.data.user.active) {
                             message = "Just a reminder, please active your account soon :)";

@@ -252,6 +252,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           };
 
           $auth.setToken = function(token) {
+            debugger;
             shared.setToken({ access_token: token });
           };
 

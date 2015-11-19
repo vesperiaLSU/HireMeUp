@@ -8,12 +8,13 @@
     "alertService",
     "$rootScope",
     "dataTransfer",
-    "$auth",
     "$state",
     "$uibModal",
     "jobModalService",
     "applyForJobService",
-    function($scope, jobService, userService, alertService, $rootScope, dataTransfer, $auth, $state, $uibModal, jobModalService, applyForJobService) {
+    "userStorage",
+    "jobs",
+    function($scope, jobService, userService, alertService, $rootScope, dataTransfer, $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs) {
       $rootScope.bodyStyle = "";
       $scope.jobToSearch = dataTransfer.getJob();
 
@@ -22,23 +23,22 @@
         search();
       });
 
-      jobService.title.query({}).$promise.then(
-        function(data) {
-          $scope.allJobs = data;
-          $scope.numOfJob = $scope.allJobs.length;
-          if ($scope.jobToSearch) {
-            dataTransfer.clearJob();
-            $scope.jobs = $.grep($scope.allJobs, function(item) {
-              return item.title.toLowerCase().indexOf($scope.jobToSearch.toLowerCase()) !== -1;
-            });
-          }
-          else {
-            $scope.jobs = $scope.allJobs;
-          }
-        },
-        function(error) {
-          alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");
-        });
+      if (jobs.length === 0) {
+        alertService("warning", "Unable to get jobs: ", "job-alert");
+      }
+      else {
+        $scope.allJobs = jobs;
+        $scope.numOfJob = $scope.allJobs.length;
+        if ($scope.jobToSearch) {
+          dataTransfer.clearJob();
+          $scope.jobs = $.grep($scope.allJobs, function(item) {
+            return item.title.toLowerCase().indexOf($scope.jobToSearch.toLowerCase()) !== -1;
+          });
+        }
+        else {
+          $scope.jobs = $scope.allJobs;
+        }
+      }
 
       $scope.viewJob = function(job) {
         $scope.id = job._id;
@@ -59,13 +59,13 @@
           alertService('warning', 'Opps! ', 'Error increasing the job view for : ' + $scope.title, 'job-alert');
         });
 
-        var user = dataTransfer.getUser();
+        var user = userStorage.getUser();
         if (user && user.jobsViewed.indexOf($scope.id) === -1) {
           user.jobsViewed.push($scope.id);
           userService.update({
             id: user._id
           }, user).$promise.then(function(user) {
-            dataTransfer.updateUser(user);
+            userStorage.setUser(user);
           }).catch(function(error) {
             alertService('warning', 'Opps! ', 'Error adding: ' + $scope.title + " to jobs viewed", 'job-alert');
           });
@@ -73,20 +73,22 @@
       };
 
       $scope.openJobModal = function(type) {
-        var user = dataTransfer.getUser();
-        $scope.hasApplied = user && $scope.candidates.indexOf(user._id) !== -1;
+        var user = userStorage.getUser();
+        if (type !== 'POST' && user) {
+          $scope.hasApplied = user && $scope.candidates.indexOf(user._id) !== -1;
+        }
         jobModalService.open(type, $scope);
       };
 
       $scope.markJob = function(job) {
-        var user = dataTransfer.getUser();
+        var user = userStorage.getUser();
         if (user) {
           if (user.jobsMarked.indexOf(job._id) === -1) {
             user.jobsMarked.push(job._id);
             userService.update({
               id: user._id
             }, user).$promise.then(function(user) {
-              dataTransfer.updateUser(user);
+              userStorage.setUser(user);
               alertService("success", "You succesfully bookmarked: ", job.title, "job-alert");
             }).catch(function(error) {
               alertService('warning', 'Opps! ', 'Error adding: ' + job.title + " to bookmarked", 'job-alert');

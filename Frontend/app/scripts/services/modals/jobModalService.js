@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService) {
+    angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService) {
         this.open = function(type, scope) {
             $("body").css('overflow-y', 'scroll');
             var modalInstance = $uibModal.open({

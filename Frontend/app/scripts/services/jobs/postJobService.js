@@ -13,7 +13,7 @@
                     else {
                         $state.go("jobs");
                     }
-                    user.jobsPosted.push(job._id);
+                    user.jobsPosted.push(data._id);
                     userService.update({
                         id: user._id
                     }, user).$promise.then(function(user) {

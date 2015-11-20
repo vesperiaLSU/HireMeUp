@@ -6,7 +6,7 @@
             <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="vm.searchJob()"><span class="glyphicon glyphicon-search"></span></button>
         </div>
         <div class="col-sm-12" style="margin-top: 50px; padding: 0">
-            <button type="button" class="btn btn-primary" style="width:100%; opacity:0.9;" ng-click="vm.openJobModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
+            <button type="button" class="btn btn-primary" style="width:100%; opacity:0.9;" ng-click="vm.openModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
         </div>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-left: 0; padding-right: 20px">
@@ -38,31 +38,35 @@
             <div style="display: inline-table; padding-left: 20px;">
                 <span style="display: block; padding: 5px;">User: {{vm.displayName}}</span>
                 <span style="display: block; padding: 5px;">Status: {{vm.status}}</span>
-                <span style="display: block; padding: 5px;"><a href="#" ng-click="openModal('USER')"><span class="glyphicon glyphicon-edit" style="padding-right:5px"></span>Edit Profile</a></span>
+                <span style="display: block; padding: 5px;"><a href="#" ng-click="vm.openModal('USER')"><span class="glyphicon glyphicon-edit" style="padding-right:5px"></span>Edit Profile</a>
+                </span>
             </div>
         </div>
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel panel-default" style="padding-right: 0; padding-left: 0; margin-bottom: 0">
-        <div class="panel-heading" style="background-color: rgba(238,185,109,0.9);">
-            <h3 class="panel-title" style="font-weight:bold">Jobs Recently Posted</h3>
+        <div class="panel-heading" style="background-color: rgba(240,173,78,0.9);">
+            <h3 class="panel-title" style="font-weight:bold; display: inline">Jobs Recently Posted</h3>
+            <a href="#" role="button" ng-click="refresh()" style="color: #eaeaea; margin-left: 60px"><span class="glyphicon glyphicon-list-alt" style="padding-right:5px"></span>More</a>
         </div>
-        <div class="panel-body" style="height:555px;">
+        <div class="panel-body nopad" style="height:553px;">
             <div style="width:100%; overflow: auto;">
                 <table class="table table-hover table-font-style">
                     <thead style="background-color: #485563;">
                         <tr>
-                            <th class="col-sm-8">Title</th>
-                            <th class="col-sm-4"></th>
+                            <th class="col-sm-7" style="padding:10px 15px">Title</th>
+                            <th class="col-sm-2"></th>
+                            <th class="col-sm-3"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in vm.jobsPosted">
-                            <td style="font-weight:bold; padding:15px 0;"><a href="#" style="color: #7cb228" ng-click="vm.viewJob(job); vm.openJobModal('VIEW')">{{job.title}}</a></td>
+                        <tr style="padding: 5px" ng-repeat="job in vm.jobsPosted">
+                            <td style="font-weight:bold; padding:15px"><a href="#" style="color: #7cb228" ng-click="vm.viewJob(job); vm.openModal('VIEW')">{{job.title}}</a></td>
                             <td>
-                                <button class="btn btn-default" style="color:#fff" ng-click="markJob(job);"><span class="glyphicon glyphicon-edit"></span>
-                                <br>Edit
-                            </button>
+                                <a href="#" role="button" style="color:#eaeaea" ng-click="vm.viewJob(job); vm.openModal('VIEW')"><span class="glyphicon glyphicon-edit" style="padding-right: 5px"></span>Edit</a>
+                            </td>
+                            <td>
+                                <a href="#" role="button" style="color:#eaeaea" ng-click="vm.deleteJob(job); vm.openModal('CONFIRM')"><span class="glyphicon glyphicon-remove" style="padding-right: 5px"></span>Remove</a>
                             </td>
                         </tr>
                         <tr ng-show="jobsPosted.length === 0" style="font-size: 20px; font-weight: bold">

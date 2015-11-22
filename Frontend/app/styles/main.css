@@ -265,8 +265,7 @@ body {
     display: inline;
     float: none !important;
     vertical-align: text-top;
-    margin-top: 5px;
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .form-sign-in-heading {

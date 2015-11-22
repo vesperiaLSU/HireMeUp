@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService) {
+    angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService, editJobService) {
         this.open = function(type, scope) {
             $("body").css('overflow-y', 'scroll');
             var modalInstance = $uibModal.open({
@@ -11,7 +11,7 @@
                 size: 'md',
                 backdrop: 'static',
                 keyboard: false,
-                windowClass: 'jobModal',
+                windowClass: 'custom-modal',
                 resolve: {
                     config: function() {
                         return renderModalConfig(type, scope);
@@ -43,6 +43,17 @@
                                 }
                             }
                             break;
+                        case 'SAVE':
+                            {
+                                if ($auth.isAuthenticated()) {
+                                    editJobService.edit(job, scope);
+                                }
+                                else {
+                                    $state.go("login");
+                                    alertService("warning", "Opps! ", "To edit a job, you need to sign in first", "main-alert");
+                                }
+                            }
+                            break;
                     }
                 },
                 function() {
@@ -71,6 +82,16 @@
                         hasApplied: scope.hasApplied,
                         buttonType: scope.hasApplied ? "APPLIED" : "APPLY",
                         candidates: scope.candidates
+                    };
+                case 'EDIT':
+                    return {
+                        id: scope.id,
+                        title: scope.title,
+                        company: scope.company,
+                        description: scope.description,
+                        modalTitle: "Edit Job",
+                        isEditable: true,
+                        buttonType: "SAVE"
                     };
             }
         }

@@ -6,7 +6,7 @@
             <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="searchJob()"><span class="glyphicon glyphicon-search"></span></button>
         </div>
         <div class="col-sm-12" style="margin-top: 50px; padding: 0">
-            <button type="button" class="btn btn-primary" style="width:100%; opacity: 0.9" ng-click="openJobModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
+            <button type="button" class="btn btn-primary" style="width:100%; opacity: 0.9" ng-click="openModal('POST')">Hiring? Post A Job<span class="glyphicon glyphicon-plus" style="padding-left: 10px;"></span></button>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
                 <tbody>
                     <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobs">
                         <td>{{job.datePosted | date: MM-dd-yyyy}}</td>
-                        <td><a style="color: #7cb228; font-weight:bold;" href="#" ng-click="viewJob(job); openJobModal('VIEW')">{{job.title}}</a></td>
+                        <td><a style="color: #7cb228; font-weight:bold;" href="#" ng-click="viewJob(job); openModal('VIEW')">{{job.title}}</a></td>
                         <td>{{job.company}}</td>
                         <td>{{job.views}}</td>
                         <td>{{job.applicants}}</td>

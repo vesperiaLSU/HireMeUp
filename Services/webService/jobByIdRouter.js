@@ -13,6 +13,13 @@
 
     jobByIdRouter.route("/jobById/:id").delete(function(req, res, next) {
         var id = req.params.id;
+        jobService.deleteJob(id).then(function(deleted) {
+            res.send(deleted);
+        }).catch(function(err) {
+            res.status(404).send({
+                message: err
+            });
+        });
 
     }).put(function(req, res, next) {
         var id = req.params.id;

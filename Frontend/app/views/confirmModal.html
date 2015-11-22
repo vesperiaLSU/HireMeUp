@@ -1,1 +1,11 @@
-
+<div class="modal-header">
+    <h4 class="modal-title">{{modalTitle}}</h4>
+</div>
+<div class="modal-body" style="height: 440px;">
+    <p>Are you sure you want to delete this job?</p>
+    <span>{{title}}</span>
+</div>
+<div class="modal-footer" style="height:60px;">
+    <button type="button" class="btn btn-default" style="position:relative; top:-10px;" ng-click="yes()">Yes</button>
+    <button type="button" class="btn btn-default" style="position:relative; top:-10px;" ng-click="cancel()">Cancel</button>
+</div>

@@ -72,9 +72,9 @@
         }
       };
 
-      $scope.openJobModal = function(type) {
+      $scope.openModal = function(type) {
         var user = userStorage.getUser();
-        if (type !== 'POST' && user) {
+        if (type === 'VIEW' && user) {
           $scope.hasApplied = user && $scope.candidates.indexOf(user._id) !== -1;
         }
         jobModalService.open(type, $scope);

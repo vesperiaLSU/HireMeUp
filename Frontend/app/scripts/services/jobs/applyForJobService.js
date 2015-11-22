@@ -23,13 +23,12 @@
                         userStorage.setUser(user);
                         alertService("success", "You succesfully applied for: ", job.title, "job-alert");
                     }).catch(function(error) {
-                        alertService('warning', 'Opps!', 'Error adding: ' + job.title + " to jobs applied", 'job-alert');
+                        alertService('warning', 'Opps! ', 'Error adding: ' + job.title + " to jobs applied", 'job-alert');
                     });
-
                     increaseJobApplicant(job);
                 }
                 else {
-                    alertService('warning', 'Opps!', 'You already have applied for: ' + job.title, 'job-alert');
+                    alertService('warning', 'Opps! ', 'You already have applied for: ' + job.title, 'job-alert');
                 }
             }
             else {
@@ -43,7 +42,7 @@
             jobService.jobId.update({
                 id: job._id
             }, job).$promise.then(function(data) {
-                //do nothing
+                console.log("success");
             }, function(error) {
                 alertService("warning", "Opps! ", "Applying for job " + job.title + " failed!", "job-alert");
             });

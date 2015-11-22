@@ -28,13 +28,13 @@
         vm.jobsViewed = jobsViewed;
         vm.jobsMarked = jobsMarked;
         vm.jobsApplied = jobsApplied;
+        vm.jobsPosted = jobsPosted.length > 11 ? jobsPosted.slice(0, 11) : jobsPosted;
         vm.displayName = user.displayName ? user.displayName : emailName;
         vm.status = user.active ? "activated" : "unactivated";
         vm.avatar_url = user.avatar_url;
-        vm.jobsPosted = jobsPosted.length > 10 ? jobsPosted.slice(0, 10) : jobsPosted;
 
         vm.viewJob = function(job) {
-            vm.jobId = job._id;
+            vm.id = job._id;
             vm.title = job.title;
             vm.company = job.company;
             vm.description = job.description;
@@ -44,17 +44,17 @@
 
             job.views++;
             jobService.jobId.update({
-                id: vm.jobId
+                id: vm.id
             }, job).$promise.then(function(data) {
-                //do nothing
+                console.log("success");
             }).catch(function(error) {
                 job.views -= 1;
                 alertService('warning', 'Opps! ', 'Error increasing the job view for : ' + vm.title, 'job-alert');
             });
 
             var user = userStorage.getUser();
-            if (user && user.jobsViewed.indexOf(vm.jobId) === -1) {
-                user.jobsViewed.push(vm.jobId);
+            if (user && user.jobsViewed.indexOf(vm.id) === -1) {
+                user.jobsViewed.push(vm.id);
                 userService.update({
                     id: user._id
                 }, user).$promise.then(function(user) {
@@ -66,10 +66,20 @@
         };
 
         vm.deleteJob = function(job) {
-            vm.jobId = job._id;
+            debugger;
+            vm.id = job._id;
+            vm.title = job.title;
+        };
+
+        vm.editJob = function(job) {
+            vm.id = job._id;
+            vm.title = job.title;
+            vm.company = job.company;
+            vm.description = job.description;
         };
 
         vm.openModal = function(type) {
+            debugger;
             var user = userStorage.getUser();
             if (user) {
                 switch (type) {
@@ -82,6 +92,8 @@
                     case 'POST':
                         jobModalService.open(type, vm);
                         break;
+                    case 'EDIT':
+                        jobModalService.open(type, vm);
                     case 'CONFIRM':
                         confirmModalService.open(type, vm);
                         break;

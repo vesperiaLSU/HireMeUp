@@ -1,24 +1,29 @@
 <div class="modal-header">
     <h4 class="modal-title">{{modalTitle}}</h4>
 </div>
-<div class="modal-body" style="height: 440px;">
+<div class="modal-body" style="height: 310px; padding:0;">
     <form class="form-horizontal" name="jobs">
         <br>
-
-        <div class="col-sm-12">
-            <div style="margin-bottom: 20px;">
-                <input ng-disabled="!isEditable" class="form-control font-style" type="text" name="title" placeholder="Title..." maxlength="50" ng-model="title" />
+        <div class="col-sm-12" style="padding-right: 20px;">
+            <div class="form-group">
+                <label class="control-label col-sm-2" style="text-align: left; font-size: 16px; padding-left: 25px">Email:</label>
+                <div style="margin-bottom: 20px;" class="col-sm-10">
+                    <input class="form-control font-style" type="text" name="email" placeholder="Email..." maxlength="50" ng-model="email" />
+                </div>
             </div>
-
-            <div style="margin-bottom: 20px;">
-                <input ng-disabled="!isEditable" class="form-control font-style" type="text" name="jobCompany" placeholder="Company..." maxlength="50" ng-model="company" />
+            <div class="form-group">
+                <label class="control-label col-sm-2" style="text-align: left; font-size: 16px; padding-left: 25px">Username:</label>
+                <div style="margin-bottom: 20px;" class="col-sm-10">
+                    <input class="form-control font-style" type="text" name="username" placeholder="User Name.." maxlength="50" ng-model="username" />
+                </div>
             </div>
-
-            <div style="margin-bottom: 20px;">
-                <textarea ng-disabled="!isEditable" class="form-control font-style" rows="10" name="jobDescription" placeholder="Description..." maxlength="550" ng-model="description" />
+            <div class="form-group">
+                <label class="control-label col-sm-2" style="text-align: left; font-size: 14px; padding-left: 25px; padding-top: 0">Avatar Url:</label>
+                <div style="margin-bottom: 20px;" class="col-sm-10">
+                    <input class="form-control font-style" type="text" name="avatar_url" placeholder="Avatar Url..." maxlength="50" ng-model="avatar_url" />
+                </div>
             </div>
-
-            <button ng-disabled="hasApplied" class="btn btn-primary col-sm-2 col-sm-offset-4 font-style" ng-click="submit()" style="width:200px;">{{buttonType}}</button>
+            <button ng-disabled="hasApplied" class="btn btn-primary col-sm-2 col-sm-offset-4 font-style" ng-click="update()" style="width:200px;">{{buttonType}}</button>
         </div>
     </form>
 </div>

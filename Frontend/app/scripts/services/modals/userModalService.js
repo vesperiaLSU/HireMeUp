@@ -1,9 +1,8 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("userModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService) {
+    angular.module("common.service").service("userModalService", function($uibModal, $auth, userService, $state, alertService, userStorage) {
         this.open = function(type, scope) {
-            $("body").css('overflow-y', 'scroll');
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: '/app/views/userModal.html',
@@ -12,19 +11,27 @@
                 backdrop: 'static',
                 keyboard: false,
                 windowClass: 'custom-modal',
+                openedClass: 'always-scroll',
                 resolve: {
                     user: {
                         email: scope.email,
                         name: scope.displayName,
-                        password: scope.password,
                         avatar_url: scope.avatar_url
                     }
                 }
             });
 
-            modalInstance.result.then(function(job) {
+            modalInstance.result.then(function(update) {
+                    var user = userStorage.getUser();
                     if ($auth.isAuthenticated()) {
-                        deleteJobService.delete(job, scope);
+                        userService.update({
+                            id: user._id
+                        }, update).$promise.then(function(user) {
+                            userStorage.setUser(user);
+                            alertService("success", "You succesfully edited your profile!", '', "job-alert");
+                        }).catch(function(error) {
+                            alertService('warning', 'Opps!', 'Error editing your profile: ', error.message, 'job-alert');
+                        });
                     }
                     else {
                         $state.go("login");

@@ -3,7 +3,6 @@
 
     angular.module("common.service").service("jobModalService", function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService, editJobService) {
         this.open = function(type, scope) {
-            $("body").css('overflow-y', 'scroll');
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: '/app/views/jobModal.html',
@@ -12,6 +11,7 @@
                 backdrop: 'static',
                 keyboard: false,
                 windowClass: 'custom-modal',
+                openedClass: 'always-scroll',
                 resolve: {
                     config: function() {
                         return renderModalConfig(type, scope);

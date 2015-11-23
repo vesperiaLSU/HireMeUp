@@ -14,8 +14,12 @@ body {
 }
 
 .custom-modal {
-    top: 15%;
+    top: 20%;
     outline: none;
+}
+
+.always-scroll {
+    overflow-y: scroll;
 }
 
 .nopad {

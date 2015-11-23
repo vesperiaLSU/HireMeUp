@@ -29,6 +29,7 @@
         vm.jobsMarked = jobsMarked;
         vm.jobsApplied = jobsApplied;
         vm.jobsPosted = jobsPosted.length > 11 ? jobsPosted.slice(0, 11) : jobsPosted;
+        vm.email = user.email;
         vm.displayName = user.displayName ? user.displayName : emailName;
         vm.status = user.active ? "activated" : "unactivated";
         vm.avatar_url = user.avatar_url;
@@ -66,9 +67,9 @@
         };
 
         vm.deleteJob = function(job) {
-            debugger;
             vm.id = job._id;
             vm.title = job.title;
+            vm.company = job.company;
         };
 
         vm.editJob = function(job) {
@@ -79,7 +80,6 @@
         };
 
         vm.openModal = function(type) {
-            debugger;
             var user = userStorage.getUser();
             if (user) {
                 switch (type) {
@@ -94,6 +94,7 @@
                         break;
                     case 'EDIT':
                         jobModalService.open(type, vm);
+                        break;
                     case 'CONFIRM':
                         confirmModalService.open(type, vm);
                         break;

@@ -1,10 +1,8 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("confirmModalService", function($uibModal, $auth, jobService, alertService, $state, deleteJobService) {
+    angular.module("common.service").service("confirmModalService", function($uibModal, $auth, alertService, $state, deleteJobService) {
         this.open = function(type, scope) {
-            debugger;
-            $("body").css('overflow-y', 'scroll');
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: '/app/views/confirmModal.html',
@@ -13,10 +11,12 @@
                 backdrop: 'static',
                 keyboard: false,
                 windowClass: 'custom-modal',
+                openedClass: 'always-scroll',
                 resolve: {
                     config: {
                         id: scope.id,
-                        title: scope.title
+                        title: scope.title,
+                        company: scope.company
                     }
                 }
             });

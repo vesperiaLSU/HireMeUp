@@ -68,8 +68,8 @@
                                 <a href="#" role="button" style="color:#eaeaea" ng-click="vm.deleteJob(job); vm.openModal('CONFIRM')"><span class="glyphicon glyphicon-remove" style="padding-right: 5px"></span>Remove</a>
                             </td>
                         </tr>
-                        <tr ng-show="jobsPosted.length === 0" style="font-size: 20px; font-weight: bold">
-                            <td style="padding-top:30px" colspan="6">You haven't posted a job</td>
+                        <tr ng-show="vm.jobsPosted.length === 0" style="font-size: 15px; font-weight: bold">
+                            <td style="padding: 10px 10px" colspan="6">You haven yet to post a job</td>
                         </tr>
                     </tbody>
                 </table>

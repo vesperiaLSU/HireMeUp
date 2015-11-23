@@ -15,7 +15,7 @@
                     <td style="font-weight:bold; padding:15px 0;"><a href="#" style="color: #7cb228" ng-click="vm.viewJob(job); vm.openModal('VIEW')">{{job.title}}</a></td>
                     <td>{{job.company}}</td>
                 </tr>
-                <tr ng-show="jobsViewed.length === 0" style="font-size: 20px; font-weight: bold">
+                <tr ng-show="vm.jobsViewed.length === 0" style="font-size: 20px; font-weight: bold">
                     <td style="padding-top:30px" colspan="6">No job viewed recently</td>
                 </tr>
             </tbody>

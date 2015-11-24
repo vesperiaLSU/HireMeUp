@@ -16,7 +16,8 @@
                     config: {
                         id: scope.id,
                         title: scope.title,
-                        company: scope.company
+                        company: scope.company,
+                        modalTitle: "Confirmation"
                     }
                 }
             });

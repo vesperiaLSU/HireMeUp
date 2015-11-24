@@ -2,7 +2,7 @@
     <div style="background-image: url('http://teecom.com/media/projects_hero_airbnb-01.jpg'); background-size: cover; padding:14px 0 0 0; margin-bottom: 20px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p class="leadShadow" style='text-align: center; margin-top: 20px;'>Get Hired. Love Your Job.</p>
         <div class="input-group col-sm-6 col-sm-offset-3">
-            <input type="text" name="job" ng-model="jobToSearch" class="form-control font-style" placeholder="Job Title.." />
+            <input type="text" name="job" ng-model="jobToSearch" ng-keypress="keyPressed($event)" class="form-control font-style" placeholder="Job Title.." />
             <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="searchJob()"><span class="glyphicon glyphicon-search"></span></button>
         </div>
         <div class="col-sm-12" style="margin-top: 50px; padding: 0">

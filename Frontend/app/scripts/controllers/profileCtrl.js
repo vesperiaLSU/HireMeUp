@@ -2,6 +2,7 @@
     "use strict";
 
     angular.module("jobFinder.app").controller("ProfileCtrl", [
+        "$scope",
         "$rootScope",
         "dataTransfer",
         "jobService",
@@ -10,6 +11,7 @@
         "jobModalService",
         "confirmModalService",
         "userModalService",
+        "jobPostModalService",
         "$state",
         "userStorage",
         "jobsViewed",
@@ -19,8 +21,8 @@
         userProfileController
     ]);
 
-    function userProfileController($rootScope, dataTransfer, jobService, alertService, userService,
-        jobModalService, confirmModalService, userModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted) {
+    function userProfileController($scope, $rootScope, dataTransfer, jobService, alertService, userService,
+        jobModalService, confirmModalService, userModalService, jobPostModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted) {
         var vm = this;
         var user = userStorage.getUser();
         var emailName = user.email.substring(0, user.email.indexOf('@'));
@@ -28,6 +30,8 @@
         vm.jobsViewed = jobsViewed;
         vm.jobsMarked = jobsMarked;
         vm.jobsApplied = jobsApplied;
+        vm.numOfPosted = jobsPosted.length;
+        vm.totalJobsPosted = jobsPosted;
         vm.jobsPosted = jobsPosted.length > 11 ? jobsPosted.slice(0, 11) : jobsPosted;
         vm.email = user.email;
         vm.displayName = user.displayName ? user.displayName : emailName;
@@ -62,6 +66,51 @@
                     userStorage.setUser(user);
                 }).catch(function(error) {
                     alertService('warning', 'Opps! ', 'Error adding: ' + vm.title + " to jobs viewed", 'job-alert');
+                });
+            }
+        };
+
+        vm.clearJobApplied = function() {
+            var user = userStorage.getUser();
+            if (user && user.jobsApplied.length > 0) {
+                user.jobsApplied.splice(0, user.jobsApplied.length);
+                userService.update({
+                    id: user._id
+                }, user).$promise.then(function(user) {
+                    vm.jobsApplied.splice(0, vm.jobsApplied.length);
+                    userStorage.setUser(user);
+                }).catch(function(error) {
+                    alertService('warning', 'Opps! ', 'Error clearing all jobs applied: ' + error.message, 'job-alert');
+                });
+            }
+        };
+
+        vm.clearJobMarked = function() {
+            var user = userStorage.getUser();
+            if (user && user.jobsMarked.length > 0) {
+                user.jobsMarked.splice(0, user.jobsMarked.length);
+                userService.update({
+                    id: user._id
+                }, user).$promise.then(function(user) {
+                    vm.jobsMarked.splice(0, vm.jobsMarked.length);
+                    userStorage.setUser(user);
+                }).catch(function(error) {
+                    alertService('warning', 'Opps! ', 'Error clearing all jobs marked: ' + error.message, 'job-alert');
+                });
+            }
+        };
+
+        vm.clearJobViewed = function() {
+            var user = userStorage.getUser();
+            if (user && user.jobsViewed.length > 0) {
+                user.jobsViewed.splice(0, user.jobsViewed.length);
+                userService.update({
+                    id: user._id
+                }, user).$promise.then(function(user) {
+                    vm.jobsViewed.splice(0, vm.jobsViewed.length);
+                    userStorage.setUser(user);
+                }).catch(function(error) {
+                    alertService('warning', 'Opps! ', 'Error clearing all jobs viewed: ' + error.message, 'job-alert');
                 });
             }
         };
@@ -101,8 +150,16 @@
                     case 'USER':
                         userModalService.open(type, vm);
                         break;
+                    case 'JOBPOST':
+                        jobPostModalService.open(type, vm);
+                        break;
                 }
             }
+        };
+
+        vm.keyPressed = function(event) {
+            if (event.charCode === 13)
+                vm.searchJob();
         };
 
         vm.searchJob = function search() {

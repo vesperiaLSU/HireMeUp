@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h4 class="modal-title">{{modalTitle}}</h4>
 </div>
-<div class="modal-body" style="height: 310px; padding:0;">
+<div class="modal-body" style="height: 350px; padding:0;">
     <form class="form-horizontal" name="jobs">
         <br>
         <div class="col-sm-12" style="padding-right: 20px;">
@@ -20,7 +20,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-2" style="text-align: left; font-size: 14px; padding-left: 25px; padding-top: 0">Avatar Url:</label>
                 <div style="margin-bottom: 20px;" class="col-sm-10">
-                    <input class="form-control font-style" type="text" name="avatar_url" placeholder="Avatar Url..." maxlength="50" ng-model="avatar_url" />
+                    <textarea type="text" name="avatar_url" class="form-control font-style" rows="3" placeholder="Avatar Url..." maxlength="200" ng-model="avatar_url"/>
+                    <span></span>
                 </div>
             </div>
             <button ng-disabled="hasApplied" class="btn btn-primary col-sm-2 col-sm-offset-4 font-style" ng-click="update()" style="width:200px;">{{buttonType}}</button>

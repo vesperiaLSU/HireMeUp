@@ -28,6 +28,8 @@
                             id: user._id
                         }, update).$promise.then(function(user) {
                             userStorage.setUser(user);
+                            scope.displayName = user.displayName;
+                            $("#avatar").attr("src", user.avatar_url);
                             alertService("success", "You succesfully edited your profile!", '', "job-alert");
                         }).catch(function(error) {
                             alertService('warning', 'Opps!', 'Error editing your profile: ', error.message, 'job-alert');

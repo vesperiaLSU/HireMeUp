@@ -2,7 +2,7 @@
     <div style="background-image: url('http://teecom.com/media/projects_hero_airbnb-01.jpg'); background-size: cover; padding:14px 0 0 0; margin-bottom: 20px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p class="leadShadow" style='text-align: center; margin-top: 20px;'>Get Hired. Love Your Job.</p>
         <div class="input-group col-sm-6 col-sm-offset-3">
-            <input type="text" name="job" ng-model="vm.jobToSearch" class="form-control font-style" placeholder="Job Title.." />
+            <input type="text" name="job" ng-model="vm.jobToSearch" class="form-control font-style" ng-keypress="vm.keyPressed($event)" placeholder="Job Title.." />
             <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="vm.searchJob()"><span class="glyphicon glyphicon-search"></span></button>
         </div>
         <div class="col-sm-12" style="margin-top: 50px; padding: 0">
@@ -34,7 +34,7 @@
             <h3 class="panel-title" style="font-weight:bold">Complete Your Profile</h3>
         </div>
         <div class="panel-body">
-            <img border="0" height="70" width="70" class="cell round50" src={{vm.avatar_url}}>
+            <img id="avatar" border="0" height="70" width="70" class="cell round50" src={{vm.avatar_url}}>
             <div style="padding: 5px 20px 0 0; float: right;">
                 <span style="display: block; padding: 5px; font-weight:bold">User: {{vm.displayName}}</span>
                 <span style="display: block; padding: 5px; font-weight:bold"><a href="#" ng-click="vm.openModal('USER')"><span class="glyphicon glyphicon-edit" style="padding-right:5px"></span>Edit Profile</a>
@@ -46,7 +46,7 @@
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel panel-default" style="padding-right: 0; padding-left: 0; margin-bottom: 0">
         <div class="panel-heading" style="background-color: rgba(240,173,78,0.9);">
             <h3 class="panel-title" style="font-weight:bold; display: inline">Jobs Posted Recently</h3>
-            <a href="#" role="button" ng-click="refresh()" style="color: #eaeaea; margin-left: 60px"><span class="glyphicon glyphicon-list-alt" style="padding-right:5px"></span>More</a>
+            <a ng-show="vm.numOfPosted > 11" href="#" role="button" ng-click="vm.openModal('JOBPOST')" style="color: #eaeaea; margin-left: 60px"><span class="glyphicon glyphicon-list-alt" style="padding-right:5px"></span>More</a>
         </div>
         <div class="panel-body nopad" style="height:575px;">
             <div style="width:100%; overflow: auto;">

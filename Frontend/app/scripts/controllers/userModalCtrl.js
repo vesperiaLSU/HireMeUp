@@ -11,7 +11,7 @@
         $scope.update = function() {
             $uibModalInstance.close({
                 email: $scope.email,
-                username: $scope.name,
+                displayName: $scope.username,
                 avatar_url: $scope.avatar_url
             });
         };

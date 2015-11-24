@@ -17,14 +17,17 @@
             <div class="panel-body" style="background-color: #2b3e50; padding:0">
                 <div class="nav nav-tabs nav-justified">
                     <div class="wizard col-sm-12 nopad">
-                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsViewed" ui-sref-active="active">Jobs Viewed</a>
-                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsMarked" ui-sref-active="active">Jobs Marked</a>
-                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsApplied" ui-sref-active="active">Jobs Applied</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsViewed" ui-sref-active="active" ng-click="vm.stateChanged()">Jobs Viewed</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsMarked" ui-sref-active="active" ng-click="vm.stateChanged()">Jobs Marked</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsApplied" ui-sref-active="active" ng-click="vm.stateChanged()">Jobs Applied</a>
                     </div>
                 </div>
-                <div class="ui-view-container" style="height: 700px; background-color: rgba(78,93,108,0.9); border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+                <div class="ui-view-container" style="height: 650px; background-color: rgba(78,93,108,0.9); border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
                     <div ui-view></div>
                 </div>
+            </div>
+            <div class="panel-footer">
+                <uib-pagination total-items="vm.numOfJob" ng-model="vm.currentPage" ng-change="vm.pageChanged()" items-per-page="vm.itemsPerPage" style="margin: 0; vertical-align: middle;"></uib-pagination>
             </div>
         </div>
     </div>
@@ -74,6 +77,9 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="panel-footer">
+            <uib-pagination total-items="vm.numOfJobPosted" ng-model="vm.currentPageJobPosted" ng-change="vm.jobPostedPageChanged()" items-per-page="vm.jobPostedPerPage" style="margin: 0; vertical-align: middle;"></uib-pagination>
         </div>
     </div>
 

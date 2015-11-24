@@ -16,7 +16,7 @@
             <label style="margin:5px 20px; font-size: 14px;">{{numOfJob}} Jobs</label>
             <a href="#" role="button" ng-click="refresh()" style="float: right; margin:10px; color: #eaeaea;"><span class="glyphicon glyphicon-refresh" style="padding-right:5px"></span>refresh all jobs</a>
         </div>
-        <div class="panel-body" id="job-list" style="width:100%; height:670px; overflow: auto;">
+        <div class="panel-body" id="job-list" style="width:100%; height:720px; ">
             <table class="table table-hover table-font-style table-condensed">
                 <thead style="background-color: #485563;">
                     <tr>
@@ -49,6 +49,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="panel-footer">
+            <uib-pagination total-items="numOfJob" ng-model="currentPage" ng-change="pageChanged()" items-per-page="itemsPerPage" style="margin: 0; vertical-align: middle;"></uib-pagination>
         </div>
     </div>
     <div class="hr"></div>

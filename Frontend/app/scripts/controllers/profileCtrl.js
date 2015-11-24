@@ -1,28 +1,13 @@
 (function() {
     "use strict";
 
-    angular.module("jobFinder.app").controller("ProfileCtrl", [
-        "$scope",
-        "$rootScope",
-        "dataTransfer",
-        "jobService",
-        "alertService",
-        "userService",
-        "jobModalService",
-        "confirmModalService",
-        "userModalService",
-        "jobPostModalService",
-        "$state",
-        "userStorage",
-        "jobsViewed",
-        "jobsMarked",
-        "jobsApplied",
-        "jobsPosted",
+    angular.module("jobFinder.app").controller("ProfileCtrl", ["$scope", "$rootScope", "dataTransfer", "jobService", "alertService", "userService", "jobModalService",
+        "confirmModalService", "userModalService", "jobPostModalService", "$state", "userStorage", "jobsViewed", "jobsMarked", "jobsApplied", "jobsPosted", "paginateJobsService",
         userProfileController
     ]);
 
-    function userProfileController($scope, $rootScope, dataTransfer, jobService, alertService, userService,
-        jobModalService, confirmModalService, userModalService, jobPostModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted) {
+    function userProfileController($scope, $rootScope, dataTransfer, jobService, alertService, userService, jobModalService, confirmModalService,
+        userModalService, jobPostModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted, paginateJobsService) {
         var vm = this;
         var user = userStorage.getUser();
         var emailName = user.email.substring(0, user.email.indexOf('@'));
@@ -37,6 +22,23 @@
         vm.displayName = user.displayName ? user.displayName : emailName;
         vm.status = user.active ? "activated" : "unactivated";
         vm.avatar_url = user.avatar_url;
+        
+        vm.jobPostedPerPage = 10;
+        vm.itemsPerPage = 11;
+        vm.numOfJobPosted = jobsPosted.length;
+        paginateJobsService.paginateViewed(vm, jobsViewed);
+        paginateJobsService.paginateMarked(vm, jobsMarked);
+        paginateJobsService.paginateApplied(vm, jobsApplied);
+        
+        vm.stateChanged = function(){
+            debugger;
+            var state = $state.current;
+        };
+        
+        vm.pageChanged = function(){
+            debugger;
+            var state = $state.current;
+        };
 
         vm.viewJob = function(job) {
             vm.id = job._id;

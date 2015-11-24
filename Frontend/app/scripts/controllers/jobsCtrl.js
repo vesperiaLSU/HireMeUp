@@ -1,22 +1,13 @@
 (function() {
   "use strict";
 
-  angular.module("jobFinder.app").controller("JobsCtrl", [
-    "$scope",
-    "jobService",
-    "userService",
-    "alertService",
-    "$rootScope",
-    "dataTransfer",
-    "$state",
-    "$uibModal",
-    "jobModalService",
-    "applyForJobService",
-    "userStorage",
-    "jobs",
-    function($scope, jobService, userService, alertService, $rootScope, dataTransfer, $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs) {
+  angular.module("jobFinder.app").controller("JobsCtrl", ["$scope", "jobService", "userService", "alertService", "$rootScope", "dataTransfer",
+    "$state", "$uibModal", "jobModalService", "applyForJobService", "userStorage", "jobs", "paginateJobsService",
+    function($scope, jobService, userService, alertService, $rootScope, dataTransfer,
+      $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs, paginateJobsService) {
       $rootScope.bodyStyle = "";
       $scope.jobToSearch = dataTransfer.getJob();
+      var resultFound;
 
       $scope.$watch("jobToSearch", function(newValue, oldValue) {
         if (newValue === oldValue) return;
@@ -27,18 +18,21 @@
         alertService("warning", "Opps! ", "No job found", "job-alert");
       }
       else {
-        $scope.allJobs = jobs;
-        $scope.numOfJob = $scope.allJobs.length;
-        if ($scope.jobToSearch) {
-          dataTransfer.clearJob();
-          $scope.jobs = $.grep($scope.allJobs, function(item) {
-            return item.title.toLowerCase().indexOf($scope.jobToSearch.toLowerCase()) !== -1;
-          });
+        resultFound = paginateJobsService.paginateJobs($scope, jobs);
+      }
+
+      $scope.pageChanged = function() {
+        if (resultFound && resultFound.length > 10) {
+          begin = ($scope.currentPage - 1) * $scope.itemsPerPage;
+          end = begin + $scope.itemsPerPage;
+          $scope.jobs = resultFound.slice(begin, end);
         }
         else {
-          $scope.jobs = $scope.allJobs;
+          var begin = ($scope.currentPage - 1) * $scope.itemsPerPage;
+          var end = begin + $scope.itemsPerPage;
+          $scope.jobs = $scope.allJobs.slice(begin, end);
         }
-      }
+      };
 
       $scope.viewJob = function(job) {
         $scope.id = job._id;
@@ -127,7 +121,7 @@
           title: $scope.jobToSearch
         }).$promise.then(
           function(data) {
-            $scope.jobs = data;
+            resultFound = paginateJobsService.paginateJobs($scope, data);
           },
           function(error) {
             alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");

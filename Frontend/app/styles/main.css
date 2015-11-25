@@ -17,6 +17,10 @@ textarea {
     resize: none;
 }
 
+.red-heart{
+    color: red;
+}
+
 .custom-modal {
     top: 20%;
     outline: none;

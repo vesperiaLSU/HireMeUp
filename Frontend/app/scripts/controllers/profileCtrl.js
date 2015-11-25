@@ -2,42 +2,101 @@
     "use strict";
 
     angular.module("jobFinder.app").controller("ProfileCtrl", ["$scope", "$rootScope", "dataTransfer", "jobService", "alertService", "userService", "jobModalService",
-        "confirmModalService", "userModalService", "jobPostModalService", "$state", "userStorage", "jobsViewed", "jobsMarked", "jobsApplied", "jobsPosted", "paginateJobsService",
+        "confirmModalService", "userModalService", "$state", "userStorage", "jobsViewed", "jobsMarked", "jobsApplied", "jobsPosted", "paginateJobsService",
         userProfileController
     ]);
 
     function userProfileController($scope, $rootScope, dataTransfer, jobService, alertService, userService, jobModalService, confirmModalService,
-        userModalService, jobPostModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted, paginateJobsService) {
+        userModalService, $state, userStorage, jobsViewed, jobsMarked, jobsApplied, jobsPosted, paginateJobsService) {
         var vm = this;
         var user = userStorage.getUser();
         var emailName = user.email.substring(0, user.email.indexOf('@'));
         $rootScope.bodyStyle = "";
-        vm.jobsViewed = jobsViewed;
-        vm.jobsMarked = jobsMarked;
-        vm.jobsApplied = jobsApplied;
-        vm.numOfPosted = jobsPosted.length;
-        vm.totalJobsPosted = jobsPosted;
-        vm.jobsPosted = jobsPosted.length > 11 ? jobsPosted.slice(0, 11) : jobsPosted;
         vm.email = user.email;
         vm.displayName = user.displayName ? user.displayName : emailName;
         vm.status = user.active ? "activated" : "unactivated";
         vm.avatar_url = user.avatar_url;
-        
         vm.jobPostedPerPage = 10;
+        vm.currentPageJobPosted = 1;
+        vm.currentPage = 1;
         vm.itemsPerPage = 11;
-        vm.numOfJobPosted = jobsPosted.length;
-        paginateJobsService.paginateViewed(vm, jobsViewed);
-        paginateJobsService.paginateMarked(vm, jobsMarked);
-        paginateJobsService.paginateApplied(vm, jobsApplied);
-        
-        vm.stateChanged = function(){
-            debugger;
-            var state = $state.current;
+        vm.numOfPosted = jobsPosted.length;
+
+        paginateJobsService.paginatePosted(vm, jobsPosted);
+
+        var currentState = $state.current.url.substring(1);
+        switch (currentState) {
+            case 'jobsViewed':
+                paginateJobsService.paginateViewed(vm, jobsViewed);
+                break;
+            case 'jobsMarked':
+                paginateJobsService.paginateMarked(vm, jobsMarked);
+                break;
+            case 'jobsApplied':
+                paginateJobsService.paginateApplied(vm, jobsApplied);
+                break;
+            default:
+                paginateJobsService.paginateViewed(vm, jobsViewed);
+        }
+
+        vm.pageChanged = function() {
+            var begin, end;
+            switch (currentState) {
+                case 'jobsViewed':
+                    {
+                        if (jobsViewed.length > 11) {
+                            begin = (vm.currentPage - 1) * vm.itemsPerPage;
+                            end = begin + vm.itemsPerPage;
+                            vm.jobsViewed = jobsViewed.slice(begin, end);
+                        }
+                    }
+                    break;
+                case 'jobsMarked':
+                    {
+                        if (jobsMarked.length > 11) {
+                            begin = (vm.currentPage - 1) * vm.itemsPerPage;
+                            end = begin + vm.itemsPerPage;
+                            vm.jobsMarked = jobsMarked.slice(begin, end);
+                        }
+                    }
+                    break;
+                case 'jobsApplied':
+                    {
+                        if (jobsApplied.length > 11) {
+                            begin = (vm.currentPage - 1) * vm.itemsPerPage;
+                            end = begin + vm.itemsPerPage;
+                            vm.jobsApplied = jobsApplied.slice(begin, end);
+                        }
+                    }
+                    break;
+            }
+
         };
-        
-        vm.pageChanged = function(){
-            debugger;
-            var state = $state.current;
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            var nextState = toState.url.substring(1);
+            switch (nextState) {
+                case 'jobsViewed':
+                    vm.numOfJob = jobsViewed.length;
+                    paginateJobsService.paginateViewed(vm, jobsViewed);
+                    break;
+                case 'jobsMarked':
+                    vm.numOfJob = jobsMarked.length;
+                    paginateJobsService.paginateMarked(vm, jobsMarked);
+                    break;
+                case 'jobsApplied':
+                    vm.numOfJob = jobsApplied.length;
+                    paginateJobsService.paginateApplied(vm, jobsApplied);
+                    break;
+            }
+        });
+
+        vm.jobPostedPageChanged = function() {
+            if (jobsPosted.length > 11) {
+                var begin = (vm.currentPageJobPosted - 1) * vm.jobPostedPerPage;
+                var end = begin + vm.jobPostedPerPage;
+                vm.jobsPosted = jobsPosted.slice(begin, end);
+            }
         };
 
         vm.viewJob = function(job) {
@@ -80,6 +139,8 @@
                     id: user._id
                 }, user).$promise.then(function(user) {
                     vm.jobsApplied.splice(0, vm.jobsApplied.length);
+                    vm.numOfJob = 0;
+                    jobsApplied.splice(0, jobsApplied.length);
                     userStorage.setUser(user);
                 }).catch(function(error) {
                     alertService('warning', 'Opps! ', 'Error clearing all jobs applied: ' + error.message, 'job-alert');
@@ -95,6 +156,8 @@
                     id: user._id
                 }, user).$promise.then(function(user) {
                     vm.jobsMarked.splice(0, vm.jobsMarked.length);
+                    vm.numOfJob = 0;
+                    jobsMarked.splice(0, jobsMarked.length);
                     userStorage.setUser(user);
                 }).catch(function(error) {
                     alertService('warning', 'Opps! ', 'Error clearing all jobs marked: ' + error.message, 'job-alert');
@@ -110,6 +173,8 @@
                     id: user._id
                 }, user).$promise.then(function(user) {
                     vm.jobsViewed.splice(0, vm.jobsViewed.length);
+                    vm.numOfJob = 0;
+                    jobsViewed.splice(0, jobsViewed.length);
                     userStorage.setUser(user);
                 }).catch(function(error) {
                     alertService('warning', 'Opps! ', 'Error clearing all jobs viewed: ' + error.message, 'job-alert');
@@ -151,9 +216,6 @@
                         break;
                     case 'USER':
                         userModalService.open(type, vm);
-                        break;
-                    case 'JOBPOST':
-                        jobPostModalService.open(type, vm);
                         break;
                 }
             }

@@ -36,10 +36,9 @@
         };
 
         this.paginateViewed = function(vm, jobsViewed) {
-            vm.currentPage = 1;
-            vm.numOfJob = jobsViewed.length;
             vm.jobsViewed = jobsViewed;
-            if (jobsViewed.length > 11) {
+            vm.numOfJob = jobsViewed.length;
+            if (vm.numOfJob > 11) {
                 var begin = (vm.currentPage - 1) * vm.itemsPerPage;
                 var end = begin + vm.itemsPerPage;
                 vm.jobsViewed = jobsViewed.slice(begin, end);
@@ -47,10 +46,9 @@
         };
 
         this.paginateMarked = function(vm, jobsMarked) {
-            vm.currentPage = 1;
-            vm.numOfJob = jobsMarked.length;
             vm.jobsMarked = jobsMarked;
-            if (jobsMarked.length > 11) {
+            vm.numOfJob = jobsMarked.length;
+            if (vm.numOfJob > 11) {
                 var begin = (vm.currentPage - 1) * vm.itemsPerPage;
                 var end = begin + vm.itemsPerPage;
                 vm.jobsMarked = jobsMarked.slice(begin, end);
@@ -58,13 +56,22 @@
         };
 
         this.paginateApplied = function(vm, jobsApplied) {
-            vm.currentPage = 1;
-            vm.numOfJob = jobsApplied.length;
             vm.jobsApplied = jobsApplied;
-            if (jobsApplied.length > 11) {
+            vm.numOfJob = jobsApplied.length;
+            if (vm.numOfJob > 11) {
                 var begin = (vm.currentPage - 1) * vm.itemsPerPage;
                 var end = begin + vm.itemsPerPage;
                 vm.jobsApplied = jobsApplied.slice(begin, end);
+            }
+        };
+
+        this.paginatePosted = function(vm, jobsPosted) {
+            vm.numOfJobPosted = jobsPosted.length;
+            vm.jobsPosted = jobsPosted;
+            if (vm.numOfJobPosted > 11) {
+                var begin = (vm.currentPageJobPosted - 1) * vm.jobPostedPerPage;
+                var end = begin + vm.jobPostedPerPage;
+                vm.jobsPosted = jobsPosted.slice(begin, end);
             }
         };
     });

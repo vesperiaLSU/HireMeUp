@@ -15,11 +15,12 @@
                             $state.go("main");
                             userStorage.setUser(res.data.user);
                             var message = "Thanks for coming back!";
-
+                            var username = res.data.user.displayName ? res.data.user.displayName : res.data.user.email;
                             if (!res.data.user.active) {
                                 message = "Just a reminder, please active your account soon :)";
                             }
-                            alertService("success", "Welcome! ", res.data.user.email + "! " + message, "main-alert");
+                            
+                            alertService("success", "Welcome ", username + "! " + message, "main-alert");
                         })
                         .catch(handleError);
                 };

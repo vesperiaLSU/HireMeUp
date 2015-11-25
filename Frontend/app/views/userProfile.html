@@ -17,9 +17,9 @@
             <div class="panel-body" style="background-color: #2b3e50; padding:0">
                 <div class="nav nav-tabs nav-justified">
                     <div class="wizard col-sm-12 nopad">
-                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsViewed" ui-sref-active="active" ng-click="vm.stateChanged()">Jobs Viewed</a>
-                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsMarked" ui-sref-active="active" ng-click="vm.stateChanged()">Jobs Marked</a>
-                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsApplied" ui-sref-active="active" ng-click="vm.stateChanged()">Jobs Applied</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsViewed" ui-sref-active="active">Jobs Viewed</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsMarked" ui-sref-active="active">Jobs Marked</a>
+                        <a href="#" class="col-sm-4" style="text-align: center;" ui-sref=".jobsApplied" ui-sref-active="active">Jobs Applied</a>
                     </div>
                 </div>
                 <div class="ui-view-container" style="height: 650px; background-color: rgba(78,93,108,0.9); border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
@@ -49,9 +49,8 @@
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 panel panel-default" style="padding-right: 0; padding-left: 0; margin-bottom: 0">
         <div class="panel-heading" style="background-color: rgba(240,173,78,0.9);">
             <h3 class="panel-title" style="font-weight:bold; display: inline">Jobs Posted Recently</h3>
-            <a ng-show="vm.numOfPosted > 11" href="#" role="button" ng-click="vm.openModal('JOBPOST')" style="color: #eaeaea; margin-left: 60px"><span class="glyphicon glyphicon-list-alt" style="padding-right:5px"></span>More</a>
         </div>
-        <div class="panel-body nopad" style="height:575px;">
+        <div class="panel-body nopad" style="height:525px;">
             <div style="width:100%; overflow: auto;">
                 <table class="table table-hover table-font-style">
                     <thead style="background-color: #485563;">

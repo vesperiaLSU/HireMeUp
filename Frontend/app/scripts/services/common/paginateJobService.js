@@ -6,7 +6,7 @@
             scope.allJobs = jobs;
             scope.numOfJob = jobs.length;
             scope.currentPage = 1;
-            scope.itemsPerPage = 10;
+            scope.itemsPerPage = 12;
             var begin, end, resultFound;
             if (scope.jobToSearch) {
                 dataTransfer.clearJob();

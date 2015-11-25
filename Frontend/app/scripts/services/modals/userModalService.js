@@ -29,6 +29,7 @@
                         }, update).$promise.then(function(user) {
                             userStorage.setUser(user);
                             scope.displayName = user.displayName;
+                            scope.avatar_url = user.avatar_url;
                             $("#avatar").attr("src", user.avatar_url);
                             alertService("success", "You succesfully edited your profile!", '', "job-alert");
                         }).catch(function(error) {

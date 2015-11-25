@@ -33,7 +33,17 @@
             required: true,
             default: true
         },
-        candidates: [String]
+        candidates: [String],
+        marked : {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        applied : {
+            type: Boolean,
+            required: true,
+            default: false
+        }
     });
 
     module.exports = mongoose.model("Job", JobSchema);

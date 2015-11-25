@@ -14,6 +14,10 @@
                         alertService("warning", "Opps! ", "Applying for job " + job.title + " failed!", "job-alert");
                     });
                 }
+                else {
+                    alertService('warning', 'Opps! ', 'You already have applied for: ' + job.title, 'job-alert');
+                    return;
+                }
 
                 if (user.jobsApplied.indexOf(job._id) === -1) {
                     user.jobsApplied.push(job._id);
@@ -29,6 +33,7 @@
                 }
                 else {
                     alertService('warning', 'Opps! ', 'You already have applied for: ' + job.title, 'job-alert');
+                    return;
                 }
             }
             else {

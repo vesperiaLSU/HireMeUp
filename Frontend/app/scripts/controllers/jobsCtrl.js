@@ -2,9 +2,9 @@
   "use strict";
 
   angular.module("jobFinder.app").controller("JobsCtrl", ["$scope", "jobService", "userService", "alertService", "$rootScope", "dataTransfer",
-    "$state", "$uibModal", "jobModalService", "applyForJobService", "userStorage", "jobs", "paginateJobsService",
+    "$state", "$uibModal", "jobModalService", "applyForJobService", "userStorage", "jobs", "paginateJobsService", "_",
     function($scope, jobService, userService, alertService, $rootScope, dataTransfer,
-      $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs, paginateJobsService) {
+      $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs, paginateJobsService, _) {
       $rootScope.bodyStyle = "";
       $scope.jobToSearch = dataTransfer.getJob();
       var resultFound;
@@ -20,6 +20,21 @@
       else {
         resultFound = paginateJobsService.paginateJobs($scope, jobs);
       }
+      
+      var user = userStorage.getUser();
+      $.each($scope.jobs, function(index, job){
+        if(_.contains(user.jobsMarked, job._id)){
+          job.marked = true;
+        } else {
+          job.marked = false;
+        }
+        
+        if(_.contains(user.jobsApplied, job._id)){
+          job.applied = true;
+        } else {
+          job.applied = false;
+        }
+      });
 
       $scope.pageChanged = function() {
         if (resultFound && resultFound.length > 10) {
@@ -77,7 +92,8 @@
       $scope.markJob = function(job) {
         var user = userStorage.getUser();
         if (user) {
-          if (user.jobsMarked.indexOf(job._id) === -1) {
+          var index = user.jobsMarked.indexOf(job._id);
+          if (index === -1) {
             user.jobsMarked.push(job._id);
             userService.update({
               id: user._id
@@ -89,7 +105,15 @@
             });
           }
           else {
-            alertService('warning', 'Opps! ', 'You already have bookmarked: ' + job.title, 'job-alert');
+            user.jobsMarked.splice(index, 1);
+            userService.update({
+              id: user._id
+            }, user).$promise.then(function(user) {
+              userStorage.setUser(user);
+              alertService("success", "You succesfully un-bookmarked: ", job.title, "job-alert");
+            }).catch(function(error) {
+              alertService('warning', 'Opps! ', 'Error adding: ' + job.title + " to bookmarked", 'job-alert');
+            });
           }
         }
         else {
@@ -106,9 +130,12 @@
         jobService.title.query({}).$promise.then(function(jobs) {
           if (jobs.length === 0) {
             alertService("warning", "Opps! ", "No job found", "job-alert");
-            return;
           }
-          $scope.jobs = jobs;
+          else {
+            $scope.jobToSearch = "";
+            paginateJobsService.paginateJobs($scope, jobs);
+          }
+
         }).catch(function(err) {
           alertService("warning", "Unable to get jobs: " + err, "job-alert");
         });

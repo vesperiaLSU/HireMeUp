@@ -17,7 +17,7 @@
             <a href="#" role="button" ng-click="refresh()" style="float: right; margin:10px; color: #eaeaea;"><span class="glyphicon glyphicon-refresh" style="padding-right:5px"></span>refresh all jobs</a>
         </div>
         <div class="panel-body" id="job-list" style="width:100%; height:720px; ">
-            <table class="table table-hover table-font-style table-condensed">
+            <table class="table table-hover table-font-style">
                 <thead style="background-color: #485563;">
                     <tr>
                         <th class="col-sm-2">Date Posted</th>
@@ -25,21 +25,22 @@
                         <th class="col-sm-3">Company</th>
                         <th class="col-sm-1">Views</th>
                         <th class="col-sm-1">Applicants</th>
-                        <th class="col-sm-2"></th>
+                        <th class="col-sm-2" style="text-align:center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="padding: 5px; border-bottom-style: solid; border-bottom-color: slategray; border-bottom-width: 2px;" ng-repeat="job in jobs">
                         <td>{{job.datePosted | date: MM-dd-yyyy}}</td>
-                        <td><a style="color: #7cb228; font-weight:bold;" href="#" ng-click="viewJob(job); openModal('VIEW')">{{job.title}}</a></td>
+                        <td><a style="color: #7cb228; font-weight:bold" href="#" ng-click="viewJob(job); openModal('VIEW')">{{job.title}}</a></td>
                         <td>{{job.company}}</td>
-                        <td>{{job.views}}</td>
-                        <td>{{job.applicants}}</td>
-                        <td>
-                            <button class="btn btn-default" style="color:#fff" ng-click="markJob(job); marked = !marked"><span ng-class="{'red-heart': marked}" class="glyphicon glyphicon-heart"></span>
+                        <td style="padding-left: 15px">{{job.views}}</td>
+                        <td style="text-align:center">{{job.applicants}}</td>
+                        <td style="text-align:center">
+                            <button type="button" uib-popover="Bookmark" popover-trigger="mouseenter" class="btn btn-default" style="color:#fff" ng-click="markJob(job); job.marked = !job.marked;">
+                                <span ng-class="{'bookmarked': job.marked}" class="glyphicon glyphicon-bookmark markJob"></span>
                             </button>
-                            <button class="btn btn-default" style="color:#fff" ng-click="applyJob(job)"><span class="glyphicon glyphicon-send"></span>
-                                <br>Apply
+                            <button type="button" uib-popover="Apply" popover-trigger="mouseenter" class="btn btn-default" style="color:#fff" ng-click="applyJob(job); job.applied = true;">
+                                <span ng-class="{'applied': job.applied}" class="glyphicon glyphicon-send applyJob"></span>
                             </button>
                         </td>
                     </tr>

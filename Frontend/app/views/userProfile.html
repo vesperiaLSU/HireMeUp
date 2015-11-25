@@ -38,7 +38,7 @@
         </div>
         <div class="panel-body">
             <img id="avatar" border="0" height="70" width="70" class="cell round50" src={{vm.avatar_url}}>
-            <div style="padding: 5px 20px 0 0; float: right;">
+            <div style="float: right; position: absolute; top: 45%; left: 35%;">
                 <span style="display: block; padding: 5px; font-weight:bold">User: {{vm.displayName}}</span>
                 <span style="display: block; padding: 5px; font-weight:bold"><a href="#" ng-click="vm.openModal('USER')"><span class="glyphicon glyphicon-edit" style="padding-right:5px"></span>Edit Profile</a>
                 </span>
@@ -55,19 +55,18 @@
                 <table class="table table-hover table-font-style">
                     <thead style="background-color: #485563;">
                         <tr>
-                            <th class="col-sm-7" style="padding:10px 15px">Title</th>
-                            <th class="col-sm-2"></th>
-                            <th class="col-sm-3"></th>
+                            <th class="col-sm-3">Posted On</th>
+                            <th class="col-sm-7">Title</th>
+                            <th class="col-sm-2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="padding: 5px" ng-repeat="job in vm.jobsPosted">
-                            <td style="font-weight:bold; padding:15px"><a href="#" style="color: #7cb228" ng-click="vm.editJob(job); vm.openModal('EDIT')">{{job.title}}</a></td>
+                        <tr ng-repeat="job in vm.jobsPosted">
+                            <td>{{job.datePosted | date: 'M-dd-yy'}}</td>
+                            <td style="font-weight:bold; padding:15px 6px"><a href="#" style="color: #7cb228" ng-click="vm.editJob(job); vm.openModal('EDIT')">{{job.title}}</a></td>
                             <td>
-                                <a href="#" role="button" style="color:#eaeaea" ng-click="vm.editJob(job); vm.openModal('EDIT')"><span class="glyphicon glyphicon-edit" style="padding-right: 5px"></span>Edit</a>
-                            </td>
-                            <td>
-                                <a href="#" role="button" style="color:#eaeaea" ng-click="vm.deleteJob(job); vm.openModal('CONFIRM')"><span class="glyphicon glyphicon-remove" style="padding-right: 5px"></span>Remove</a>
+                                <a href="#" uib-popover="Edit" popover-trigger="mouseenter" role="button" style="color:#eaeaea" ng-click="vm.editJob(job); vm.openModal('EDIT')"><span class="glyphicon glyphicon-edit" style="padding-right: 4px; font-size:16px"></span></a>
+                                <a href="#" uib-popover="Remove" popover-trigger="mouseenter" role="button" style="color:#eaeaea" ng-click="vm.deleteJob(job); vm.openModal('CONFIRM')"><span class="glyphicon glyphicon-remove" style="padding-right: 4px; font-size:16px"></span></a>
                             </td>
                         </tr>
                         <tr ng-show="vm.jobsPosted.length === 0" style="font-size: 15px; font-weight: bold">

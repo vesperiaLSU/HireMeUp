@@ -131,23 +131,6 @@
             }
         };
 
-        vm.clearJobApplied = function() {
-            var user = userStorage.getUser();
-            if (user && user.jobsApplied.length > 0) {
-                user.jobsApplied.splice(0, user.jobsApplied.length);
-                userService.update({
-                    id: user._id
-                }, user).$promise.then(function(user) {
-                    vm.jobsApplied.splice(0, vm.jobsApplied.length);
-                    vm.numOfJob = 0;
-                    jobsApplied.splice(0, jobsApplied.length);
-                    userStorage.setUser(user);
-                }).catch(function(error) {
-                    alertService('warning', 'Opps! ', 'Error clearing all jobs applied: ' + error.message, 'job-alert');
-                });
-            }
-        };
-
         vm.clearJobMarked = function() {
             var user = userStorage.getUser();
             if (user && user.jobsMarked.length > 0) {

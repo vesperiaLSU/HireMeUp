@@ -20,21 +20,9 @@
       else {
         resultFound = paginateJobsService.paginateJobs($scope, jobs);
       }
-      
+
       var user = userStorage.getUser();
-      $.each($scope.jobs, function(index, job){
-        if(_.contains(user.jobsMarked, job._id)){
-          job.marked = true;
-        } else {
-          job.marked = false;
-        }
-        
-        if(_.contains(user.jobsApplied, job._id)){
-          job.applied = true;
-        } else {
-          job.applied = false;
-        }
-      });
+      changeJobStatus();
 
       $scope.pageChanged = function() {
         if (resultFound && resultFound.length > 10) {
@@ -134,6 +122,7 @@
           else {
             $scope.jobToSearch = "";
             paginateJobsService.paginateJobs($scope, jobs);
+            changeJobStatus();
           }
 
         }).catch(function(err) {
@@ -149,10 +138,37 @@
         }).$promise.then(
           function(data) {
             resultFound = paginateJobsService.paginateJobs($scope, data);
+            changeJobStatus();
           },
           function(error) {
             alertService("warning", "Unable to get jobs: ", error.data.message, "job-alert");
           });
+      }
+
+      function changeJobStatus() {
+        if (user) {
+          $.each($scope.jobs, function(index, job) {
+            if (_.contains(user.jobsMarked, job._id)) {
+              job.marked = true;
+            }
+            else {
+              job.marked = false;
+            }
+
+            if (_.contains(user.jobsApplied, job._id)) {
+              job.applied = true;
+            }
+            else {
+              job.applied = false;
+            }
+          });
+        }
+        else {
+          $.each($scope.jobs, function(index, job) {
+            job.marked = false;
+            job.applied = false;
+          });
+        }
       }
     }
   ]);

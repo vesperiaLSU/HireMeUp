@@ -20,7 +20,7 @@
                             alertService('warning', 'Opps! ', 'Could not register: ' + err.data.message, "main-alert");
                         });
                 };
-                
+
                 $scope.authenticate = function(provider) {
                     $auth.authenticate(provider).then(function(res) {
                         $state.go("main");
@@ -38,4 +38,4 @@
                 }
             }
         ]);
-}());
+})();

@@ -19,7 +19,7 @@
                             if (!res.data.user.active) {
                                 message = "Just a reminder, please active your account soon :)";
                             }
-                            
+
                             alertService("success", "Welcome ", username + "! " + message, "main-alert");
                         })
                         .catch(handleError);
@@ -42,4 +42,4 @@
                 }
             }
         ]);
-}());
+})();

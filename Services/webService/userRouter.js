@@ -18,4 +18,4 @@
     userRouter.route("/users/:id").put(updateUserInfoHandler);
 
     module.exports = userRouter;
-}());
+})();

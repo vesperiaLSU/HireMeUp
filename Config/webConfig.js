@@ -23,4 +23,4 @@
         
         STATIC_AVATAR: "http://static.glassdoor.com/static/img/icons/generic-avatar-50x50@2x.png?v=089a97eh"
     };
-}());
+})();

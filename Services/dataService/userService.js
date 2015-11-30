@@ -8,4 +8,4 @@
         };
         return User.findByIdAndUpdateAsync(id, update, options);
     };
-}());
+})();

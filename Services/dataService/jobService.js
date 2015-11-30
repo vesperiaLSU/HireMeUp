@@ -29,4 +29,4 @@
         };
         return Job.findByIdAndUpdateAsync(id, update, options);
     };
-}());
+})();

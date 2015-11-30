@@ -12,6 +12,6 @@
         NEED_ACTIVATION: "Account not active yet!",
         NEED_VERIFY: "Please verify your email address by clicking the button below"
     };
-}());
+})();
 
 

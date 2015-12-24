@@ -8,9 +8,6 @@
     var jobByIdRouter = express.Router();
     jobByIdRouter.use(bodyParser.json());
 
-    // jobRouter.all("/jobs", requireAuthentication);
-    // jobRouter.all("/jobs/:title", requireAuthentication);
-
     jobByIdRouter.route("/jobById/:id").delete(function(req, res, next) {
         var id = req.params.id;
         jobService.deleteJob(id).then(function(deleted) {

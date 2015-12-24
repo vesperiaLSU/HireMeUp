@@ -36,6 +36,7 @@
           resolve: {
             jobService: "jobService",
             jobs: function(jobService) {
+              debugger;
               return jobService.title.query({}).$promise;
             }
           }

@@ -9,6 +9,7 @@
       $scope.jobToSearch = dataTransfer.getJob();
       var resultFound;
 
+      debugger;
       $scope.$watch("jobToSearch", function(newValue, oldValue) {
         if (newValue === oldValue) return;
         search();

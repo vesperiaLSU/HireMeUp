@@ -8,8 +8,6 @@
     var jobRouter = express.Router();
     jobRouter.use(bodyParser.json());
 
-    // jobRouter.all("/jobs", requireAuthentication);
-    // jobRouter.all("/jobs/:title", requireAuthentication);
     jobRouter.route("/jobs")
         .get(function(req, res, next) {
             jobService.findJobs({}).then(function(collection) {

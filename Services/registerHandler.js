@@ -31,7 +31,7 @@
             });
         }).catch(function(err) {
             return res.status(500).send({
-                message: "register failed with error"
+                message: err
             });
         });
     };

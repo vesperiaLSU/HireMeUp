@@ -11,9 +11,7 @@
             email: req.user.email
         };
 
-        User.findOne(searchUser, function(err, user) {
-            if (err) throw err;
-
+        User.findOneAsync(searchUser).then(function(user) {
             if (!user) return res.status(401).send({
                 message: messages.USER_NOT_FOUND
             });
@@ -35,6 +33,8 @@
 
                 tokenHandler(user, req, res);
             });
+        }).catch(function(err) {
+            throw err;
         });
     };
 })();

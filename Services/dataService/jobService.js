@@ -21,7 +21,7 @@
     
     exports.deleteJob = function(id){
         return Job.findByIdAndRemoveAsync(id);
-    }
+    };
 
     exports.updateJob = function(id, update) {
         var options = {

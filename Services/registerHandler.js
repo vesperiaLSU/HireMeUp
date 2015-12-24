@@ -17,7 +17,7 @@
             email: user.email
         };
 
-        User.findOne(searchUser).then(function(user) {
+        User.findOneAsync(searchUser).then(function(user) {
             if (user) return res.status(401).send({
                 message: messages.EMAIL_DUPLICATE
             });
@@ -29,7 +29,7 @@
             }).catch(function(err) {
                 throw err;
             });
-        }).catch(function(err) {
+        }, function(err) {
             return res.status(500).send({
                 message: err
             });

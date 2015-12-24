@@ -8,6 +8,8 @@
     var jobRouter = express.Router();
     jobRouter.use(bodyParser.json());
 
+    // jobRouter.all("/jobs", requireAuthentication);
+    // jobRouter.all("/jobs/:title", requireAuthentication);
     jobRouter.route("/jobs")
         .get(function(req, res, next) {
             jobService.findJobs({}).then(function(collection) {
@@ -19,7 +21,7 @@
                         message: "failed to find any job"
                     });
                 }
-            }).catch(function(err) {
+            }, function(err) {
                 res.status(500).send({
                     message: err
                 });
@@ -52,7 +54,7 @@
             };
             jobService.findJobs(searchBy).then(function(collection) {
                 res.send(collection);
-            }).catch(function(err) {
+            }, function(err) {
                 res.status(404).send({
                     message: err
                 });

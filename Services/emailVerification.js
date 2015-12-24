@@ -30,7 +30,7 @@
         var mailOptions = {
             from: webConfig.SMTP_EMAIL_FROM,
             to: user.email,
-            subject: "JWT Account Verification",
+            subject: "HireMeUp Account Verification",
             html: getHtml(user.host, token)
         };
 
@@ -74,7 +74,7 @@
     function getHtml(host, token) {
         var model = {
             verifyUrl: "https://" + host + webConfig.VERIFY_URL,
-            title: "JWT",
+            title: "Hire Me Up",
             subTitle: "Thanks for signing up",
             body: messages.NEED_VERIFY
         };

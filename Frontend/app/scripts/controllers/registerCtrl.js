@@ -11,12 +11,14 @@
                             password: $scope.password
                         })
                         .then(function(res) {
+                            debugger;
                             $state.go("main");
                             $auth.setToken(res.data.token);
                             userStorage.setUser(res.data.user);
                             alertService('success', 'Account Created! ', "Welcome, " + res.data.user.email + " Just a reminder, please active your account soon :)", "main-alert");
                         })
                         .catch(function(err) {
+                            debugger;
                             alertService('warning', 'Opps! ', 'Could not register: ' + err.data.message, "main-alert");
                         });
                 };

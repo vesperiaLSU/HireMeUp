@@ -17,9 +17,11 @@
         VERIFY_URL: "/api/auth/verifyEmail?token=",
         SEND_PATH: "./views/emailVerification.html",
         SMTP_USER: "postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org",
-        SMTP_PASS: "dae3f15a722e23f3ffd9b4c354b8a993",
+        SMTP_PASS: "104.130.96.6",
         SMTP_HOST: "smtp.mailgun.org",
         SMTP_EMAIL_FROM: "Accounts <postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org>",
+        API_KEY: "key-4c727b4f44758682acb2b25f276fe644",
+        DOMAIN: "sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org",
         
         STATIC_AVATAR: "http://static.glassdoor.com/static/img/icons/generic-avatar-50x50@2x.png?v=089a97eh"
     };

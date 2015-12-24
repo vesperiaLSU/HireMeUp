@@ -17,13 +17,13 @@
         };
 
         var token = jwt.encode(payload, webConfig.EMAIL_SECRET);
-        
+
         var auth = {
             auth: {
-                api_key: "key-4c727b4f44758682acb2b25f276fe644",
-                domain: "sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org"
+                api_key: webConfig.API_KEY,
+                domain: webConfig.DOMAIN
             }
-        }
+        };
 
         var transporter = nodeMailer.createTransport(mg(auth));
 
@@ -113,7 +113,7 @@
                 if (err) return res.status(500);
 
                 return res.redirect("/");
-            })
+            });
         });
     }
 })();

@@ -21,6 +21,10 @@
         vm.currentPage = 1;
         vm.itemsPerPage = 11;
         vm.numOfPosted = jobsPosted.length;
+        vm.jobsViewed = jobsViewed;
+        vm.jobsApplied = jobsApplied;
+        vm.jobsMarked = jobsMarked;
+        vm.jobsPosted = jobsPosted;
 
         paginateJobsService.paginatePosted(vm, jobsPosted);
 

@@ -69,7 +69,7 @@
             this.paginatePosted = function(vm, jobsPosted) {
                 vm.numOfJobPosted = jobsPosted.length;
                 vm.jobsPosted = jobsPosted;
-                if (vm.numOfJobPosted > 11) {
+                if (vm.numOfJobPosted > 10) {
                     var begin = (vm.currentPageJobPosted - 1) * vm.jobPostedPerPage;
                     var end = begin + vm.jobPostedPerPage;
                     vm.jobsPosted = jobsPosted.slice(begin, end);

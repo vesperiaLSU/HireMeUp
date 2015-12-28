@@ -17,7 +17,7 @@
         VERIFY_URL: "/api/auth/verifyEmail?token=",
         SEND_PATH: "./views/emailVerification.html",
         SMTP_USER: "postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org",
-        SMTP_PASS: "308c556b84c7cbd01486c1508870e",
+        SMTP_PASS: "01251f6ea29b2a56327131668f0ff270",
         SMTP_HOST: "smtp.mailgun.org",
         SMTP_EMAIL_FROM: "Accounts <postmaster@sandbox84e308c556b84c7cbd01486c1508870e.mailgun.org>",
         API_KEY: "key-01251f6ea29b2a56327131668f0ff270",

@@ -6,4 +6,4 @@
       $scope.isAuthenticated = $auth.isAuthenticated;
     }
   ]);
-})();
+}());

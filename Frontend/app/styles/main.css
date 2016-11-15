@@ -94,7 +94,7 @@ textarea {
 }
 
 .mainPage {
-    background-image: url("http://www.metropolismag.com/Airbnb_PDXoffice_Bittermann_12-10-2104_-6.jpg");
+    background-image: url("../images/Background-min.jpg");
     background-size: cover
 }
 
@@ -376,6 +376,14 @@ textarea {
     right: 5px;
     max-width: 400px;
     margin: 0 auto;
+}
+
+#githubLogo {
+    border: 0;
+    width: 75px;
+    height: 75px;
+    margin-top :10px;
+    font-weight: bold;
 }
 
 .alert-hidden {

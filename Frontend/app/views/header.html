@@ -21,7 +21,7 @@
                 <li ui-sref-active="active">
                     <a ui-sref="jobs" style="padding: 12px;">Jobs</a>
                 </li>
-                <li ui-sref-active="active" style="float: right;">
+                <li ng-hide="isAuthenticated()" ui-sref-active="active" style="float: right;">
                     <a ui-sref="register" style="padding: 12px;">Register</a>
                 </li>
 

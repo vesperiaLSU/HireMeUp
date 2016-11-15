@@ -1,6 +1,6 @@
 (function () {
     module.exports = {
-        //google authenticate
+        /*google authenticate*/
         GOOGLE_URL: "https://www.googleapis.com/oauth2/v3/token",
         GOOGLE_API: "https://www.googleapis.com/plus/v1/people/me/openIdConnect",
         GOOGLE_SECRET: "1i-ZVE86crQvzRrvK80x0ZaI",

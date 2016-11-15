@@ -1,3 +1,4 @@
+/*global angular*/
 (function() {
   'use strict';
 
@@ -106,4 +107,4 @@
       $authProvider.signupUrl = "/api/register";
     }
   ]);
-})();
+}());

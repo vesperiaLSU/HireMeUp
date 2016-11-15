@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    angular.module("common.service").service("deleteJobService", ["userStorage", "alertService", "$state", "jobService", "userService",
-        function(userStorage, alertService, $state, jobService, userService) {
+    angular.module("common.service").service("deleteJobService", ["userStorage", "alertService", "$state", "jobService", "userService", "paginateJobsService",
+        function(userStorage, alertService, $state, jobService, userService, paginateJobsService) {
             this.delete = function(job, scope) {
                 var user = userStorage.getUser();
                 var indexToDelete;
@@ -61,4 +61,4 @@
             };
         }
     ]);
-})();
+}());

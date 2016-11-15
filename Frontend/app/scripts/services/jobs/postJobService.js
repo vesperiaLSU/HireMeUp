@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    angular.module("common.service").service("postJobService", ["userStorage", "userService", "alertService", "$state", "jobService",
-        function(userStorage, userService, alertService, $state, jobService) {
+    angular.module("common.service").service("postJobService", ["userStorage", "userService", "alertService", "$state", "jobService", "paginateJobsService",
+        function(userStorage, userService, alertService, $state, jobService, paginateJobsService) {
             this.post = function(job, scope) {
                 var user = userStorage.getUser();
                 if (user) {
@@ -9,11 +9,12 @@
                         if ($state.current.url === "/jobs") {
                             scope.jobs = scope.allJobs;
                             scope.jobs.push(data);
-                            scope.numOfJob = scope.jobs.length;
+                            paginateJobsService.paginateJobs(scope, scope.jobs);
                         }
                         else {
                             $state.go("jobs");
                         }
+                        
                         user.jobsPosted.push(data._id);
                         userService.update({
                             id: user._id
@@ -34,4 +35,4 @@
             };
         }
     ]);
-})();
+}());

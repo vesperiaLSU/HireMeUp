@@ -5,6 +5,7 @@
     var mongoose = require("mongoose");
     var bodyParser = require("body-parser");
     var Promise = require("bluebird");
+    var compression = require("compression");
 
     /**custom service**/
     var webConfig = require("./Config/webConfig.js");
@@ -15,6 +16,7 @@
     var app = express();
 
     app.engine('.html', require('ejs').renderFile);
+    app.use(compression());
     app.use(express.static(__dirname + "/Frontend"));
     app.use(bodyParser.json());
     app.use("/api", jobRouter);

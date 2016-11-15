@@ -3,14 +3,13 @@
     <h1><span class="glyphicon glyphicon-send" style="color: #7cb228; padding: 0 10px;"></span>Hire Me Up</h1>
     <p class="lead">Get Hired. Love Your Job.</p>
     <div class="input-group col-sm-8">
-      <input type="text" name="job" ng-model="jobToSearch" ng-keypress="keyPressed($event)" class="form-control font-style" placeholder="Job Title.." />
+      <input type="text" name="job" ng-model="jobToSearch" ng-keypress="keyPressed($event)" maxlength="50" class="form-control font-style" placeholder="Job Title.." />
       <button class="btn btn-primary" style="font-size:13px; padding: 10px 15px" ng-click="searchJob()"><span class="glyphicon glyphicon-search"></span></button>
     </div>
     <div style="margin-top:60px">
       <legend></legend>
-      <span class="col-sm-12">Copyright ©2015, Chen Guo, All Rights Reserved.</span> 
+      <span class="col-sm-12">Copyright ©2016, Chen Guo, All Rights Reserved.</span> 
       <span class="col-sm-12">HireMeUp is for demonstration and non-commercial use only.</span>
-      <a class="col-sm-12" style="margin-top: 20px; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; font-weight:bold" href="https://github.com/vesperiaLSU/HireMeUp.git">Come check out the source code on my Github!</a>
+      <a href="https://github.com/vesperiaLSU/HireMeUp" style="color:whitesmoke"><img id="githubLogo" class="cell round50" src="dist/images/logo.png" popover-placement="right" uib-popover="Fork me on Github" popover-trigger="mouseenter"></img></a>
     </div>
   </div>
-</div>

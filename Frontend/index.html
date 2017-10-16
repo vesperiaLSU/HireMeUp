@@ -45,7 +45,9 @@
       s.parentNode.insertBefore(t, s)
     }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '503298683364175');
+    fbq('init', '503298683364175', {
+      em: '{customerEmailAddress}'
+    });
     fbq('track', 'PageView');
     fbq('track', 'ViewContent', {
       content_name: 'The Avengers Trailer',

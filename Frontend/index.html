@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="dist/styles/bootstrap-superhero.css" />
   <link rel="stylesheet" href="dist/styles/main.css" />
-  
+
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-resource/angular-resource.min.js"></script>
@@ -22,21 +22,38 @@
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
   <script src="bower_components/satellizer/satellizer.min.js"></script>
   <script src="bower_components/underscore.js"></script>
-  
+
   <script src="dist/scripts/scripts.js"></script>
 
-  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <!-- Facebook Pixel Code -->
   <script>
-    ! function(A, n, g, u, l, a, r) {
-      A.GoogleAnalyticsObject = l, A[l] = A[l] || function() {
-          (A[l].q = A[l].q || []).push(arguments);
-        }, A[l].l = +new Date, a = n.createElement(g),
-        r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r);
-    }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-XXXXX-X');
-    ga('send', 'pageview');
+    ! function(f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function() {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '503298683364175');
+    fbq('track', 'PageView');
   </script>
+  <noscript>
+      <img height="1" width="1" style="display:none" 
+    src="https://www.facebook.com/tr?id=503298683364175&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Facebook Pixel Code -->
+
 </head>
 
 <body class="{{bodyStyle}}">

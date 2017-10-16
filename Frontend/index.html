@@ -47,6 +47,12 @@
       'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '503298683364175');
     fbq('track', 'PageView');
+    fbq('track', 'ViewContent', {
+      content_name: 'The Avengers Trailer',
+      content_category: 'Entertainment',
+      value: 1.50,
+      currency: 'USD',
+    })
   </script>
   <noscript>
       <img height="1" width="1" style="display:none" 

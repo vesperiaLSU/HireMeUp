@@ -173,17 +173,23 @@
         }
     ]);
 }());
+/* global angular,$ */
 (function() {
   "use strict";
 
-  angular.module("jobFinder.app").controller("JobsCtrl", ["$scope", "jobService", "userService", "alertService", "$rootScope", "dataTransfer",
+  angular.module("jobFinder.app").controller("JobsCtrl", ["$window", "$scope", "jobService", "userService", "alertService", "$rootScope", "dataTransfer",
     "$state", "$uibModal", "jobModalService", "applyForJobService", "userStorage", "jobs", "paginateJobsService", "_",
-    function($scope, jobService, userService, alertService, $rootScope, dataTransfer,
+    function($window, $scope, jobService, userService, alertService, $rootScope, dataTransfer,
       $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs, paginateJobsService, _) {
+
       $rootScope.bodyStyle = "";
       $scope.jobToSearch = dataTransfer.getJob();
       var resultFound;
-      
+
+      $window.fbq('track', 'PageView', {
+        page: 'Jobs'
+      });
+
       $scope.$watch("jobToSearch", function(newValue, oldValue) {
         if (newValue === oldValue) return;
         search();
@@ -249,6 +255,12 @@
         if (type === 'VIEW' && user) {
           $scope.hasApplied = user && $scope.candidates.indexOf(user._id) !== -1;
         }
+        $window.fbq('track', 'ViewContent', {
+          content_name: $scope.title,
+          content_type: 'product',
+          value: 10,
+          currency: 'USD',
+        });
         jobModalService.open(type, $scope);
       };
 
@@ -348,6 +360,7 @@
     }
   ]);
 }());
+
 (function() {
     "use strict";
 
@@ -405,12 +418,30 @@
   ]);
 }());
 
+/* global angular, fbq */
+
 (function() {
     "use strict";
 
-    angular.module("jobFinder.app").controller("MainCtrl", ["$rootScope", "$scope", "$state", "dataTransfer",
-        function($rootScope, $scope, $state, dataTransfer) {
+    angular.module("jobFinder.app").controller("MainCtrl", ["$window", "$rootScope", "$scope", "$state", "dataTransfer", "userStorage",
+        function($window, $rootScope, $scope, $state, dataTransfer, userStorage) {
             $rootScope.bodyStyle = "mainPage";
+            var user = userStorage.getUser(),
+                email = '';
+            if (user) {
+                email = user.email;
+            }
+
+            if (!$window.isInit) {
+                $window.fbq('init', '503298683364175', {
+                    em: email,
+                });
+                $window.isInit = true;
+            }
+            $window.fbq('track', 'PageView', {
+                page: 'Home'
+            });
+
             $scope.keyPressed = function(event) {
                 if (event.charCode === 13)
                     $scope.searchJob();
@@ -423,6 +454,7 @@
         }
     ]);
 }());
+
 (function() {
     "use strict";
 
@@ -756,6 +788,172 @@
     angular.module("common.service", ["ngResource"]);
 }());
 (function() {
+  "use strict";
+
+  angular.module("common.service")
+    .service("alertService", ["$rootScope", "$timeout",
+      function alert($rootScope, $timeout) {
+        var alertTimeout;
+        return function(type, title, message, style, timeout) {
+          $rootScope.alert = {
+            hasBeenShown: true,
+            show: true,
+            type: type,
+            style: style,
+            message: message,
+            title: title
+          };
+          $timeout.cancel(alertTimeout);
+          alertTimeout = $timeout(function() {
+            $rootScope.alert.show = false;
+          }, timeout || 4000);
+        };
+      }
+    ]);
+}());
+
+(function() {
+    "use strict";
+    angular.module("common.service").factory("dataTransfer",
+        function() {
+            var jobTitle;
+            var addJob = function(title) {
+                jobTitle = title;
+            }
+            var getJob = function() {
+                return jobTitle;
+            }
+            var clearJob = function() {
+                jobTitle = "";
+            }
+
+            return {
+                addJob: addJob,
+                getJob: getJob,
+                clearJob: clearJob
+            };
+        });
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('common.service').service('paginateJobsService',
+        function(dataTransfer) {
+            this.paginateJobs = function(scope, jobs) {
+                scope.allJobs = jobs;
+                scope.numOfJob = jobs.length;
+                scope.currentPage = 1;
+                scope.itemsPerPage = 12;
+                var begin, end, resultFound;
+                if (scope.jobToSearch) {
+                    dataTransfer.clearJob();
+                    resultFound = $.grep(scope.allJobs, function(item) {
+                        return item.title.toLowerCase().indexOf(scope.jobToSearch.toLowerCase()) !== -1;
+                    });
+                    scope.numOfJob = resultFound.length;
+                    if (resultFound.length > 10) {
+                        begin = (scope.currentPage - 1) * scope.itemsPerPage;
+                        end = begin + scope.itemsPerPage;
+                        scope.jobs = resultFound.slice(begin, end);
+                    }
+                    else {
+                        scope.jobs = resultFound;
+                    }
+                }
+                else {
+                    scope.jobs = scope.allJobs;
+                    if (scope.jobs.length > 10) {
+                        begin = (scope.currentPage - 1) * scope.itemsPerPage;
+                        end = begin + scope.itemsPerPage;
+                        scope.jobs = scope.allJobs.slice(begin, end);
+                    }
+                }
+
+                return resultFound;
+            };
+
+            this.paginateViewed = function(vm, jobsViewed) {
+                vm.jobsViewed = jobsViewed;
+                vm.numOfJob = jobsViewed.length;
+                if (vm.numOfJob > 11) {
+                    var begin = (vm.currentPage - 1) * vm.itemsPerPage;
+                    var end = begin + vm.itemsPerPage;
+                    vm.jobsViewed = jobsViewed.slice(begin, end);
+                }
+            };
+
+            this.paginateMarked = function(vm, jobsMarked) {
+                vm.jobsMarked = jobsMarked;
+                vm.numOfJob = jobsMarked.length;
+                if (vm.numOfJob > 11) {
+                    var begin = (vm.currentPage - 1) * vm.itemsPerPage;
+                    var end = begin + vm.itemsPerPage;
+                    vm.jobsMarked = jobsMarked.slice(begin, end);
+                }
+            };
+
+            this.paginateApplied = function(vm, jobsApplied) {
+                vm.jobsApplied = jobsApplied;
+                vm.numOfJob = jobsApplied.length;
+                if (vm.numOfJob > 11) {
+                    var begin = (vm.currentPage - 1) * vm.itemsPerPage;
+                    var end = begin + vm.itemsPerPage;
+                    vm.jobsApplied = jobsApplied.slice(begin, end);
+                }
+            };
+
+            this.paginatePosted = function(vm, jobsPosted) {
+                vm.numOfJobPosted = jobsPosted.length;
+                vm.jobsPosted = jobsPosted;
+                if (vm.numOfJobPosted > 10) {
+                    var begin = (vm.currentPageJobPosted - 1) * vm.jobPostedPerPage;
+                    var end = begin + vm.jobPostedPerPage;
+                    vm.jobsPosted = jobsPosted.slice(begin, end);
+                }
+            };
+        });
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('common.service').factory('_', ['$window', function($window) {
+        return $window._;
+    }]);
+}());
+
+(function() {
+    'use strict';
+
+    angular.module('common.service').factory('userStorage', ["$window",
+        function($window) {
+            var storage = $window.localStorage;
+            var cachedUser;
+            var userToken = "currentUser";
+            var userStorage = {
+                setUser: function(user) {
+                    cachedUser = user;
+                    storage.setItem(userToken, JSON.stringify(user));
+                },
+                getUser: function() {
+                    if (!cachedUser) {
+                        cachedUser = JSON.parse(storage.getItem(userToken));
+                    }
+
+                    return cachedUser;
+                },
+                removeUser: function() {
+                    cachedUser = null;
+                    storage.removeItem(userToken);
+                }
+            };
+            return userStorage;
+        }
+    ]);
+}());
+
+(function() {
     'use strict';
     angular.module("common.service").service("applyForJobService", ["userStorage", "userService", "alertService", "$state", "jobService",
         function(userStorage, userService, alertService, $state, jobService) {
@@ -967,172 +1165,6 @@
     ]);
 }());
 (function() {
-  "use strict";
-
-  angular.module("common.service")
-    .service("alertService", ["$rootScope", "$timeout",
-      function alert($rootScope, $timeout) {
-        var alertTimeout;
-        return function(type, title, message, style, timeout) {
-          $rootScope.alert = {
-            hasBeenShown: true,
-            show: true,
-            type: type,
-            style: style,
-            message: message,
-            title: title
-          };
-          $timeout.cancel(alertTimeout);
-          alertTimeout = $timeout(function() {
-            $rootScope.alert.show = false;
-          }, timeout || 4000);
-        };
-      }
-    ]);
-}());
-
-(function() {
-    "use strict";
-    angular.module("common.service").factory("dataTransfer",
-        function() {
-            var jobTitle;
-            var addJob = function(title) {
-                jobTitle = title;
-            }
-            var getJob = function() {
-                return jobTitle;
-            }
-            var clearJob = function() {
-                jobTitle = "";
-            }
-
-            return {
-                addJob: addJob,
-                getJob: getJob,
-                clearJob: clearJob
-            };
-        });
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('common.service').service('paginateJobsService',
-        function(dataTransfer) {
-            this.paginateJobs = function(scope, jobs) {
-                scope.allJobs = jobs;
-                scope.numOfJob = jobs.length;
-                scope.currentPage = 1;
-                scope.itemsPerPage = 12;
-                var begin, end, resultFound;
-                if (scope.jobToSearch) {
-                    dataTransfer.clearJob();
-                    resultFound = $.grep(scope.allJobs, function(item) {
-                        return item.title.toLowerCase().indexOf(scope.jobToSearch.toLowerCase()) !== -1;
-                    });
-                    scope.numOfJob = resultFound.length;
-                    if (resultFound.length > 10) {
-                        begin = (scope.currentPage - 1) * scope.itemsPerPage;
-                        end = begin + scope.itemsPerPage;
-                        scope.jobs = resultFound.slice(begin, end);
-                    }
-                    else {
-                        scope.jobs = resultFound;
-                    }
-                }
-                else {
-                    scope.jobs = scope.allJobs;
-                    if (scope.jobs.length > 10) {
-                        begin = (scope.currentPage - 1) * scope.itemsPerPage;
-                        end = begin + scope.itemsPerPage;
-                        scope.jobs = scope.allJobs.slice(begin, end);
-                    }
-                }
-
-                return resultFound;
-            };
-
-            this.paginateViewed = function(vm, jobsViewed) {
-                vm.jobsViewed = jobsViewed;
-                vm.numOfJob = jobsViewed.length;
-                if (vm.numOfJob > 11) {
-                    var begin = (vm.currentPage - 1) * vm.itemsPerPage;
-                    var end = begin + vm.itemsPerPage;
-                    vm.jobsViewed = jobsViewed.slice(begin, end);
-                }
-            };
-
-            this.paginateMarked = function(vm, jobsMarked) {
-                vm.jobsMarked = jobsMarked;
-                vm.numOfJob = jobsMarked.length;
-                if (vm.numOfJob > 11) {
-                    var begin = (vm.currentPage - 1) * vm.itemsPerPage;
-                    var end = begin + vm.itemsPerPage;
-                    vm.jobsMarked = jobsMarked.slice(begin, end);
-                }
-            };
-
-            this.paginateApplied = function(vm, jobsApplied) {
-                vm.jobsApplied = jobsApplied;
-                vm.numOfJob = jobsApplied.length;
-                if (vm.numOfJob > 11) {
-                    var begin = (vm.currentPage - 1) * vm.itemsPerPage;
-                    var end = begin + vm.itemsPerPage;
-                    vm.jobsApplied = jobsApplied.slice(begin, end);
-                }
-            };
-
-            this.paginatePosted = function(vm, jobsPosted) {
-                vm.numOfJobPosted = jobsPosted.length;
-                vm.jobsPosted = jobsPosted;
-                if (vm.numOfJobPosted > 10) {
-                    var begin = (vm.currentPageJobPosted - 1) * vm.jobPostedPerPage;
-                    var end = begin + vm.jobPostedPerPage;
-                    vm.jobsPosted = jobsPosted.slice(begin, end);
-                }
-            };
-        });
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('common.service').factory('_', ['$window', function($window) {
-        return $window._;
-    }]);
-}());
-
-(function() {
-    'use strict';
-
-    angular.module('common.service').factory('userStorage', ["$window",
-        function($window) {
-            var storage = $window.localStorage;
-            var cachedUser;
-            var userToken = "currentUser";
-            var userStorage = {
-                setUser: function(user) {
-                    cachedUser = user;
-                    storage.setItem(userToken, JSON.stringify(user));
-                },
-                getUser: function() {
-                    if (!cachedUser) {
-                        cachedUser = JSON.parse(storage.getItem(userToken));
-                    }
-
-                    return cachedUser;
-                },
-                removeUser: function() {
-                    cachedUser = null;
-                    storage.removeItem(userToken);
-                }
-            };
-            return userStorage;
-        }
-    ]);
-}());
-
-(function() {
     "use strict";
 
     angular.module("common.service").service("confirmModalService", ["$uibModal", "$auth", "alertService", "$state", "deleteJobService",
@@ -1176,8 +1208,8 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("jobModalService", ["$uibModal", "$auth", "jobService", "alertService", "$state", "applyForJobService", "postJobService", "deleteJobService", "editJobService",
-        function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService, editJobService) {
+    angular.module("common.service").service("jobModalService", ["$window", "$uibModal", "$auth", "jobService", "alertService", "$state", "applyForJobService", "postJobService", "deleteJobService", "editJobService",
+        function($window, $uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService, editJobService) {
             this.open = function(type, scope) {
                 var modalInstance = $uibModal.open({
                     animation: true,
@@ -1212,6 +1244,12 @@
                                 {
                                     if ($auth.isAuthenticated()) {
                                         applyForJobService.apply(job);
+                                        $window.fbq('track', 'Purchase', {
+                                            content_name: scope.title,
+                                            content_type: 'product',
+                                            value: 10,
+                                            currency: 'USD',
+                                        });
                                     }
                                     else {
                                         $state.go("login");
@@ -1274,6 +1312,7 @@
         }
     ]);
 }());
+
 (function() {
     "use strict";
 

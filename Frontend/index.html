@@ -24,14 +24,13 @@
   <script src="bower_components/underscore.js"></script>
 
   <script src="dist/scripts/scripts.js"></script>
-
   <!-- Facebook Pixel Code -->
   <script>
-    ! function(f, b, e, v, n, t, s) {
+    /* global fbq*/ ! function(f, b, e, v, n, t, s) {
       if (f.fbq) return;
       n = f.fbq = function() {
         n.callMethod ?
-          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments);
       };
       if (!f._fbq) f._fbq = n;
       n.push = n;
@@ -42,23 +41,17 @@
       t.async = !0;
       t.src = v;
       s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
+      s.parentNode.insertBefore(t, s);
     }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '503298683364175');
-    fbq('track', 'PageView');
-    fbq('track', 'ViewContent', {
-      content_name: 'The Avengers Trailer',
-      content_category: 'Entertainment',
-      value: 12.50,
-      currency: 'USD',
-    })
+
+    window.isInit = false;
   </script>
-  <noscript>
-      <img height="1" width="1" style="display:none" 
-    src="https://www.facebook.com/tr?id=503298683364175&ev=PageView&noscript=1"
-  /></noscript>
+  <!--  <noscript><img height="1" width="1" style="display:none"-->
+  <!--  src="https://www.facebook.com/tr?id=503298683364175&ev=PageView&noscript=1"-->
+  <!--/></noscript>-->
   <!-- End Facebook Pixel Code -->
+
 
 </head>
 

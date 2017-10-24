@@ -1,14 +1,20 @@
+/* global angular,$ */
 (function() {
   "use strict";
 
-  angular.module("jobFinder.app").controller("JobsCtrl", ["$scope", "jobService", "userService", "alertService", "$rootScope", "dataTransfer",
+  angular.module("jobFinder.app").controller("JobsCtrl", ["$window", "$scope", "jobService", "userService", "alertService", "$rootScope", "dataTransfer",
     "$state", "$uibModal", "jobModalService", "applyForJobService", "userStorage", "jobs", "paginateJobsService", "_",
-    function($scope, jobService, userService, alertService, $rootScope, dataTransfer,
+    function($window, $scope, jobService, userService, alertService, $rootScope, dataTransfer,
       $state, $uibModal, jobModalService, applyForJobService, userStorage, jobs, paginateJobsService, _) {
+
       $rootScope.bodyStyle = "";
       $scope.jobToSearch = dataTransfer.getJob();
       var resultFound;
-      
+
+      $window.fbq('track', 'PageView', {
+        page: 'Jobs'
+      });
+
       $scope.$watch("jobToSearch", function(newValue, oldValue) {
         if (newValue === oldValue) return;
         search();
@@ -74,6 +80,12 @@
         if (type === 'VIEW' && user) {
           $scope.hasApplied = user && $scope.candidates.indexOf(user._id) !== -1;
         }
+        $window.fbq('track', 'ViewContent', {
+          content_name: $scope.title,
+          content_type: 'product',
+          value: 10,
+          currency: 'USD',
+        });
         jobModalService.open(type, $scope);
       };
 

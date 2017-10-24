@@ -1,8 +1,8 @@
 (function() {
     "use strict";
 
-    angular.module("common.service").service("jobModalService", ["$uibModal", "$auth", "jobService", "alertService", "$state", "applyForJobService", "postJobService", "deleteJobService", "editJobService",
-        function($uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService, editJobService) {
+    angular.module("common.service").service("jobModalService", ["$window", "$uibModal", "$auth", "jobService", "alertService", "$state", "applyForJobService", "postJobService", "deleteJobService", "editJobService",
+        function($window, $uibModal, $auth, jobService, alertService, $state, applyForJobService, postJobService, deleteJobService, editJobService) {
             this.open = function(type, scope) {
                 var modalInstance = $uibModal.open({
                     animation: true,
@@ -37,6 +37,12 @@
                                 {
                                     if ($auth.isAuthenticated()) {
                                         applyForJobService.apply(job);
+                                        $window.fbq('track', 'Purchase', {
+                                            content_name: scope.title,
+                                            content_type: 'product',
+                                            value: 10,
+                                            currency: 'USD',
+                                        });
                                     }
                                     else {
                                         $state.go("login");
